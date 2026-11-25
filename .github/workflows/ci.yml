@@ -22,13 +22,15 @@ name: CI
 #                    and oncospan_sorted_benchmark_variants.vcf.gz
 #   REFERENCE_FASTA  the indexed hg38 FASTA
 #
-# Pushes to init-dev do not trigger CI (checks run locally; see CLAUDE.md). The release workflow
-# (release.yml) calls this workflow for a v* tag before it builds and drafts the release.
+# Branch flow: feature branch -> test -> main. CI runs when changes are pushed to test (after a
+# feature branch is merged into it), on manual runs (gh workflow run CI --ref <branch>) and from
+# release.yml, which calls it for a v* tag before it builds and drafts the release. Feature
+# branches, pull requests and main do not trigger it: main only receives commits that passed on
+# test (fast-forward; see CLAUDE.md).
 
 on:
   push:
-    branches: [main]
-  pull_request:
+    branches: [test]
   workflow_dispatch:
   workflow_call:
     inputs:
