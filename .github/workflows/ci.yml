@@ -163,8 +163,8 @@ jobs:
           awk 'NR % 10 == 1' "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" > "$RUNNER_TEMP/subset.bed"
           args=(-G "$REFERENCE_FASTA" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" -N Oncospan_DNA
                 -c 1 -S 2 -E 3 -g 4 -f 0.01 "$RUNNER_TEMP/subset.bed")
-          chmod +x static/omnivar
-          static/omnivar "${args[@]}" -th 16 > "$RUNNER_TEMP/static.vcf"
+          chmod +x static/out/omnivar   # the artifact keeps the out/ prefix
+          static/out/omnivar "${args[@]}" -th 16 > "$RUNNER_TEMP/static.vcf"
           build/omnivar "${args[@]}" -th ${{ matrix.threads }} > "$RUNNER_TEMP/sanitizer.vcf"
           cmp "$RUNNER_TEMP/static.vcf" "$RUNNER_TEMP/sanitizer.vcf"
           echo "$(grep -vc '^#' "$RUNNER_TEMP/sanitizer.vcf") records, identical to the static binary"
