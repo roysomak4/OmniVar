@@ -4,16 +4,20 @@ name: CI
 # linux, x64, omnivar; setup in runner-setup.md). The toolchain and the benchmark data are on that
 # machine; jobs install nothing.
 #
-# Order (each job needs the one before; one runner, so they run one after another):
-#   lint        clang-format, clang-tidy, repository rules (no Python, no upstream names in src/)
-#   sanitizers  Clang 20 + libc++, ASan + UBSan: unit + golden gates, Oncospan benchmark;
-#               Clang 19 TSan: worker-pool gate and an Oncospan subset with 8 threads
-#   test        GCC 14 Release (-Werror): unit + golden gates, Oncospan benchmark
-#   static      Debian trixie static x86_64 binary (Docker), Oncospan benchmark on that binary
+# Order (each job needs the one before; one runner, so they run one after another). The accuracy
+# gate comes first so its result is known in about 3 minutes:
+#   lint        repository rules (no Python, no upstream names in src/), clang-format, clang-tidy
+#               (the Clang static analyzer only when called with analyzer: true, as release.yml does)
+#   static      Debian trixie static x86_64 binary (Docker; runs the unit + golden gates inside).
+#               Accuracy gate: the full Oncospan benchmark on that binary.
+#   sanitizers  Clang 20 + libc++ ASan + UBSan: unit + golden gates, and an Oncospan subset;
+#               Clang 19 TSan: the Oncospan subset with 8 threads. Both subset outputs must equal
+#               the static binary's output byte for byte.
 #
 # Oncospan benchmark (omnivar-testkit bench): aardvark recall must stay 187/187 and the call set
-# must equal tests/validation/oncospan_snapshot.tsv. Data paths come from repository variables
-# (Settings -> Secrets and variables -> Actions -> Variables, or `gh variable set`):
+# must equal tests/validation/oncospan_snapshot.tsv. The subset is every 10th target region.
+# Data paths come from repository variables (Settings -> Secrets and variables -> Actions ->
+# Variables, or `gh variable set`):
 #   ONCOSPAN_DIR     directory with Oncospan_DNA.realigned.bam, target_roi_sorted_100bp_ex_pad.bed
 #                    and oncospan_sorted_benchmark_variants.vcf.gz
 #   REFERENCE_FASTA  the indexed hg38 FASTA
@@ -27,6 +31,11 @@ on:
   pull_request:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      analyzer:
+        description: Also run the Clang static analyzer checks of .clang-tidy (about 1 minute more)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -62,90 +71,21 @@ jobs:
         run: >
           cmake -S . -B build-lint -G Ninja -DCMAKE_BUILD_TYPE=Debug
           -DCMAKE_C_COMPILER=clang-19 -DCMAKE_CXX_COMPILER=clang++-19 -DOMNIVAR_WERROR=ON
-      - name: Build (generated headers, htslib)
-        run: cmake --build build-lint -j "$(nproc)"
-      - name: clang-tidy
-        run: run-clang-tidy-20 -p build-lint -quiet -j "$(nproc)" "$PWD/(src|tests/testkit)/"
-
-  sanitizers:
-    name: sanitizers / ${{ matrix.name }}
-    needs: lint
-    runs-on: [self-hosted, linux, x64, omnivar]
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        include:
-          - name: asan-ubsan
-            cc: clang-20
-            cxx: clang++-20
-            # -O1 with sanitizers finds the same bugs and runs the golden tests much faster
-            flags: -stdlib=libc++
-            cmake_args: -DOMNIVAR_SANITIZE=ON
-          - name: tsan
-            cc: clang-19
-            cxx: clang++-19
-            flags: -fsanitize=thread
-            cmake_args: -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=thread
-    steps:
-      - uses: actions/checkout@v4
-      - name: Configure
-        run: >
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
-          -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
-          "-DCMAKE_CXX_FLAGS=${{ matrix.flags }}" "-DCMAKE_C_FLAGS_RELWITHDEBINFO=-O1 -g"
-          "-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O1 -g" -DOMNIVAR_WERROR=ON ${{ matrix.cmake_args }}
-      - name: Build
-        run: cmake --build build -j "$(nproc)"
-      - name: Unit and golden gates (ASan + UBSan)
-        if: matrix.name == 'asan-ubsan'
-        run: ctest --test-dir build --output-on-failure -j "$(nproc)"
-      - name: Oncospan benchmark (ASan + UBSan)
-        if: matrix.name == 'asan-ubsan'
-        run: |
-          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
-          build/tests/testkit/omnivar-testkit bench --binary build/omnivar --reference "$REFERENCE_FASTA" \
-            --bed "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" \
-            -N Oncospan_DNA --truth "$ONCOSPAN_DIR/oncospan_sorted_benchmark_variants.vcf.gz" \
-            --snapshot tests/validation/oncospan_snapshot.tsv --min-recall 1 -th 16 -- -f 0.01
-      - name: Worker pool and data races (TSan)
-        if: matrix.name == 'tsan'
+      - name: Build htslib (its headers; the version header is written by configure)
+        run: cmake --build build-lint --target htslib_ext
+      - name: clang-tidy${{ inputs.analyzer && ' (with the static analyzer)' || '' }}
         env:
-          TSAN_OPTIONS: halt_on_error=1 second_deadlock_stack=1
+          # The analyzer checks take two thirds of the time (realigner.cpp alone ~50 s).
+          CHECKS: ${{ !inputs.analyzer && '--checks=-clang-analyzer-*' || '' }}
         run: |
-          ctest --test-dir build --output-on-failure -R 'unit|golden.threads'
-          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
-          awk 'NR % 10 == 1' "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" > "$RUNNER_TEMP/subset.bed"
-          build/omnivar -G "$REFERENCE_FASTA" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" -N Oncospan_DNA \
-            -c 1 -S 2 -E 3 -g 4 -f 0.01 -th 8 "$RUNNER_TEMP/subset.bed" > "$RUNNER_TEMP/tsan.vcf"
-          grep -vc '^#' "$RUNNER_TEMP/tsan.vcf"
-
-  test:
-    name: test / gcc-14 release
-    needs: sanitizers
-    runs-on: [self-hosted, linux, x64, omnivar]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Configure
-        run: >
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14 -DOMNIVAR_WERROR=ON
-      - name: Build
-        run: cmake --build build -j "$(nproc)"
-      - run: build/omnivar --version
-      - name: Unit and golden gates
-        run: ctest --test-dir build --output-on-failure -j "$(nproc)"
-      - name: Oncospan benchmark
-        run: |
-          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
-          build/tests/testkit/omnivar-testkit bench --binary build/omnivar --reference "$REFERENCE_FASTA" \
-            --bed "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" \
-            -N Oncospan_DNA --truth "$ONCOSPAN_DIR/oncospan_sorted_benchmark_variants.vcf.gz" \
-            --snapshot tests/validation/oncospan_snapshot.tsv --min-recall 1 -th 16 -- -f 0.01
+          # clang-tidy directly: run-clang-tidy ignores the .clang-tidy checks when -checks is given.
+          jq -r '.[].file' build-lint/compile_commands.json | grep -E "^$PWD/(src|tests/testkit)/" |
+            xargs -P "$(nproc)" -n 1 clang-tidy-20 -p build-lint --quiet $CHECKS 2>&1 |
+            sed -E "/^[0-9]+ warnings? generated\.$/d"   # counts of suppressed system-header warnings
 
   static:
     name: static / debian-trixie x86_64
-    needs: test
+    needs: lint
     runs-on: [self-hosted, linux, x64, omnivar]
     steps:
       - uses: actions/checkout@v4
@@ -160,7 +100,7 @@ jobs:
         run: |
           cmake -S . -B build-tk -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14
           cmake --build build-tk --target omnivar-testkit -j "$(nproc)"
-      - name: Oncospan benchmark (static binary)
+      - name: Accuracy gate (Oncospan benchmark on the static binary)
         run: |
           test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
           build-tk/tests/testkit/omnivar-testkit bench --binary out/omnivar --reference "$REFERENCE_FASTA" \
@@ -173,3 +113,58 @@ jobs:
           path: |
             out/omnivar
             bench.txt
+
+  sanitizers:
+    name: sanitizers / ${{ matrix.name }}
+    needs: static
+    runs-on: [self-hosted, linux, x64, omnivar]
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - name: asan-ubsan
+            cc: clang-20
+            cxx: clang++-20
+            flags: -stdlib=libc++
+            cmake_args: -DOMNIVAR_SANITIZE=ON
+            target: all
+            threads: 16
+          - name: tsan
+            cc: clang-19
+            cxx: clang++-19
+            flags: -fsanitize=thread
+            cmake_args: -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=thread
+            target: omnivar
+            threads: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        # -O1 with sanitizers finds the same bugs and runs much faster than -O0
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+          "-DCMAKE_CXX_FLAGS=${{ matrix.flags }}" "-DCMAKE_C_FLAGS_RELWITHDEBINFO=-O1 -g"
+          "-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O1 -g" -DOMNIVAR_WERROR=ON ${{ matrix.cmake_args }}
+      - name: Build
+        run: cmake --build build --target ${{ matrix.target }} -j "$(nproc)"
+      - name: Unit and golden gates (ASan + UBSan)
+        if: matrix.name == 'asan-ubsan'
+        run: ctest --test-dir build --output-on-failure -j "$(nproc)"
+      - uses: actions/download-artifact@v4
+        with:
+          name: omnivar-linux-x86_64
+          path: static
+      - name: Oncospan subset (-th ${{ matrix.threads }}), output equal to the static binary's
+        env:
+          TSAN_OPTIONS: halt_on_error=1 second_deadlock_stack=1
+        run: |
+          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
+          awk 'NR % 10 == 1' "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" > "$RUNNER_TEMP/subset.bed"
+          args=(-G "$REFERENCE_FASTA" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" -N Oncospan_DNA
+                -c 1 -S 2 -E 3 -g 4 -f 0.01 "$RUNNER_TEMP/subset.bed")
+          chmod +x static/omnivar
+          static/omnivar "${args[@]}" -th 16 > "$RUNNER_TEMP/static.vcf"
+          build/omnivar "${args[@]}" -th ${{ matrix.threads }} > "$RUNNER_TEMP/sanitizer.vcf"
+          cmp "$RUNNER_TEMP/static.vcf" "$RUNNER_TEMP/sanitizer.vcf"
+          echo "$(grep -vc '^#' "$RUNNER_TEMP/sanitizer.vcf") records, identical to the static binary"
