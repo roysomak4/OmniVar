@@ -1,0 +1,7 @@
+build*/
+out/
+.git/
+docs/*.html
+docs/*.md
+vardictjavasrc/
+tests/oracle/lib/

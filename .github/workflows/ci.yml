@@ -1,0 +1,175 @@
+name: CI
+
+# All jobs run on the self-hosted runner on the development workstation (labels: self-hosted,
+# linux, x64, omnivar; setup in runner-setup.md). The toolchain and the benchmark data are on that
+# machine; jobs install nothing.
+#
+# Order (each job needs the one before; one runner, so they run one after another):
+#   lint        clang-format, clang-tidy, repository rules (no Python, no upstream names in src/)
+#   sanitizers  Clang 20 + libc++, ASan + UBSan: unit + golden gates, Oncospan benchmark;
+#               Clang 19 TSan: worker-pool gate and an Oncospan subset with 8 threads
+#   test        GCC 14 Release (-Werror): unit + golden gates, Oncospan benchmark
+#   static      Debian trixie static x86_64 binary (Docker), Oncospan benchmark on that binary
+#
+# Oncospan benchmark (omnivar-testkit bench): aardvark recall must stay 187/187 and the call set
+# must equal tests/validation/oncospan_snapshot.tsv. Data paths come from repository variables
+# (Settings -> Secrets and variables -> Actions -> Variables, or `gh variable set`):
+#   ONCOSPAN_DIR     directory with Oncospan_DNA.realigned.bam, target_roi_sorted_100bp_ex_pad.bed
+#                    and oncospan_sorted_benchmark_variants.vcf.gz
+#   REFERENCE_FASTA  the indexed hg38 FASTA
+#
+# Pushes to init-dev do not trigger CI (checks run locally; see CLAUDE.md). The release workflow
+# (release.yml) calls this workflow for a v* tag before it builds and drafts the release.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+# One runner: a newer push cancels the run still in progress on the same ref. (Called from
+# release.yml, github.workflow is "Release", so release runs have their own group.)
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ONCOSPAN_DIR: ${{ vars.ONCOSPAN_DIR }}
+  REFERENCE_FASTA: ${{ vars.REFERENCE_FASTA }}
+
+jobs:
+  lint:
+    name: lint
+    runs-on: [self-hosted, linux, x64, omnivar]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repository rules
+        run: |
+          # Everything in this repository is C++ (tooling that must run the reference jar is Java,
+          # the read-only reference scripts are R and Perl).
+          if git ls-files '*.py' | grep .; then echo "Python files are not allowed (use tests/testkit)"; exit 1; fi
+          # No "java" or "vardict" in the code (CLAUDE.md hard rule).
+          if git grep -n -i -E 'java|vardict' -- src tests/unit CMakeLists.txt cmake; then
+            echo "the code must not name the reference implementation"; exit 1
+          fi
+      - name: clang-format
+        run: git ls-files 'src/*.cpp' 'src/*.hpp' 'tests/unit/*.cpp' 'tests/testkit/*.cpp' 'tests/testkit/*.hpp' | xargs clang-format-20 --dry-run --Werror
+      - name: Configure (Clang 19, libstdc++; compile_commands.json for clang-tidy)
+        run: >
+          cmake -S . -B build-lint -G Ninja -DCMAKE_BUILD_TYPE=Debug
+          -DCMAKE_C_COMPILER=clang-19 -DCMAKE_CXX_COMPILER=clang++-19 -DOMNIVAR_WERROR=ON
+      - name: Build (generated headers, htslib)
+        run: cmake --build build-lint -j "$(nproc)"
+      - name: clang-tidy
+        run: run-clang-tidy-20 -p build-lint -quiet -j "$(nproc)" "$PWD/(src|tests/testkit)/"
+
+  sanitizers:
+    name: sanitizers / ${{ matrix.name }}
+    needs: lint
+    runs-on: [self-hosted, linux, x64, omnivar]
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - name: asan-ubsan
+            cc: clang-20
+            cxx: clang++-20
+            # -O1 with sanitizers finds the same bugs and runs the golden tests much faster
+            flags: -stdlib=libc++
+            cmake_args: -DOMNIVAR_SANITIZE=ON
+          - name: tsan
+            cc: clang-19
+            cxx: clang++-19
+            flags: -fsanitize=thread
+            cmake_args: -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=thread
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+          "-DCMAKE_CXX_FLAGS=${{ matrix.flags }}" "-DCMAKE_C_FLAGS_RELWITHDEBINFO=-O1 -g"
+          "-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O1 -g" -DOMNIVAR_WERROR=ON ${{ matrix.cmake_args }}
+      - name: Build
+        run: cmake --build build -j "$(nproc)"
+      - name: Unit and golden gates (ASan + UBSan)
+        if: matrix.name == 'asan-ubsan'
+        run: ctest --test-dir build --output-on-failure -j "$(nproc)"
+      - name: Oncospan benchmark (ASan + UBSan)
+        if: matrix.name == 'asan-ubsan'
+        run: |
+          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
+          build/tests/testkit/omnivar-testkit bench --binary build/omnivar --reference "$REFERENCE_FASTA" \
+            --bed "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" \
+            -N Oncospan_DNA --truth "$ONCOSPAN_DIR/oncospan_sorted_benchmark_variants.vcf.gz" \
+            --snapshot tests/validation/oncospan_snapshot.tsv --min-recall 1 -th 16 -- -f 0.01
+      - name: Worker pool and data races (TSan)
+        if: matrix.name == 'tsan'
+        env:
+          TSAN_OPTIONS: halt_on_error=1 second_deadlock_stack=1
+        run: |
+          ctest --test-dir build --output-on-failure -R 'unit|golden.threads'
+          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
+          awk 'NR % 10 == 1' "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" > "$RUNNER_TEMP/subset.bed"
+          build/omnivar -G "$REFERENCE_FASTA" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" -N Oncospan_DNA \
+            -c 1 -S 2 -E 3 -g 4 -f 0.01 -th 8 "$RUNNER_TEMP/subset.bed" > "$RUNNER_TEMP/tsan.vcf"
+          grep -vc '^#' "$RUNNER_TEMP/tsan.vcf"
+
+  test:
+    name: test / gcc-14 release
+    needs: sanitizers
+    runs-on: [self-hosted, linux, x64, omnivar]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14 -DOMNIVAR_WERROR=ON
+      - name: Build
+        run: cmake --build build -j "$(nproc)"
+      - run: build/omnivar --version
+      - name: Unit and golden gates
+        run: ctest --test-dir build --output-on-failure -j "$(nproc)"
+      - name: Oncospan benchmark
+        run: |
+          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
+          build/tests/testkit/omnivar-testkit bench --binary build/omnivar --reference "$REFERENCE_FASTA" \
+            --bed "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" \
+            -N Oncospan_DNA --truth "$ONCOSPAN_DIR/oncospan_sorted_benchmark_variants.vcf.gz" \
+            --snapshot tests/validation/oncospan_snapshot.tsv --min-recall 1 -th 16 -- -f 0.01
+
+  static:
+    name: static / debian-trixie x86_64
+    needs: test
+    runs-on: [self-hosted, linux, x64, omnivar]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the static binary (runs unit + golden gates inside, checks it is static)
+        run: docker build -f docker/debian-static.Dockerfile --target export --output type=local,dest=out .
+      - name: Check the binary
+        run: |
+          file out/omnivar
+          ldd out/omnivar 2>&1 | grep "not a dynamic executable"
+          out/omnivar --version
+      - name: Build the testkit (host)
+        run: |
+          cmake -S . -B build-tk -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14
+          cmake --build build-tk --target omnivar-testkit -j "$(nproc)"
+      - name: Oncospan benchmark (static binary)
+        run: |
+          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
+          build-tk/tests/testkit/omnivar-testkit bench --binary out/omnivar --reference "$REFERENCE_FASTA" \
+            --bed "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" \
+            -N Oncospan_DNA --truth "$ONCOSPAN_DIR/oncospan_sorted_benchmark_variants.vcf.gz" \
+            --snapshot tests/validation/oncospan_snapshot.tsv --min-recall 1 -th 16 -- -f 0.01 | tee bench.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: omnivar-linux-x86_64
+          path: |
+            out/omnivar
+            bench.txt

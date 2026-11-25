@@ -1,0 +1,53 @@
+hard_clip_next_to_del_test2	testbed	test	6528	6533	AGACAG	GACAGA	1	1	0	0	1	0	GACAGAGACAG/GACAGA	1.0000	0;0	14.0	0	90.0	0	60.0	2.000	1.0000	0	0	1.000	1	0	1	1	AAAATAAATGAAAATTTAAA	ATTTTTTTTTTTAGGATTTT	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6469	6469			0	0	0	0	0	0		0	0;0	0	0	0	0	0	0	0	0	0	0	0	0	0	0			test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	0	0			0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6468	6469	CA	C	1	1	0	0	1	0	-1/-1	1.0000	0;0	29.0	0	90.0	0	60.0	2.000	1.0000	0	0	4.000	1	0	1	1	AAGTTGTCCTGTGCCCTCCC	TTACCTGTGGCAACGCGTCT	test:6434-6564	Deletion	0	0
+hard_clip_next_to_del_test2	testbed	test	6470	6470	T	T	1	0	1	0	0	0	T/T	0	0;0	29.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6534	6534	A	T	1	1	0	0	1	0	T/T	1.0000	0;0	12.0	0	90.0	0	60.0	2.000	1.0000	0	0	11.000	1	0	1	1	AATGAAAATTTAAAAGACAG	TTTTTTTTTTTAGGATTTTA	test:6434-6564	SNV	0	0
+hard_clip_next_to_del_test2	testbed	test	6471	6482	TACCTGTGGCAA	ACCTGTGGCAAC	1	1	0	0	1	0	ACCTGTGGCAACACCTGTGGCAA/ACCTGTGGCAAC	1.0000	0;0	41.0	0	90.0	0	60.0	2.000	1.0000	0	0	1.000	1	0	1	1	TTGTCCTGTGCCCTCCCCAT	CGCGTCTCTTTTTCCCCCTC	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6535	6535	T	T	1	0	1	0	0	0	T/T	0	0;0	11.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6536	6536	T	T	1	0	1	0	0	0	T/T	0	0;0	10.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6537	6537	T	T	1	0	1	0	0	0	T/T	0	0;0	9.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6538	6538	T	T	1	0	1	0	0	0	T/T	0	0;0	8.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6539	6539	T	T	1	0	1	0	0	0	T/T	0	0;0	7.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6540	6540	T	T	1	0	1	0	0	0	T/T	0	0;0	6.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6541	6541	T	T	1	0	1	0	0	0	T/T	0	0;0	5.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6542	6542	T	T	1	0	1	0	0	0	T/T	0	0;0	4.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6543	6543	T	T	1	0	1	0	0	0	T/T	0	0;0	3.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6544	6544	T	T	1	0	1	0	0	0	T/T	0	0;0	2.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6545	6545	T	A	1	1	0	0	1	0	A/A	1.0000	0;0	1.0	0	90.0	0	60.0	2.000	1.0000	0	0	1.000	1	0	1	1	AAAAGACAGATTTTTTTTTT	AGGATTTTATTTGTTCAAAA	test:6434-6564	SNV	0	0
+hard_clip_next_to_del_test2	testbed	test	6483	6483			0	0	0	0	0	0		0	0;0	0	0	0	0	0	0	0	0	0	0	0	0	0	0			test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	0	0			0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6482	6483	AC	A	1	1	0	0	1	0	-1/-1	1.0000	0;0	42.0	0	90.0	0	60.0	2.000	1.0000	0	0	2.000	1	0	1	1	CCTCCCCATTACCTGTGGCA	GCGTCTCTTTTTCCCCCTCC	test:6434-6564	Deletion	0	0
+hard_clip_next_to_del_test2	testbed	test	6484	6487	GCGT	TGTC	1	1	0	0	1	0	TGTCCGT/TGTC	1.0000	0;0	45.0	0	90.0	0	60.0	2.000	1.0000	0	0	1.000	1	0	1	1	TCCCCATTACCTGTGGCAAC	CTCTTTTTCCCCCTCCACAC	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6488	6488	C	C	1	0	1	0	0	0	C/C	0	0;0	46.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6489	6489	T	T	1	0	1	0	0	0	T/T	0	0;0	47.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6490	6490	C	C	1	0	1	0	0	0	C/C	0	0;0	48.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6491	6491	T	T	1	0	1	0	0	0	T/T	0	0;0	49.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6492	6492	T	T	1	0	1	0	0	0	T/T	0	0;0	50.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6493	6493	T	T	1	0	1	0	0	0	T/T	0	0;0	51.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6494	6494	T	T	1	0	1	0	0	0	T/T	0	0;0	52.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6495	6495	T	C	1	1	0	0	1	0	C/C	1.0000	0;0	51.0	0	90.0	0	60.0	2.000	1.0000	0	4	5.000	1	0	1	1	TGTGGCAACGCGTCTCTTTT	CCCCCTCCACACAAAATAAA	test:6434-6564	SNV	0	0
+hard_clip_next_to_del_test2	testbed	test	6496	6496	C	C	1	0	1	0	0	0	C/C	0	0;0	50.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6497	6497	C	C	1	0	1	0	0	0	C/C	0	0;0	49.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6498	6498	C	C	1	0	1	0	0	0	C/C	0	0;0	48.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6499	6499	C	C	1	0	1	0	0	0	C/C	0	0;0	47.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6500	6506	CTCCACA	TCCACAC	1	1	0	0	1	0	TCCACACTCCACA/TCCACAC	1.0000	0;0	40.0	0	90.0	0	60.0	2.000	1.0000	0	0	1.000	1	0	1	1	CAACGCGTCTCTTTTTCCCC	CAAAATAAATGAAAATTTAA	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6442	6442	A	AT	1	1	1	0	1	0	A/+1	1.0000	0;0	1.0	0	90.0	0	60.0	2.000	1.0000	0	0	3.000	1	0	1	1	GCTTTAGTACACAGTTAATA	ATGTGAAGTTGTCCTGTGCC	test:6434-6564	Insertion	0	0
+hard_clip_next_to_del_test2	testbed	test	6443	6447	ATGTG	TGTGA	1	1	0	0	1	0	TGTGATGTG/TGTGA	1.0000	0;0	6.0	0	90.0	0	60.0	2.000	1.0000	0	0	1.000	1	0	1	1	CTTTAGTACACAGTTAATAA	AAGTTGTCCTGTGCCCTCCC	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6507	6507			0	0	0	0	0	0		0	0;0	0	0	0	0	0	0	0	0	0	0	0	0	0	0			test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	0	0			0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6506	6507	AC	A	1	1	0	0	1	0	-1/-1	1.0000	0;0	39.0	0	90.0	0	60.0	2.000	1.0000	0	0	5.000	1	0	1	1	GTCTCTTTTTCCCCCTCCAC	AAAATAAATGAAAATTTAAA	test:6434-6564	Deletion	0	0
+hard_clip_next_to_del_test2	testbed	test	6508	6508	A	A	1	0	1	0	0	0	A/A	0	0;0	39.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6509	6509	A	A	1	0	1	0	0	0	A/A	0	0;0	38.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6510	6510	A	A	1	0	1	0	0	0	A/A	0	0;0	37.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6511	6517	ATAAATG	TAAATGA	1	1	0	0	1	0	TAAATGATAAATG/TAAATGA	1.0000	0;0	30.0	0	90.0	0	60.0	2.000	1.0000	0	2	2.000	4	0	1	1	TTTTTCCCCCTCCACACAAA	AAAATTTAAAAGACAGATTT	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6448	6448	A	A	1	0	1	0	0	0	A/A	0	0;0	8.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6449	6468	AGTTGTCCTGTGCCCTCCCC	GTTGTCCTGTGCCCTCCACA	1	1	0	0	1	0	GTTGTCCTGTGCCCTCCACAGTTGTCCTGTGCCCTCCCC/GTTGTCCTGTGCCCTCCACA	1.0000	0;0	28.0	0	90.0	0	60.0	2.000	1.0000	0	0	1.000	1	0	1	1	TACACAGTTAATAAATGTGA	ATTACCTGTGGCAACGCGTC	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6518	6518	A	A	1	0	1	0	0	0	A/A	0	0;0	29.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6519	6519	A	A	1	0	1	0	0	0	A/A	0	0;0	28.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6520	6520	A	A	1	0	1	0	0	0	A/A	0	0;0	27.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6521	6524	ATTT	TTTA	1	1	0	0	1	0	TTTATTT/TTTA	1.0000	0;0	23.0	0	90.0	0	60.0	2.000	1.0000	0	2	3.000	1	0	1	1	TCCACACAAAATAAATGAAA	AAAAGACAGATTTTTTTTTT	test:6434-6564	Complex	0	0
+hard_clip_next_to_del_test2	testbed	test	6525	6525	A	A	1	0	1	0	0	0	A/A	0	0;0	22.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6526	6526	A	A	1	0	1	0	0	0	A/A	0	0;0	21.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0
+hard_clip_next_to_del_test2	testbed	test	6527	6527	A	A	1	0	1	0	0	0	A/A	0	0;0	20.0	0	90.0	0	60.0	2.000	1.0000	0	0	0	0	0	1	1	0	0	test:6434-6564		0	0

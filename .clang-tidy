@@ -1,0 +1,43 @@
+# Static analysis for src/ and tests/testkit (CI lint job: run-clang-tidy-20 on the
+# compile_commands.json of a Clang build). Every enabled check must be clean (WarningsAsErrors).
+# Off because the port keeps the upstream structure until parity work ends (CLAUDE.md): integer
+# division and widening casts that reproduce upstream arithmetic, dead stores and empty catches
+# mirroring upstream control flow. Off as noise: string concatenation, vector pre-allocation.
+Checks: >
+  -*,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-narrowing-conversions,
+  -bugprone-implicit-widening-of-multiplication-result,
+  -bugprone-branch-clone,
+  -bugprone-exception-escape,
+  -bugprone-switch-missing-default-case,
+  -bugprone-unchecked-optional-access,
+  -bugprone-integer-division,
+  -bugprone-misplaced-widening-cast,
+  -bugprone-empty-catch,
+  cert-err33-c,
+  cert-err34-c,
+  cert-flp30-c,
+  clang-analyzer-*,
+  -clang-analyzer-optin.performance.Padding,
+  -clang-analyzer-deadcode.DeadStores,
+  misc-redundant-expression,
+  misc-unused-using-decls,
+  misc-definitions-in-headers,
+  misc-static-assert,
+  modernize-use-nullptr,
+  modernize-use-override,
+  modernize-redundant-void-arg,
+  performance-*,
+  -performance-enum-size,
+  -performance-avoid-endl,
+  -performance-inefficient-string-concatenation,
+  -performance-inefficient-vector-operation,
+  readability-container-size-empty,
+  readability-duplicate-include,
+  readability-misleading-indentation,
+  readability-redundant-string-cstr,
+  readability-string-compare,
+WarningsAsErrors: '*'
+HeaderFilterRegex: '(src|tests/testkit)/.*\.hpp$'

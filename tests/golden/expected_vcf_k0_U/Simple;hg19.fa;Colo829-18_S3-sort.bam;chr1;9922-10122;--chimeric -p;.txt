@@ -1,0 +1,73 @@
+##fileformat=VCFv4.2
+##source=VarDict_v1.8.2
+##INFO=<ID=SAMPLE,Number=1,Type=String,Description="Sample name (with whitespace translated to underscores)">
+##INFO=<ID=TYPE,Number=1,Type=String,Description="Variant Type: SNV Insertion Deletion Complex">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##INFO=<ID=END,Number=1,Type=Integer,Description="Chr End Position">
+##INFO=<ID=VD,Number=1,Type=Integer,Description="Variant Depth">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##INFO=<ID=BIAS,Number=1,Type=String,Description="Strand Bias Info">
+##INFO=<ID=REFBIAS,Number=1,Type=String,Description="Reference depth by strand">
+##INFO=<ID=VARBIAS,Number=1,Type=String,Description="Variant depth by strand">
+##INFO=<ID=PMEAN,Number=1,Type=Float,Description="The mean distance to the nearest 5 or 3 prime read end (whichever is closer) in all reads that support the variant call">
+##INFO=<ID=PSTD,Number=1,Type=Float,Description="Position STD in reads">
+##INFO=<ID=QUAL,Number=1,Type=Float,Description="Mean quality score in reads">
+##INFO=<ID=QSTD,Number=1,Type=Float,Description="Quality score STD in reads">
+##INFO=<ID=SBF,Number=1,Type=Float,Description="Strand Bias Fisher p-value">
+##INFO=<ID=ODDRATIO,Number=1,Type=Float,Description="Strand Bias Odds ratio">
+##INFO=<ID=MQ,Number=1,Type=Float,Description="Mean Mapping Quality">
+##INFO=<ID=SN,Number=1,Type=Float,Description="Signal to noise">
+##INFO=<ID=HIAF,Number=1,Type=Float,Description="Allele frequency using only high quality bases">
+##INFO=<ID=ADJAF,Number=1,Type=Float,Description="Adjusted AF for indels due to local realignment">
+##INFO=<ID=SHIFT3,Number=1,Type=Integer,Description="No. of bases to be shifted to 3 prime for deletions due to alternative alignment">
+##INFO=<ID=MSI,Number=1,Type=Float,Description="MicroSatellite. > 1 indicates MSI">
+##INFO=<ID=MSILEN,Number=1,Type=Float,Description="MicroSatellite unit length in bp">
+##INFO=<ID=NM,Number=1,Type=Float,Description="Mean mismatches in reads">
+##INFO=<ID=LSEQ,Number=1,Type=String,Description="5' flanking seq">
+##INFO=<ID=RSEQ,Number=1,Type=String,Description="3' flanking seq">
+##INFO=<ID=GDAMP,Number=1,Type=Integer,Description="No. of amplicons supporting variant">
+##INFO=<ID=TLAMP,Number=1,Type=Integer,Description="Total of amplicons covering variant">
+##INFO=<ID=NCAMP,Number=1,Type=Integer,Description="No. of amplicons don't work">
+##INFO=<ID=AMPFLAG,Number=1,Type=Integer,Description="Top variant in amplicons don't match">
+##INFO=<ID=HICNT,Number=1,Type=Integer,Description="High quality variant reads">
+##INFO=<ID=HICOV,Number=1,Type=Integer,Description="High quality total reads">
+##INFO=<ID=SPLITREAD,Number=1,Type=Integer,Description="No. of split reads supporting SV">
+##INFO=<ID=SPANPAIR,Number=1,Type=Integer,Description="No. of pairs supporting SV">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="SV type: INV DUP DEL INS FUS">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="The length of SV in bp">
+##INFO=<ID=DUPRATE,Number=1,Type=Float,Description="Duplication rate in fraction">
+##FILTER=<ID=q22.5,Description="Mean Base Quality Below 22.5">
+##FILTER=<ID=Q10,Description="Mean Mapping Quality Below 10">
+##FILTER=<ID=p8,Description="Mean Position in Reads Less than 8">
+##FILTER=<ID=SN1.5,Description="Signal to Noise Less than 1.5">
+##FILTER=<ID=Bias,Description="Strand Bias">
+##FILTER=<ID=pSTD,Description="Position in Reads has STD of 0">
+##FILTER=<ID=d3,Description="Total Depth < 3">
+##FILTER=<ID=v2,Description="Var Depth < 2">
+##FILTER=<ID=f0.02,Description="Allele frequency < 0.02">
+##FILTER=<ID=MSI12,Description="Variant in MSI region with 12 non-monomer MSI or 13 monomer MSI">
+##FILTER=<ID=NM5.25,Description="Mean mismatches in reads >= 5.25, thus likely false positive">
+##FILTER=<ID=InGap,Description="The variant is in the deletion gap, thus likely false positive">
+##FILTER=<ID=InIns,Description="The variant is adjacent to an insertion variant">
+##FILTER=<ID=Cluster0bp,Description="Two variants are within 0 bp">
+##FILTER=<ID=LongMSI,Description="The somatic variant is flanked by long A/T (>=14)">
+##FILTER=<ID=AMPBIAS,Description="Indicate the variant has amplicon bias.">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##FORMAT=<ID=VD,Number=1,Type=Integer,Description="Variant Depth">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##FORMAT=<ID=RD,Number=2,Type=Integer,Description="Reference forward, reverse reads">
+##FORMAT=<ID=ALD,Number=2,Type=Integer,Description="Variant forward, reverse reads">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	Colo829-18_S3-sort
+chr1	10043	.	TA	T	95	PASS	SAMPLE=Colo829-18_S3-sort;TYPE=Deletion;DP=182;END=10044;VD=5;AF=0.0275;BIAS=2:2;REFBIAS=114:61;VARBIAS=4:1;PMEAN=42;PSTD=1;QUAL=41;QSTD=0;SBF=0.66099;ODDRATIO=2.13251444778538;MQ=21.6;SN=10;HIAF=0.0331;ADJAF=0;SHIFT3=1;MSI=7;MSILEN=6;NM=2.6;HICNT=5;HICOV=151;LSEQ=CCTAACCCTAACCCTAACCC;RSEQ=ACCCTAACCCTAACCCTAAC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:182:5:175,5:0.0275:114,61:4,1
+chr1	10078	.	CT	C	72	f0.02	SAMPLE=Colo829-18_S3-sort;TYPE=Deletion;DP=231;END=10079;VD=4;AF=0.0173;BIAS=2:2;REFBIAS=142:76;VARBIAS=3:1;PMEAN=66.2;PSTD=1;QUAL=36.2;QSTD=1;SBF=1;ODDRATIO=1.60248705991699;MQ=22.5;SN=3;HIAF=0.0172;ADJAF=0;SHIFT3=0;MSI=11;MSILEN=6;NM=3.2;HICNT=3;HICOV=174;LSEQ=CCCTAACCCTAACCCTAACC;RSEQ=AACCCTAACCCTAACCCTAA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:231:4:218,4:0.0173:142,76:3,1
+chr1	10085	.	T	G	72	Q10	SAMPLE=Colo829-18_S3-sort;TYPE=SNV;DP=233;END=10085;VD=5;AF=0.0215;BIAS=2:2;REFBIAS=138:77;VARBIAS=4:1;PMEAN=32.4;PSTD=1;QUAL=31.1;QSTD=1;SBF=0.65803;ODDRATIO=2.2248920927335;MQ=0;SN=4;HIAF=0.0248;ADJAF=0.0043;SHIFT3=0;MSI=8;MSILEN=6;NM=3.2;HICNT=4;HICOV=161;LSEQ=CCTAACCCTAACCCTAACCC;RSEQ=AACCCTAACCCTAACCCTAA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:233:5:215,5:0.0215:138,77:4,1
+chr1	10087	.	A	AC	133	Q10	SAMPLE=Colo829-18_S3-sort;TYPE=Insertion;DP=237;END=10087;VD=11;AF=0.0464;BIAS=2:2;REFBIAS=146:76;VARBIAS=9:2;PMEAN=47.7;PSTD=1;QUAL=38.7;QSTD=1;SBF=0.34348;ODDRATIO=2.33519370431777;MQ=0.3;SN=22;HIAF=0.0705;ADJAF=0;SHIFT3=3;MSI=11;MSILEN=6;NM=1.4;HICNT=11;HICOV=156;LSEQ=TAACCCTAACCCTAACCCTA;RSEQ=CCCTAACCCTAACCCTAACC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:237:11:222,11:0.0464:146,76:9,2
+chr1	10091	.	T	G	62	f0.02;Q10;NM5.25	SAMPLE=Colo829-18_S3-sort;TYPE=SNV;DP=232;END=10091;VD=3;AF=0.0129;BIAS=2:2;REFBIAS=136:72;VARBIAS=1:2;PMEAN=27;PSTD=1;QUAL=39.7;QSTD=1;SBF=0.28174;ODDRATIO=3.75286;MQ=0;SN=6;HIAF=0.0191;ADJAF=0;SHIFT3=0;MSI=7;MSILEN=6;NM=5.3;HICNT=3;HICOV=157;LSEQ=CCTAACCCTAACCCTAACCC;RSEQ=AACCCTAACCCTAACCCAAC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:232:3:208,3:0.0129:136,72:1,2
+chr1	10097	.	T	G	62	Q10	SAMPLE=Colo829-18_S3-sort;TYPE=SNV;DP=225;END=10097;VD=5;AF=0.0222;BIAS=2:2;REFBIAS=135:69;VARBIAS=4:1;PMEAN=19.8;PSTD=1;QUAL=26.8;QSTD=1;SBF=0.66599;ODDRATIO=2.03836197231904;MQ=0;SN=1.5;HIAF=0.0208;ADJAF=0;SHIFT3=0;MSI=6;MSILEN=6;NM=4.6;HICNT=3;HICOV=144;LSEQ=CCTAACCCTAACCCTAACCC;RSEQ=AACCCTAACCCAACCCTAAC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:225:5:204,5:0.0222:135,69:4,1
+chr1	10106	.	CCCAA	C	144	Q10	SAMPLE=Colo829-18_S3-sort;TYPE=Deletion;DP=211;END=10110;VD=14;AF=0.0664;BIAS=2:2;REFBIAS=133:61;VARBIAS=9:5;PMEAN=44.4;PSTD=1;QUAL=38;QSTD=1;SBF=0.76993;ODDRATIO=1.21012;MQ=0.2;SN=13;HIAF=0.0890;ADJAF=0;SHIFT3=2;MSI=11;MSILEN=6;NM=1.5;HICNT=13;HICOV=146;LSEQ=AACCCTAACCCTAACCCTAA;RSEQ=CCCTAACCCTAACCCTAACC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:211:14:194,14:0.0664:133,61:9,5
+chr1	10108	.	C	CA	60	f0.02;p8;Q10	SAMPLE=Colo829-18_S3-sort;TYPE=Insertion;DP=208;END=10108;VD=4;AF=0.0192;BIAS=2:2;REFBIAS=126:50;VARBIAS=2:2;PMEAN=7.5;PSTD=1;QUAL=30.2;QSTD=1;SBF=0.58031;ODDRATIO=2.50526;MQ=0;SN=3;HIAF=0.0283;ADJAF=0;SHIFT3=2;MSI=8;MSILEN=6;NM=1.2;HICNT=3;HICOV=106;LSEQ=CCCTAACCCTAACCCTAACC;RSEQ=AACCCTAACCCTAACCCTAA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:208:4:176,4:0.0192:126,50:2,2
+chr1	10108	.	C	T	55	f0.02	SAMPLE=Colo829-18_S3-sort;TYPE=SNV;DP=208;END=10108;VD=3;AF=0.0144;BIAS=2:2;REFBIAS=126:50;VARBIAS=2:1;PMEAN=29;PSTD=1;QUAL=35.3;QSTD=1;SBF=1;ODDRATIO=1.25834;MQ=13;SN=6;HIAF=0.0283;ADJAF=0.0048;SHIFT3=0;MSI=2;MSILEN=1;NM=4.0;HICNT=3;HICOV=106;LSEQ=CCCTAACCCTAACCCTAACC;RSEQ=AACCCTAACCCTAACCCTAA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:208:3:176,3:0.0144:126,50:2,1
+chr1	10109	.	A	T	61	f0.02;Q10	SAMPLE=Colo829-18_S3-sort;TYPE=SNV;DP=207;END=10109;VD=4;AF=0.0193;BIAS=2:2;REFBIAS=129:52;VARBIAS=1:3;PMEAN=25.5;PSTD=1;QUAL=30.8;QSTD=1;SBF=0.07942;ODDRATIO=7.35168;MQ=3;SN=8;HIAF=0.0412;ADJAF=0.0048;SHIFT3=0;MSI=2;MSILEN=1;NM=2.8;HICNT=4;HICOV=97;LSEQ=CCTAACCCTAACCCTAACCC;RSEQ=ACCCTAACCCTAACCCTAAC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:207:4:181,4:0.0193:129,52:1,3
+chr1	10113	.	C	CT	41	f0.02;Q10	SAMPLE=Colo829-18_S3-sort;TYPE=Insertion;DP=165;END=10113;VD=2;AF=0.0121;BIAS=2:2;REFBIAS=98:64;VARBIAS=1:1;PMEAN=51;PSTD=1;QUAL=41;QSTD=0;SBF=1;ODDRATIO=1.52711;MQ=8;SN=4;HIAF=0.0153;ADJAF=0;SHIFT3=1;MSI=3;MSILEN=1;NM=3.0;HICNT=2;HICOV=131;LSEQ=ACCCTAACCCTAACCCAACC;RSEQ=TAACCCTAACCCTAACCCTA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:165:2:162,2:0.0121:98,64:1,1
