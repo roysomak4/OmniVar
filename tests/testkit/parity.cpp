@@ -92,7 +92,7 @@ int cmd_cli(Args& args) {
     if (golden) {
         for (auto& g : golden_command_lines()) cmdlines.push_back(std::move(g));
     }
-    // Deliberate difference (docs/design.md, M10): -p keeps -f and -r as given, where the jar's
+    // Deliberate difference from upstream: -p keeps -f and -r as given, where the jar's
     // pileup sets freq = -1 and minr = 0; for those lines freq and minr must match the jar's dump of
     // the same command line without -p.
     auto all = cmdlines;

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 
 # Release builds use -O2, not CMake's default -O3: on the Oncospan panel (2026-11-24, GCC 14, static)
 # -O2 was ~3% faster than -O3 on one thread and equal on 16; LTO, -march=x86-64-v3 and PGO gave
-# nothing worth their cost (docs/design.md, "Performance"). Set before project() so these become
+# nothing worth their cost. Set before project() so these become
 # the cache defaults; -DCMAKE_CXX_FLAGS_RELEASE=... still overrides them.
 set(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG" CACHE STRING "C flags for Release builds")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG" CACHE STRING "C++ flags for Release builds")

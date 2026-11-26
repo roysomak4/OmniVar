@@ -353,7 +353,7 @@ int run(const Config& conf) {
     }
     const bool splicing = conf.output_splicing;
     if (!splicing && !(conf.region_of_interest || !ctx->amplicon_based_calling)) {
-        // Amplicon mode (an 8-column BED, or -a) is out of scope for the initial build (docs/design.md §14).
+        // Amplicon mode (an 8-column BED, or -a) is out of scope for this release.
         std::println(stderr,
                      "omnivar: amplicon mode (8-column amplicon BED or -a) is not supported in this "
                      "version; use a 3- or 4-column BED");
@@ -369,7 +369,7 @@ int run(const Config& conf) {
         row_conf.fisher = false;
         row_conf.debug = false;
     }
-    // -p: also report the variants the caller rejects (docs/design.md, M10).
+    // -p: also report the variants the caller rejects, with the first failing rule.
     const bool rejected_output = conf.do_pileup && !splicing;
     annotate::Var2VcfOptions vcf_options = conf.vcf;
     if (rejected_output && !somatic) {

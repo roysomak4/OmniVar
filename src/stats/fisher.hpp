@@ -10,7 +10,7 @@
 //         annotation layer: no 7-dp rounding of the log-densities (FisherExact.logdcDhyper),
 //         long-double sums (R's sum()), and dhyper with R's numerical choices (see fisher.cpp).
 //         Equal to R on every table in tests/golden/fisher_r_vectors.tsv
-//         (tests/oracle/FisherRVectors.R). See docs/design.md section 08.
+//         (tests/oracle/FisherRVectors.R).
 
 #include <string>
 #include <vector>

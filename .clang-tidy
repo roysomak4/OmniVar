@@ -1,6 +1,6 @@
-# Static analysis for src/ and tests/testkit (CI lint job: run-clang-tidy-20 on the
-# compile_commands.json of a Clang build). Every enabled check must be clean (WarningsAsErrors).
-# Off because the port keeps the upstream structure until parity work ends (CLAUDE.md): integer
+# Static analysis for src/ and tests/testkit (CI lint job: clang-tidy-20 on the
+# compile_commands.json of a Clang build; the clang-analyzer-* checks run on release tags only). Every enabled check must be clean (WarningsAsErrors).
+# Off because the port keeps the upstream structure (one function at a time, same control flow): integer
 # division and widening casts that reproduce upstream arithmetic, dead stores and empty catches
 # mirroring upstream control flow. Off as noise: string concatenation, vector pre-allocation.
 Checks: >
