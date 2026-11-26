@@ -1,7 +1,7 @@
 name: CI
 
 # All jobs run on the self-hosted runner on the development workstation (labels: self-hosted,
-# linux, x64, omnivar; setup in runner-setup.md). The toolchain and the benchmark data are on that
+# linux, x64, omnivar). The toolchain and the benchmark data are on that
 # machine; jobs install nothing.
 #
 # Order (each job needs the one before; one runner, so they run one after another). The accuracy
@@ -16,8 +16,8 @@ name: CI
 #
 # Oncospan benchmark (omnivar-testkit bench): aardvark recall must stay 187/187 and the call set
 # must equal tests/validation/oncospan_snapshot.tsv. The subset is every 10th target region.
-# Data paths come from repository variables (Settings -> Secrets and variables -> Actions ->
-# Variables, or `gh variable set`):
+# Data paths come from repository secrets (Settings -> Secrets and variables -> Actions ->
+# Secrets, or `gh secret set`):
 #   ONCOSPAN_DIR     directory with Oncospan_DNA.realigned.bam, target_roi_sorted_100bp_ex_pad.bed
 #                    and oncospan_sorted_benchmark_variants.vcf.gz
 #   REFERENCE_FASTA  the indexed hg38 FASTA
@@ -26,7 +26,7 @@ name: CI
 # feature branch is merged into it), on manual runs (gh workflow run CI --ref <branch>) and from
 # release.yml, which calls it for a v* tag before it builds and drafts the release. Feature
 # branches, pull requests and main do not trigger it: main only receives commits that passed on
-# test (fast-forward; see CLAUDE.md).
+# test (fast-forward).
 
 on:
   push:
@@ -49,21 +49,22 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  ONCOSPAN_DIR: ${{ vars.ONCOSPAN_DIR }}
-  REFERENCE_FASTA: ${{ vars.REFERENCE_FASTA }}
+  # Secrets, not variables: public logs then show the paths as ***.
+  ONCOSPAN_DIR: ${{ secrets.ONCOSPAN_DIR }}
+  REFERENCE_FASTA: ${{ secrets.REFERENCE_FASTA }}
 
 jobs:
   lint:
     name: lint
     runs-on: [self-hosted, linux, x64, omnivar]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - name: Repository rules
         run: |
           # Everything in this repository is C++ (tooling that must run the reference jar is Java,
           # the read-only reference scripts are R and Perl).
           if git ls-files '*.py' | grep .; then echo "Python files are not allowed (use tests/testkit)"; exit 1; fi
-          # No "java" or "vardict" in the code (CLAUDE.md hard rule).
+          # No "java" or "vardict" in the code: comments say "upstream" for the reference implementation.
           if git grep -n -i -E 'java|vardict' -- src tests/unit CMakeLists.txt cmake; then
             echo "the code must not name the reference implementation"; exit 1
           fi
@@ -90,7 +91,7 @@ jobs:
     needs: lint
     runs-on: [self-hosted, linux, x64, omnivar]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - name: Build the static binary (runs unit + golden gates inside, checks it is static)
         run: docker build -f docker/debian-static.Dockerfile --target export --output type=local,dest=out .
       - name: Check the binary
@@ -104,12 +105,12 @@ jobs:
           cmake --build build-tk --target omnivar-testkit -j "$(nproc)"
       - name: Accuracy gate (Oncospan benchmark on the static binary)
         run: |
-          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
+          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA repository secrets"; exit 1; }
           build-tk/tests/testkit/omnivar-testkit bench --binary out/omnivar --reference "$REFERENCE_FASTA" \
             --bed "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" \
             -N Oncospan_DNA --truth "$ONCOSPAN_DIR/oncospan_sorted_benchmark_variants.vcf.gz" \
             --snapshot tests/validation/oncospan_snapshot.tsv --min-recall 1 -th 16 -- -f 0.01 | tee bench.txt
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         with:
           name: omnivar-linux-x86_64
           path: |
@@ -140,7 +141,7 @@ jobs:
             target: omnivar
             threads: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - name: Configure
         # -O1 with sanitizers finds the same bugs and runs much faster than -O0
         run: >
@@ -153,7 +154,7 @@ jobs:
       - name: Unit and golden gates (ASan + UBSan)
         if: matrix.name == 'asan-ubsan'
         run: ctest --test-dir build --output-on-failure -j "$(nproc)"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2
         with:
           name: omnivar-linux-x86_64
           path: static
@@ -161,7 +162,7 @@ jobs:
         env:
           TSAN_OPTIONS: halt_on_error=1 second_deadlock_stack=1
         run: |
-          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA variables"; exit 1; }
+          test -n "$ONCOSPAN_DIR" && test -n "$REFERENCE_FASTA" || { echo "set the ONCOSPAN_DIR and REFERENCE_FASTA repository secrets"; exit 1; }
           awk 'NR % 10 == 1' "$ONCOSPAN_DIR/target_roi_sorted_100bp_ex_pad.bed" > "$RUNNER_TEMP/subset.bed"
           args=(-G "$REFERENCE_FASTA" -b "$ONCOSPAN_DIR/Oncospan_DNA.realigned.bam" -N Oncospan_DNA
                 -c 1 -S 2 -E 3 -g 4 -f 0.01 "$RUNNER_TEMP/subset.bed")
