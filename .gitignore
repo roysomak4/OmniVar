@@ -4,3 +4,8 @@ build*/
 compile_commands.json
 *.swp
 .DS_Store
+
+# Private: notes, design documents and machine-specific instructions (kept locally, not published)
+docs/private/
+/CLAUDE.md
+/runner-setup.md

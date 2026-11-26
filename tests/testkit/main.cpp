@@ -33,7 +33,7 @@ Generators and benchmarks:
                     [--snapshot FILE [--update-snapshot]] [--min-recall R] [--somatic] [--min-af X]
                     [--out DIR] [-th 16] [-- caller args]
   release-notes     draft release notes  --tag vX.Y.Z [--previous TAG] [--checksums SHA256SUMS]
-                    [--bench bench.txt] [--build TEXT] [--repo owner/name]
+                    [--bench bench.txt] [--build TEXT] [--repo owner/name] [--highlights FILE]
 
 Option values may follow with a space or "=" (pass values starting with "-" as --extra-args="-U").
 )";
