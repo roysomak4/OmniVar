@@ -108,12 +108,10 @@ std::string digits_fixed(double a, int precision, RoundMode mode) {
         bool round_up;
         if (mode == RoundMode::half_up) {
             round_up = next >= '5';
-        } else if (next > '5') {
-            round_up = true;
         } else if (next < '5') {
             round_up = false;
-        } else if (k + 1 < digits.size()) {
-            round_up = true;  // 5 followed by more (non-zero) digits
+        } else if (next > '5' || k + 1 < digits.size()) {
+            round_up = true;  // above 5, or 5 followed by more (non-zero) digits
         } else {
             // Known divergence (2 of ~8900 JVM vectors, none in the caller's ranges): 5.0E-4 and
             // 5.0E-5 round down on the JVM although the double lies above the tie.

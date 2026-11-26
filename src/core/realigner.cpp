@@ -21,6 +21,9 @@ namespace omnivar::core {
 
 namespace {
 
+// A non-negative int position as a string index.
+constexpr std::size_t to_index(int i) { return static_cast<std::size_t>(i); }
+
 struct SortPositionDescription {
     int position;
     std::string description_string;
@@ -951,8 +954,6 @@ void Realigner::realignlgdel() {
     tmp = sclips_in_extended_region(d_.soft_clips_3end, false);
     sort_comp2(tmp);
     svcov = 0;
-    clusters = 0;
-    pairs = 0;
     for (const SortPositionSclip& t : tmp) {
         try {
             const int p = t.position;
@@ -1669,8 +1670,7 @@ MismatchResult Realigner::find_mm3(int p, const std::string& sanpseq) {
         }
         if (mn > 1) {
             int n2 = 0;
-            while (n + n2 + 1 < len &&
-                   is_has_and_equals(seq[static_cast<std::size_t>(n + n2 + 1)], ref, p + n + 1 + n2)) {
+            while (n + n2 + 1 < len && is_has_and_equals(seq[to_index(n + n2 + 1)], ref, p + n + 1 + n2)) {
                 n2++;
             }
             if (n2 > 2 && n + n2 + 1 < len) {
@@ -1812,7 +1812,7 @@ std::pair<int, std::string> Realigner::findbi(const std::string& seq, int positi
             if (position + dir * i - dir_ext > chr_length_or_npe(scope_.run, chr_)) {
                 break;
             }
-            const char c = seq[static_cast<std::size_t>(i + n)];
+            const char c = seq[to_index(i + n)];
             if (!equals_char(ref_get(ref, position + dir * i - dir_ext), c)) {
                 mm++;
             } else {
@@ -1831,11 +1831,10 @@ std::pair<int, std::string> Realigner::findbi(const std::string& seq, int positi
             std::string insert = util::substr(seq, 0, n);
             std::string extra;
             int ept = 0;
-            while (n + ept + 1 < seq_len && (!equals_char(ref_get(ref, position + ept * dir - dir_ext),
-                                                          seq[static_cast<std::size_t>(n + ept)]) ||
-                                             !equals_char(ref_get(ref, position + (ept + 1) * dir - dir_ext),
-                                                          seq[static_cast<std::size_t>(n + ept + 1)]))) {
-                extra += seq[static_cast<std::size_t>(n + ept)];
+            while (n + ept + 1 < seq_len &&
+                   (!equals_char(ref_get(ref, position + ept * dir - dir_ext), seq[to_index(n + ept)]) ||
+                    !equals_char(ref_get(ref, position + (ept + 1) * dir - dir_ext), seq[to_index(n + ept + 1)]))) {
+                extra += seq[to_index(n + ept)];
                 ept++;
             }
             const int extra_len = static_cast<int>(extra.size());
@@ -1848,12 +1847,10 @@ std::pair<int, std::string> Realigner::findbi(const std::string& seq, int positi
                 if (mm == 0 && i + n == seq_len) {
                     bi = position - 1 - extra_len;
                     ins = insert;
-                    bi2 = position - 1;
                     if (extra_len == 0) {
                         auto [b, s] = adj_ins_pos(bi, ins, ref);
                         bi = b;
                         ins = s;
-                        bi2 = b;
                     }
                     return {bi, ins};
                 }
@@ -1881,12 +1878,10 @@ std::pair<int, std::string> Realigner::findbi(const std::string& seq, int positi
                 if (mm == 0 && i + n == seq_len) {
                     bi = position + s;
                     ins = insert;
-                    bi2 = position + s + extra_len;
                     if (extra_len == 0) {
                         auto [b, t] = adj_ins_pos(bi, ins, ref);
                         bi = b;
                         ins = t;
-                        bi2 = b;
                     }
                     return {bi, ins};
                 }
@@ -2055,7 +2050,10 @@ void partial_pipeline(VariationData& data, RegionScope& scope, const Region& reg
         CigarParser parser(sub, true, max_read_length);
         parser.process_into(*pre, data);
     } catch (const util::RecoverableError&) {
-    } catch (const FatalError&) {}
+        return;  // a sub-region that cannot be read is skipped, as upstream does
+    } catch (const FatalError&) {
+        return;
+    }
 }
 
 namespace {

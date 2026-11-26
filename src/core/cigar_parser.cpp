@@ -219,10 +219,9 @@ void CigarParser::prepare_sv_structures_for_analysis(const io::BamRecord& record
 
     if (file.mate_reference_name_or_equals(record) == "=") {
         int mlen = record.inferred_insert_size();
-        if (mc_clipped) {
-            // Ignore those with mates mapped with softcliping at both ends
-        } else if (mate_low_mq) {
-            // Ignore those with mate mapping quality less than 15
+        if (mc_clipped || mate_low_mq) {
+            // Ignore those with mates mapped with softclipping at both ends, or with mate mapping
+            // quality less than 15
         } else if (read_dir_num * mate_dir_num == -1 && (mlen * read_dir_num) > 0 && quals_len > Config::kMinMapBase) {
             // deletion candidate
             mlen = mate_start > start ? mend - start : end - mate_start;
@@ -298,10 +297,9 @@ void CigarParser::prepare_sv_structures_for_analysis(const io::BamRecord& record
         }
     } else if (quals_len > Config::kMinMapBase) {  // Inter-chr translocation
         const std::string mchr(file.mate_reference_name_or_equals(record));
-        if (mc_clipped) {
-            // Ignore those with mates mapped with softcliping at both ends
-        } else if (mate_low_mq) {
-            // Ignore those with mate mapping quality less than 15
+        if (mc_clipped || mate_low_mq) {
+            // Ignore those with mates mapped with softclipping at both ends, or with mate mapping
+            // quality less than 15
         } else {
             auto& fus = read_dir_num == 1 ? sv.svffus : sv.svrfus;
             auto& fus_end = read_dir_num == 1 ? sv.svfusfend : sv.svfusrend;
@@ -399,7 +397,8 @@ CigarParserResult CigarParser::process(io::RecordPreprocessor& processor) {
     }
 
     if (svflag_) {
-        data_.duprate = (discordant_count_ + 1) / (total_reads - duplicate_reads + 1) > 0.5 ? 0.0 : 1.0;
+        // Integer division, as upstream: the ratio is 0 or at least 1, so "> 0.5" means ">= 1".
+        data_.duprate = (discordant_count_ + 1) / (total_reads - duplicate_reads + 1) >= 1 ? 0.0 : 1.0;
     } else {
         data_.duprate = 0.0;  // removeDuplicatedReads && totalReads != 0 is never true (see above)
     }
