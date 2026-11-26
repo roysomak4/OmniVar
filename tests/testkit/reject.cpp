@@ -1,6 +1,6 @@
-// reject-invariant (M10): adding -p must not change the calls.
+// reject-invariant: adding -p must not change the calls.
 //
-// For every Simple and Somatic golden case (except splicing / CRISPR), the binary runs with and
+// For every Simple and Somatic regression case (except splicing / CRISPR), the binary runs with and
 // without -p, for the TSV (--tsv) and the default VCF:
 //     TSV  the rows whose last column is PASS, without that column, equal the run without -p;
 //          every rejected row has a REF allele
@@ -51,11 +51,11 @@ Result check(const fs::path& path, const std::string& binary, const std::string&
     if ((c.mode != "Simple" && c.mode != "Somatic") || contains(args, "-i") || contains(args, "-J"))
         return {c.name, {}, {}, {}};
     const TempFile bed(".bed", c.chr + "\t" + c.start + "\t" + c.end + "\tt\n");
-    std::vector<std::string> base = {bed.path(), "-b", case_bams(c, golden_bams())};
+    std::vector<std::string> base = {bed.path(), "-b", case_bams(c, bams_dir())};
     base.insert(base.end(), args.begin(), args.end());
     for (auto& w : words(extra)) base.push_back(std::move(w));
     for (auto& w : words("-z -c 1 -S 2 -E 3 -g 4 -G")) base.push_back(std::move(w));
-    base.push_back(case_fasta_csv(c, golden_fastas()));
+    base.push_back(case_fasta_csv(c, fastas_dir()));
     auto go = [&](std::vector<std::string> pre) {
         std::vector<std::string> v = {binary};
         v.insert(v.end(), pre.begin(), pre.end());
@@ -144,7 +144,7 @@ int cmd_reject(Args& args) {
     const int timeout = args.int_or("--timeout", 600);
     const int jobs = args.int_or("-j", 8);
     args.finish();
-    const auto paths = case_files(golden_cases(), false);
+    const auto paths = case_files(cases_dir(), false);
     std::vector<Result> results(paths.size());
     parallel_for(paths.size(), jobs, [&](std::size_t i) { results[i] = check(paths[i], binary, extra, timeout); });
     std::map<std::string, int> total;

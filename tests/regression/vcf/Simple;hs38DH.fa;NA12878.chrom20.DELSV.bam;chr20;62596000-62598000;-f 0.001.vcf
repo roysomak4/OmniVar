@@ -1,0 +1,158 @@
+##fileformat=VCFv4.2
+##contig=<ID=1,length=249250621>
+##contig=<ID=2,length=243199373>
+##contig=<ID=3,length=198022430>
+##contig=<ID=4,length=191154276>
+##contig=<ID=5,length=180915260>
+##contig=<ID=6,length=171115067>
+##contig=<ID=7,length=159138663>
+##contig=<ID=8,length=146364022>
+##contig=<ID=9,length=141213431>
+##contig=<ID=10,length=135534747>
+##contig=<ID=11,length=135006516>
+##contig=<ID=12,length=133851895>
+##contig=<ID=13,length=115169878>
+##contig=<ID=14,length=107349540>
+##contig=<ID=15,length=102531392>
+##contig=<ID=16,length=90354753>
+##contig=<ID=17,length=81195210>
+##contig=<ID=18,length=78077248>
+##contig=<ID=19,length=59128983>
+##contig=<ID=20,length=63025520>
+##contig=<ID=21,length=48129895>
+##contig=<ID=22,length=51304566>
+##contig=<ID=X,length=155270560>
+##contig=<ID=Y,length=59373566>
+##contig=<ID=MT,length=16569>
+##contig=<ID=GL000207.1,length=4262>
+##contig=<ID=GL000226.1,length=15008>
+##contig=<ID=GL000229.1,length=19913>
+##contig=<ID=GL000231.1,length=27386>
+##contig=<ID=GL000210.1,length=27682>
+##contig=<ID=GL000239.1,length=33824>
+##contig=<ID=GL000235.1,length=34474>
+##contig=<ID=GL000201.1,length=36148>
+##contig=<ID=GL000247.1,length=36422>
+##contig=<ID=GL000245.1,length=36651>
+##contig=<ID=GL000197.1,length=37175>
+##contig=<ID=GL000203.1,length=37498>
+##contig=<ID=GL000246.1,length=38154>
+##contig=<ID=GL000249.1,length=38502>
+##contig=<ID=GL000196.1,length=38914>
+##contig=<ID=GL000248.1,length=39786>
+##contig=<ID=GL000244.1,length=39929>
+##contig=<ID=GL000238.1,length=39939>
+##contig=<ID=GL000202.1,length=40103>
+##contig=<ID=GL000234.1,length=40531>
+##contig=<ID=GL000232.1,length=40652>
+##contig=<ID=GL000206.1,length=41001>
+##contig=<ID=GL000240.1,length=41933>
+##contig=<ID=GL000236.1,length=41934>
+##contig=<ID=GL000241.1,length=42152>
+##contig=<ID=GL000243.1,length=43341>
+##contig=<ID=GL000242.1,length=43523>
+##contig=<ID=GL000230.1,length=43691>
+##contig=<ID=GL000237.1,length=45867>
+##contig=<ID=GL000233.1,length=45941>
+##contig=<ID=GL000204.1,length=81310>
+##contig=<ID=GL000198.1,length=90085>
+##contig=<ID=GL000208.1,length=92689>
+##contig=<ID=GL000191.1,length=106433>
+##contig=<ID=GL000227.1,length=128374>
+##contig=<ID=GL000228.1,length=129120>
+##contig=<ID=GL000214.1,length=137718>
+##contig=<ID=GL000221.1,length=155397>
+##contig=<ID=GL000209.1,length=159169>
+##contig=<ID=GL000218.1,length=161147>
+##contig=<ID=GL000220.1,length=161802>
+##contig=<ID=GL000213.1,length=164239>
+##contig=<ID=GL000211.1,length=166566>
+##contig=<ID=GL000199.1,length=169874>
+##contig=<ID=GL000217.1,length=172149>
+##contig=<ID=GL000216.1,length=172294>
+##contig=<ID=GL000215.1,length=172545>
+##contig=<ID=GL000205.1,length=174588>
+##contig=<ID=GL000219.1,length=179198>
+##contig=<ID=GL000224.1,length=179693>
+##contig=<ID=GL000223.1,length=180455>
+##contig=<ID=GL000195.1,length=182896>
+##contig=<ID=GL000212.1,length=186858>
+##contig=<ID=GL000222.1,length=186861>
+##contig=<ID=GL000200.1,length=187035>
+##contig=<ID=GL000193.1,length=189789>
+##contig=<ID=GL000194.1,length=191469>
+##contig=<ID=GL000225.1,length=211173>
+##contig=<ID=GL000192.1,length=547496>
+##contig=<ID=NC_007605,length=171823>
+##contig=<ID=hs37d5,length=35477943>
+##INFO=<ID=SAMPLE,Number=1,Type=String,Description="Sample name (with whitespace translated to underscores)">
+##INFO=<ID=TYPE,Number=1,Type=String,Description="Variant Type: SNV Insertion Deletion Complex">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##INFO=<ID=END,Number=1,Type=Integer,Description="Chr End Position">
+##INFO=<ID=VD,Number=1,Type=Integer,Description="Variant Depth">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##INFO=<ID=BIAS,Number=1,Type=String,Description="Strand Bias Info">
+##INFO=<ID=REFBIAS,Number=1,Type=String,Description="Reference depth by strand">
+##INFO=<ID=VARBIAS,Number=1,Type=String,Description="Variant depth by strand">
+##INFO=<ID=PMEAN,Number=1,Type=Float,Description="The mean distance to the nearest 5 or 3 prime read end (whichever is closer) in all reads that support the variant call">
+##INFO=<ID=PSTD,Number=1,Type=Float,Description="Position STD in reads">
+##INFO=<ID=QUAL,Number=1,Type=Float,Description="Mean quality score in reads">
+##INFO=<ID=QSTD,Number=1,Type=Float,Description="Quality score STD in reads">
+##INFO=<ID=SBF,Number=1,Type=Float,Description="Strand Bias Fisher p-value">
+##INFO=<ID=ODDRATIO,Number=1,Type=Float,Description="Strand Bias Odds ratio">
+##INFO=<ID=MQ,Number=1,Type=Float,Description="Mean Mapping Quality">
+##INFO=<ID=SN,Number=1,Type=Float,Description="Signal to noise">
+##INFO=<ID=HIAF,Number=1,Type=Float,Description="Allele frequency using only high quality bases">
+##INFO=<ID=ADJAF,Number=1,Type=Float,Description="Adjusted AF for indels due to local realignment">
+##INFO=<ID=SHIFT3,Number=1,Type=Integer,Description="No. of bases to be shifted to 3 prime for deletions due to alternative alignment">
+##INFO=<ID=MSI,Number=1,Type=Float,Description="MicroSatellite. > 1 indicates MSI">
+##INFO=<ID=MSILEN,Number=1,Type=Float,Description="MicroSatellite unit length in bp">
+##INFO=<ID=NM,Number=1,Type=Float,Description="Mean mismatches in reads">
+##INFO=<ID=LSEQ,Number=1,Type=String,Description="5' flanking seq">
+##INFO=<ID=RSEQ,Number=1,Type=String,Description="3' flanking seq">
+##INFO=<ID=GDAMP,Number=1,Type=Integer,Description="No. of amplicons supporting variant">
+##INFO=<ID=TLAMP,Number=1,Type=Integer,Description="Total of amplicons covering variant">
+##INFO=<ID=NCAMP,Number=1,Type=Integer,Description="No. of amplicons don't work">
+##INFO=<ID=AMPFLAG,Number=1,Type=Integer,Description="Top variant in amplicons don't match">
+##INFO=<ID=HICNT,Number=1,Type=Integer,Description="High quality variant reads">
+##INFO=<ID=HICOV,Number=1,Type=Integer,Description="High quality total reads">
+##INFO=<ID=SPLITREAD,Number=1,Type=Integer,Description="No. of split reads supporting SV">
+##INFO=<ID=SPANPAIR,Number=1,Type=Integer,Description="No. of pairs supporting SV">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="SV type: INV DUP DEL INS FUS">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="The length of SV in bp">
+##INFO=<ID=DUPRATE,Number=1,Type=Float,Description="Duplication rate in fraction">
+##INFO=<ID=CRISPR,Number=1,Type=Integer,Description="Variant is close to the CRISPR cutting site (-J)">
+##FILTER=<ID=q22.5,Description="Mean Base Quality Below 22.5">
+##FILTER=<ID=Q10,Description="Mean Mapping Quality Below 10">
+##FILTER=<ID=p8,Description="Mean Position in Reads Less than 8">
+##FILTER=<ID=SN1.5,Description="Signal to Noise Less than 1.5">
+##FILTER=<ID=Bias,Description="Strand Bias">
+##FILTER=<ID=pSTD,Description="Position in Reads has STD of 0">
+##FILTER=<ID=d3,Description="Total Depth < 3">
+##FILTER=<ID=v2,Description="Var Depth < 2">
+##FILTER=<ID=f0.02,Description="Allele frequency < 0.02">
+##FILTER=<ID=MSI12,Description="Variant in MSI region with 12 non-monomer MSI or 13 monomer MSI">
+##FILTER=<ID=NM5.25,Description="Mean mismatches in reads >= 5.25, thus likely false positive">
+##FILTER=<ID=InGap,Description="The variant is in the deletion gap, thus likely false positive">
+##FILTER=<ID=InIns,Description="The variant is adjacent to an insertion variant">
+##FILTER=<ID=Cluster0bp,Description="Two variants are within 0 bp">
+##FILTER=<ID=LongMSI,Description="The somatic variant is flanked by long A/T (>=14)">
+##FILTER=<ID=AMPBIAS,Description="Indicate the variant has amplicon bias.">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##FORMAT=<ID=VD,Number=1,Type=Integer,Description="Variant Depth">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##FORMAT=<ID=RD,Number=2,Type=Integer,Description="Reference forward, reverse reads">
+##FORMAT=<ID=ALD,Number=2,Type=Integer,Description="Variant forward, reverse reads">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	NA12878.chrom20.DELSV
+20	62596205	.	A	G	47	PASS	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=14;END=62596205;VD=3;AF=0.2143;BIAS=2:2;REFBIAS=5:6;VARBIAS=2:1;PMEAN=11.7;PSTD=1;QUAL=30.0;QSTD=1;SBF=1;ODDRATIO=2.255401687040462;MQ=28.3;SN=6.000;HIAF=0.2143;ADJAF=0;SHIFT3=0;MSI=2.000;MSILEN=1;NM=1.0;HICNT=3;HICOV=14;LSEQ=ACTGTTCCCCGACCTGGGAC;RSEQ=AGCCCCCATACCTTTTCTTA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:14:3:11,3:0.2143:5,6:2,1
+20	62597344	.	G	A	99	PASS	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=28;END=62597344;VD=8;AF=0.2857;BIAS=2:0;REFBIAS=15:5;VARBIAS=8:0;PMEAN=8.9;PSTD=1;QUAL=33.0;QSTD=1;SBF=0.28083;ODDRATIO=0;MQ=12.0;SN=16.000;HIAF=0.3077;ADJAF=0.0357;SHIFT3=0;MSI=1.000;MSILEN=1;NM=1.5;HICNT=8;HICOV=26;LSEQ=ACTGTTCCTCCCCGACCTGG;RSEQ=ACGAGCCCCCATACCTTTTC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:28:8:20,8:0.2857:15,5:8,0
+20	62597455	.	T	C	32	p8	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=38;END=62597455;VD=2;AF=0.0526;BIAS=2:2;REFBIAS=23:13;VARBIAS=1:1;PMEAN=6.0;PSTD=1;QUAL=32.8;QSTD=1;SBF=1;ODDRATIO=1.74146;MQ=30.0;SN=4.000;HIAF=0.0571;ADJAF=0.0263;SHIFT3=0;MSI=1.000;MSILEN=1;NM=2.0;HICNT=2;HICOV=35;LSEQ=CGAGCCCCCATACCTTTTCT;RSEQ=ACCACTGTTCCTCCCCGACC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:38:2:36,2:0.0526:23,13:1,1
+20	62597597	.	G	T	39	f0.02	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=205;END=62597597;VD=3;AF=0.0146;BIAS=2:2;REFBIAS=166:36;VARBIAS=1:2;PMEAN=17.7;PSTD=1;QUAL=24.7;QSTD=1;SBF=0.08894;ODDRATIO=9.0733;MQ=49.7;SN=2.000;HIAF=0.0108;ADJAF=0;SHIFT3=0;MSI=2.000;MSILEN=1;NM=1.3;HICNT=2;HICOV=186;LSEQ=GTGTCTGCTGATAGCAATGG;RSEQ=CCTGCTGACTGTCACCGGCT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:205:3:202,3:0.0146:166,36:1,2
+20	62597653	.	T	C	27	f0.02	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=230;END=62597653;VD=2;AF=0.0087;BIAS=2:2;REFBIAS=139:89;VARBIAS=1:1;PMEAN=10.0;PSTD=1;QUAL=27.0;QSTD=1;SBF=1;ODDRATIO=1.55862;MQ=60.0;SN=4.000;HIAF=0.0094;ADJAF=0.0043;SHIFT3=0;MSI=2.000;MSILEN=1;NM=1.0;HICNT=2;HICOV=212;LSEQ=GCCTGCTGACTGTCACTGGC;RSEQ=TGGTGACCGGCACGGGTTTC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:230:2:228,2:0.0087:139,89:1,1
+20	62597666	.	C	T	193	PASS	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=259;END=62597666;VD=113;AF=0.4363;BIAS=2:2;REFBIAS=82:62;VARBIAS=75:38;PMEAN=13.7;PSTD=1;QUAL=28.3;QSTD=1;SBF=0.15612;ODDRATIO=1.4899576852017402;MQ=53.9;SN=5.278;HIAF=0.4439;ADJAF=0.0347;SHIFT3=0;MSI=3.000;MSILEN=1;NM=2.2;HICNT=95;HICOV=214;LSEQ=CACTGGCTTGGTGACCGGCA;RSEQ=GGGTTTCGTAACTGTCACAA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:259:113:144,113:0.4363:82,62:75,38
+20	62597694	.	T	G	273	PASS	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=438;END=62597694;VD=222;AF=0.5068;BIAS=2:2;REFBIAS=143:73;VARBIAS=158:64;PMEAN=17.9;PSTD=1;QUAL=35.1;QSTD=1;SBF=0.30271;ODDRATIO=1.2595886183572444;MQ=56.6;SN=16.077;HIAF=0.5123;ADJAF=0.0388;SHIFT3=1;MSI=1.000;MSILEN=1;NM=1.6;HICNT=209;HICOV=408;LSEQ=GTAACTGTCACAAGCTTTGT;RSEQ=ACCGTAATGGGTTTGGTGAC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/0:438:222:216,222:0.5068:143,73:158,64
+20	62597735	.	G	A	47	f0.02	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=657;END=62597735;VD=3;AF=0.0046;BIAS=2:2;REFBIAS=433:218;VARBIAS=2:1;PMEAN=30.3;PSTD=1;QUAL=30.0;QSTD=1;SBF=1;ODDRATIO=1.0069175233856595;MQ=60.0;SN=2.000;HIAF=0.0034;ADJAF=0;SHIFT3=0;MSI=1.000;MSILEN=1;NM=1.3;HICNT=2;HICOV=592;LSEQ=AGGTACGGGTTTGGTGACCG;RSEQ=CACAGACTTGGTGACTGTGA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:657:3:651,3:0.0046:433,218:2,1
+20	62597778	.	C	A	36	f0.02	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=620;END=62597778;VD=3;AF=0.0048;BIAS=2:2;REFBIAS=268:349;VARBIAS=1:2;PMEAN=17.0;PSTD=1;QUAL=23.3;QSTD=1;SBF=1;ODDRATIO=1.5348;MQ=49.7;SN=2.000;HIAF=0.0034;ADJAF=0;SHIFT3=0;MSI=2.000;MSILEN=1;NM=0;HICNT=2;HICOV=582;LSEQ=GGTTTGGTGACCGGCATGGC;RSEQ=TTGGTGACGGGCATGGGCCT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:620:3:617,3:0.0048:268,349:1,2
+20	62597874	.	G	A	36	f0.02	SAMPLE=NA12878.chrom20.DELSV;TYPE=SNV;DP=405;END=62597874;VD=2;AF=0.0049;BIAS=2:2;REFBIAS=89:313;VARBIAS=1:1;PMEAN=22.0;PSTD=1;QUAL=36.0;QSTD=1;SBF=0.39635;ODDRATIO=3.502626970227671;MQ=60.0;SN=4.000;HIAF=0.0055;ADJAF=0;SHIFT3=0;MSI=2.000;MSILEN=4;NM=1.5;HICNT=2;HICOV=363;LSEQ=GTGACTGGCATGGGTCTGCC;RSEQ=ACCGAGACTGGCTTGCTGAT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/0:405:2:402,2:0.0049:89,313:1,1

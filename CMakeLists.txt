@@ -144,33 +144,20 @@ if(OMNIVAR_BUILD_TESTS)
     add_test(NAME cli.unknown_option COMMAND omnivar --no-such-option)
     set_tests_properties(cli.unknown_option PROPERTIES WILL_FAIL TRUE)
 
-    # Golden parity gates (no JVM): tests/testkit (omnivar-testkit). Extend as milestones land.
+    # Regression and invariant gates (tests/testkit, omnivar-testkit; tests/regression).
     add_subdirectory(tests/testkit)
-    if(EXISTS ${PROJECT_SOURCE_DIR}/docs/golden/cases)
-        set(TK $<TARGET_FILE:omnivar-testkit>)
-        set(BIN --binary $<TARGET_FILE:omnivar>)
-        # TSV at every stage: k0_U (no realignment, no SV), U (realignment, M5), full (SV, M6);
-        # Simple and Somatic (tumour/normal, M7).
-        foreach(stage k0_U U full)
-            foreach(mode Simple Somatic)
-                string(TOLOWER ${mode} m)
-                add_test(NAME golden.${stage}.${m} COMMAND ${TK} golden ${BIN} --stage ${stage} --mode ${mode} -j 4)
-                # VCF vs the jar | teststrandbias.R | var2vcf_valid.pl -A chain (paired:
-                # testsomatic.R | var2vcf_paired.pl), checked-in expectations; bcftools parse check.
-                add_test(NAME golden.vcf.${stage}.${m} COMMAND ${TK} vcf ${BIN} --stage ${stage} --mode ${mode} -j 4)
-            endforeach()
-        endforeach()
-        # -p (M10): adding -p never changes the calls (TSV and VCF, single sample and tumour/normal).
-        add_test(NAME golden.reject_invariant.full COMMAND ${TK} reject-invariant ${BIN} -j 4)
-        add_test(NAME golden.reject_invariant.U COMMAND ${TK} reject-invariant ${BIN} --extra-args=-U -j 4)
-        add_test(NAME golden.reject_invariant.k0_U COMMAND ${TK} reject-invariant ${BIN} "--extra-args=-k 0 -U" -j 4)
-        # Worker pool (M9): -th 4 must write exactly what -th 1 writes (golden regions split into chunks).
-        add_test(NAME golden.threads COMMAND ${TK} threads ${BIN} -th 4 -j 2)
-        # Synthetic rows (many contigs, SVs, clusters) against the R + Perl chain run live.
-        find_program(RSCRIPT_EXECUTABLE Rscript)
-        find_program(PERL_EXECUTABLE perl)
-        if(RSCRIPT_EXECUTABLE AND PERL_EXECUTABLE)
-            add_test(NAME golden.vcf.synthetic COMMAND ${TK} vcf ${BIN} --synthetic -k NO_CASES -j 4)
-        endif()
-    endif()
+    set(TK $<TARGET_FILE:omnivar-testkit>)
+    set(BIN --binary $<TARGET_FILE:omnivar>)
+    # omnivar's TSV and VCF on the 90 regression cases, and crafted rows through the VCF writer,
+    # against the checked-in output (omnivar-testkit regress --update after a deliberate change).
+    foreach(mode Simple Somatic)
+        string(TOLOWER ${mode} m)
+        add_test(NAME regress.tsv.${m} COMMAND ${TK} regress ${BIN} --part tsv --mode ${mode} -j 4)
+        add_test(NAME regress.vcf.${m} COMMAND ${TK} regress ${BIN} --part vcf --mode ${mode} -j 4)
+    endforeach()
+    add_test(NAME regress.synthetic COMMAND ${TK} regress ${BIN} --part synthetic -j 4)
+    # -p never changes the calls (TSV and VCF, single sample and tumour/normal).
+    add_test(NAME invariant.reject COMMAND ${TK} reject-invariant ${BIN} -j 4)
+    # -th 4 writes exactly what -th 1 writes (regression regions split into chunks).
+    add_test(NAME invariant.threads COMMAND ${TK} threads ${BIN} -th 4 -j 2)
 endif()

@@ -97,7 +97,7 @@ constexpr OptionSpec kOptions[] = {
     {"c", "", ArgKind::required, ValueType::number, "INT", "The column for chromosome"},
     {"G", "", ArgKind::required, ValueType::string, "Genome fasta",
      "The reference fasta. Should be indexed (.fai). A thin-FASTA CSV slice file (chr,start,end,sequence) is "
-     "also accepted (golden tests)."},
+     "also accepted (regression tests)."},
     {"R", "", ArgKind::required, ValueType::string, "Region",
      "The region of interest.  In the format of chr:start-end.  If end is omitted, then a single position.  No BED "
      "is needed."},
@@ -270,9 +270,7 @@ std::expected<CommandLine, ParseError> commons_cli_parse(const std::vector<std::
         bool eat_the_rest = false;
         if (t == "--") {
             eat_the_rest = true;
-        } else if (t == "-") {
-            cmd.args.emplace_back(t);
-        } else if (t.starts_with("-")) {
+        } else if (t != "-" && t.starts_with("-")) {  // a lone "-" is an argument
             const OptionSpec* spec = find_option(t);
             if (spec == nullptr) {
                 return std::unexpected(ParseError{"Unrecognized option: " + std::string(t)});
@@ -367,8 +365,6 @@ std::expected<ParsedCommandLine, ParseError> parse_command_line(std::span<const 
     std::vector<std::string_view> tokens;
     bool want_version = false;
     bool want_help = false;
-    bool dump_cfg = false;
-    bool dump_inp = false;
     bool after_double_dash = false;
     bool output_tsv = false;
     annotate::Var2VcfOptions vcf;
@@ -412,12 +408,6 @@ std::expected<ParsedCommandLine, ParseError> parse_command_line(std::span<const 
                 continue;
             } else if (a == "--help") {
                 want_help = true;
-                continue;
-            } else if (a == "--dev-dump-config") {
-                dump_cfg = true;
-                continue;
-            } else if (a == "--dev-dump-inputs") {
-                dump_inp = true;
                 continue;
             } else if (a == "--dev-tsv-to-vcf") {
                 if (ai + 1 >= all_args.size()) {
@@ -666,11 +656,6 @@ std::expected<ParsedCommandLine, ParseError> parse_command_line(std::span<const 
 
     out.config.output_tsv = output_tsv;
     out.config.vcf = vcf;
-    if (dump_cfg) {
-        out.action = Action::dump_config;
-    } else if (dump_inp) {
-        out.action = Action::dump_inputs;
-    }
     return out;
 }
 
@@ -685,9 +670,7 @@ std::string usage() {
         if (!o.long_opt.empty()) {
             head += ",--" + std::string(o.long_opt);
         }
-        if (o.arg == ArgKind::required) {
-            head += " <" + std::string(o.arg_name) + ">";
-        } else if (o.arg == ArgKind::optional) {
+        if (o.arg == ArgKind::required || o.arg == ArgKind::optional) {
             head += " <" + std::string(o.arg_name) + ">";
         }
         s += head;
@@ -723,113 +706,5 @@ std::string usage() {
 }
 
 std::string version_string() { return "omnivar " + std::string(kVersion) + ", htslib " + hts_version(); }
-
-namespace {
-
-std::string show_string(const std::string& v) {
-    std::string out = "\"";
-    for (char ch : v) {
-        if (ch == '\\') {
-            out += "\\\\";
-        } else if (ch == '\t') {
-            out += "\\t";
-        } else {
-            out += ch;
-        }
-    }
-    return out + "\"";
-}
-
-template <class T>
-std::string show_opt_string(const std::optional<T>& v) {
-    return v ? show_string(*v) : "null";
-}
-
-std::string show_bool(bool b) { return b ? "true" : "false"; }
-
-}  // namespace
-
-std::string dump_config(const Config& c) {
-    std::map<std::string, std::string> m;
-    m["INSSIZE"] = std::to_string(c.ins_size);
-    m["INSSTD"] = std::to_string(c.ins_std);
-    m["INSSTDAMT"] = std::to_string(c.ins_std_amt);
-    m["SVMINLEN"] = std::to_string(c.sv_min_len);
-    {
-        std::string a = "[";
-        for (std::size_t i = 0; i < c.adaptor.size(); ++i) {
-            a += (i ? "," : "") + show_string(c.adaptor[i]);
-        }
-        m["adaptor"] = a + "]";
-    }
-    m["ampliconBasedCalling"] = show_opt_string(c.amplicon_based_calling);
-    m["bam.raw"] = show_string(c.bam.raw);
-    m["bam.bam1"] = show_string(c.bam.bam1());
-    m["bam.bam2"] = c.bam.has_bam2() ? show_string(c.bam.bam2()) : "null";
-    m["bam.bamX"] = show_string(c.bam.bam_x());
-    m["bed"] = show_opt_string(c.bed);
-    m["bedRowFormat.chrColumn"] = std::to_string(c.bed_row_format.chr_column);
-    m["bedRowFormat.startColumn"] = std::to_string(c.bed_row_format.start_column);
-    m["bedRowFormat.endColumn"] = std::to_string(c.bed_row_format.end_column);
-    m["bedRowFormat.thickStartColumn"] = std::to_string(c.bed_row_format.thick_start_column);
-    m["bedRowFormat.thickEndColumn"] = std::to_string(c.bed_row_format.thick_end_column);
-    m["bedRowFormat.geneColumn"] = std::to_string(c.bed_row_format.gene_column);
-    m["bias"] = util::double_to_string(c.bias);
-    m["chimeric"] = show_bool(c.chimeric);
-    m["chromosomeNameIsNumber"] = show_bool(c.chromosome_name_is_number);
-    m["columnForChromosome"] = std::to_string(c.column_for_chromosome);
-    m["crisprCuttingSite"] = std::to_string(c.crispr_cutting_site);
-    m["crisprFilteringBp"] = std::to_string(c.crispr_filtering_bp);
-    m["debug"] = show_bool(c.debug);
-    m["deleteDuplicateVariants"] = show_bool(c.delete_duplicate_variants);
-    m["delimiter"] = show_string(c.delimiter);
-    m["disableSV"] = show_bool(c.disable_sv);
-    m["doPileup"] = show_bool(c.do_pileup);
-    m["downsampling"] = c.downsampling ? util::double_to_string(*c.downsampling) : "null";
-    m["fasta"] = show_string(c.fasta);
-    m["fisher"] = show_bool(c.fisher);
-    m["freq"] = util::double_to_string(c.freq);
-    m["goodq"] = util::double_to_string(c.goodq);
-    m["includeNInTotalDepth"] = show_bool(c.include_n_in_total_depth);
-    m["indelsize"] = std::to_string(c.indelsize);
-    m["lofreq"] = util::double_to_string(c.lofreq);
-    m["mappingQuality"] = c.mapping_quality ? std::to_string(*c.mapping_quality) : "null";
-    m["mapq"] = util::double_to_string(c.mapq);
-    m["minBiasReads"] = std::to_string(c.min_bias_reads);
-    m["minmatch"] = std::to_string(c.minmatch);
-    m["minr"] = std::to_string(c.minr);
-    m["mismatch"] = std::to_string(c.mismatch);
-    m["monomerMsiFrequency"] = util::double_to_string(c.monomer_msi_frequency);
-    m["moveIndelsTo3"] = show_bool(c.move_indels_to_3);
-    m["nonMonomerMsiFrequency"] = util::double_to_string(c.non_monomer_msi_frequency);
-    m["numberNucleotideToExtend"] = std::to_string(c.number_nucleotide_to_extend);
-    m["outputSplicing"] = show_bool(c.output_splicing);
-    m["performLocalRealignment"] = show_bool(c.perform_local_realignment);
-    m["printHeader"] = show_bool(c.print_header);
-    m["printerType"] = c.printer_type == PrinterType::err ? "ERR" : "OUT";
-    m["qratio"] = util::double_to_string(c.qratio);
-    m["readPosFilter"] = std::to_string(c.read_pos_filter);
-    m["referenceExtension"] = std::to_string(c.reference_extension);
-    m["regionOfInterest"] = show_opt_string(c.region_of_interest);
-    m["removeDuplicatedReads"] = show_bool(c.remove_duplicated_reads);
-    m["samfilter"] = show_string(c.samfilter);
-    m["sampleName"] = show_opt_string(c.sample_name);
-    m["sampleNameRegexp"] = show_opt_string(c.sample_name_regexp);
-    m["threads"] = std::to_string(c.threads);
-    m["trimBasesAfter"] = std::to_string(c.trim_bases_after);
-    m["uniqueModeAlignmentEnabled"] = show_bool(c.unique_mode_alignment_enabled);
-    m["uniqueModeSecondInPairEnabled"] = show_bool(c.unique_mode_second_in_pair_enabled);
-    m["validationStringency"] = c.validation_stringency == ValidationStringency::strict   ? "STRICT"
-                                : c.validation_stringency == ValidationStringency::silent ? "SILENT"
-                                                                                          : "LENIENT";
-    m["vext"] = std::to_string(c.vext);
-    m["y"] = show_bool(c.y);
-    m["zeroBased"] = c.zero_based ? show_bool(*c.zero_based) : "null";
-    std::string out;
-    for (const auto& [k, v] : m) {
-        out += k + "=" + v + "\n";
-    }
-    return out;
-}
 
 }  // namespace omnivar::cli

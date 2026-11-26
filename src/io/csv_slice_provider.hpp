@@ -1,12 +1,10 @@
 #pragma once
 
-// Reference served from a "thin FASTA" CSV (docs/golden/fastas/*.csv), one slice per line:
+// Reference served from a "thin FASTA" CSV (tests/regression/fastas/*.csv), one slice per line:
 //   chr,start,end,sequence
-// Same lookup as the upstream test harness and the test oracle (tests/oracle): take the slice
-// with the greatest
-// start <= query start (a later line with the same chr and start replaces an earlier one),
-// and serve the query only if that slice covers the query end. The CSV end column is ignored;
-// the slice end is start + len(sequence) - 1.
+// Same lookup as the upstream test harness: take the slice with the greatest start <= query start (a later line with
+// the same chr and start replaces an earlier one), and serve the query only if that slice covers the query end. The CSV
+// end column is ignored; the slice end is start + len(sequence) - 1.
 
 #include <map>
 #include <string>

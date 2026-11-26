@@ -55,23 +55,6 @@ std::vector<std::string> split_colon(const std::string& s) {
     return out;
 }
 
-// FNV-1a 64, as in the test oracle (tests/oracle)
-struct Fnv {
-    std::uint64_t h = 0xcbf29ce484222325ULL;
-    void add(std::string_view s) {
-        for (unsigned char c : s) {
-            h ^= c;
-            h *= 0x100000001b3ULL;
-        }
-    }
-    [[nodiscard]] std::string hex() const {
-        char buf[17];
-        auto [ptr, ec] = std::to_chars(buf, buf + sizeof buf, h, 16);
-        (void)ec;
-        return std::string(buf, ptr);
-    }
-};
-
 }  // namespace
 
 std::expected<std::pair<std::string, std::string>, std::string> sample_names(const Config& conf) {
@@ -218,100 +201,6 @@ int tsv_to_vcf(const Config& conf, const std::string& path) {
     info.sample = sample;
     std::print("{}", vcf.header(info));
     std::print("{}", vcf.records(sample));
-    return 0;
-}
-
-int dump_inputs(const Config& conf) {
-    auto ctx = init_resources(conf);
-    if (!ctx) {
-        std::println(stderr, "omnivar: {}", ctx.error());
-        return 1;
-    }
-    auto provider = io::open_reference(conf.fasta);
-    std::string out;
-    out += "SAMPLE\t" + ctx->sample + "\t" + ctx->samplem + "\n";
-    out += "AMPLICON\t" + ctx->amplicon_based_calling.value_or("null") + "\n";
-    for (std::size_t i = 0; i < ctx->segments.size(); ++i) {
-        for (std::size_t j = 0; j < ctx->segments[i].size(); ++j) {
-            const Region& r = ctx->segments[i][j];
-            out += "REGION\t" + std::to_string(i) + "\t" + std::to_string(j) + "\t" + r.chr + "\t" +
-                   std::to_string(r.start) + "\t" + std::to_string(r.end) + "\t" + r.gene + "\t" +
-                   std::to_string(r.insert_start) + "\t" + std::to_string(r.insert_end) + "\n";
-        }
-    }
-    std::vector<std::vector<std::string>> bam_groups = {split_colon(conf.bam.bam1())};
-    if (conf.bam.has_bam2()) {
-        bam_groups.push_back(split_colon(conf.bam.bam2()));
-    }
-    io::BamCache cache;
-    for (const auto& list : ctx->segments) {
-        for (const Region& region : list) {
-            const std::string where = region.print_region();
-            if (!provider) {
-                out += "REF\t" + where + "\tERROR\t" + provider.error().message + "\n";
-            } else if (auto ref = io::get_reference(**provider, region, conf, ctx->chr_lengths); !ref) {
-                out += "REF\t" + where + "\tERROR\t" + ref.error().message + "\n";
-            } else {
-                std::vector<int> positions;
-                positions.reserve(ref->reference_sequences.size());
-                for (const auto& [pos, base] : ref->reference_sequences) {
-                    positions.push_back(pos);
-                }
-                std::sort(positions.begin(), positions.end());
-                Fnv ref_fnv;
-                for (int pos : positions) {
-                    ref_fnv.add(std::to_string(pos) + ":" + ref->reference_sequences.at(pos) + ";");
-                }
-                std::set<std::string> keys;
-                for (const auto& [k, v] : ref->seed) {
-                    keys.insert(k);
-                }
-                Fnv seed_fnv;
-                for (const auto& k : keys) {
-                    std::string s = k + "=";
-                    const auto& ps = ref->seed.at(k);
-                    for (std::size_t n = 0; n < ps.size(); ++n) {
-                        s += (n ? "," : "") + std::to_string(ps[n]);
-                    }
-                    seed_fnv.add(s + ";");
-                }
-                out += "REF\t" + where + "\t" + std::to_string(ref->reference_sequences.size()) + "\t" + ref_fnv.hex() +
-                       "\t" + std::to_string(ref->seed.size()) + "\t" + seed_fnv.hex() + "\n";
-            }
-            for (std::size_t b = 0; b < bam_groups.size(); ++b) {
-                auto pre = io::RecordPreprocessor::create(bam_groups[b], region, conf, cache);
-                if (!pre) {
-                    out += "READS\t" + std::to_string(b + 1) + "\t" + where + "\tERROR\t" + pre.error().message + "\n";
-                    continue;
-                }
-                io::BamRecord rec;
-                Fnv fnv;
-                int returned = 0;
-                std::optional<std::string> error;
-                while (true) {
-                    auto r = pre->next_record(rec);
-                    if (!r) {
-                        error = r.error().message;
-                        break;
-                    }
-                    if (!*r) {
-                        break;
-                    }
-                    fnv.add(std::string(rec.read_name()) + "\t" + std::to_string(rec.flags()) + "\t" +
-                            std::to_string(rec.alignment_start()) + "\t" + rec.cigar_string() + "\n");
-                    ++returned;
-                }
-                if (error) {
-                    out += "READS\t" + std::to_string(b + 1) + "\t" + where + "\tERROR\t" + *error + "\n";
-                } else {
-                    out += "READS\t" + std::to_string(b + 1) + "\t" + where + "\t" + std::to_string(returned) + "\t" +
-                           std::to_string(pre->total_reads) + "\t" + std::to_string(pre->duplicate_reads) + "\t" +
-                           fnv.hex() + "\n";
-                }
-            }
-        }
-    }
-    std::print("{}", out);
     return 0;
 }
 

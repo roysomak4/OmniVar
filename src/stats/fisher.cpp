@@ -11,7 +11,7 @@ namespace omnivar::stats {
 
 namespace {
 
-// ---- commons-math3 SaddlePointExpansion (Apache License 2.0), constants read from the jar ----
+// ---- commons-math3 3.6.1 SaddlePointExpansion (Apache License 2.0; see THIRD_PARTY_LICENSES) ----
 constexpr double kHalfLog2Pi = 0x1.d67f1c864beb4p-1;
 constexpr double kExactStirlingErrors[] = {
     0x0.0p0,

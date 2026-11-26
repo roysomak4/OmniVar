@@ -126,8 +126,8 @@ int cmd_release_notes(Args& args) {
         std::println("## Verification");
         std::println("");
         std::println(
-            "The release binary passed the unit tests, the golden parity gates (single sample and tumour/normal, at "
-            "every stage) and the cell-line truth-set benchmark:");
+            "The release binary passed the unit tests, the regression cases (single sample and tumour/normal), "
+            "the thread and -p invariants, the sanitizer runs and the Oncospan truth-set benchmark:");
         std::println("");
         std::println("```");
         bool table = false;

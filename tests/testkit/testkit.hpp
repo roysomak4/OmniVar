@@ -1,7 +1,7 @@
 #pragma once
 
-// omnivar-testkit: the test and validation harness (golden parity, VCF parity, thread and -p
-// invariants, oracle runs, panel parity, truth-set benchmark). Test tooling only; not installed.
+// omnivar-testkit: the test and validation harness (regression cases, thread and -p invariants,
+// truth-set benchmark, release notes). Test tooling only; not installed.
 
 #include <algorithm>
 #include <atomic>
@@ -23,13 +23,12 @@ namespace fs = std::filesystem;
 // Repository layout
 // ---------------------------------------------------------------------------------------------
 fs::path root();  // source tree (compiled in; OMNIVAR_SOURCE_DIR env overrides)
-inline fs::path golden_cases() { return root() / "docs/golden/cases"; }
-inline fs::path golden_bams() { return root() / "docs/golden/bams"; }
-inline fs::path golden_fastas() { return root() / "docs/golden/fastas"; }
-inline fs::path golden_dir() { return root() / "tests/golden"; }
-inline fs::path jars_dir() { return root() / "tests/oracle/lib"; }
-inline fs::path scripts_dir() { return root() / "tests/scripts"; }
-inline std::string jar_classpath() { return (jars_dir() / "*").string(); }
+inline fs::path regression_dir() { return root() / "tests/regression"; }
+inline fs::path cases_dir() { return regression_dir() / "cases"; }  // case spec + expected TSV
+inline fs::path vcf_dir() { return regression_dir() / "vcf"; }      // expected VCF per case
+inline fs::path bams_dir() { return regression_dir() / "bams"; }
+inline fs::path fastas_dir() { return regression_dir() / "fastas"; }  // reference slices (CSV)
+inline fs::path synthetic_dir() { return regression_dir() / "synthetic"; }
 
 // ---------------------------------------------------------------------------------------------
 // Strings and files
@@ -159,7 +158,8 @@ private:
 [[noreturn]] void die(std::string_view msg);
 
 // ---------------------------------------------------------------------------------------------
-// Golden cases (docs/golden/cases/*.txt)
+// Regression cases (tests/regression/cases/*.txt): line 1 is the case spec
+// (mode,fasta,bam,chr,start,end[,amp_start,amp_end][,args]), the rest is the expected TSV
 // ---------------------------------------------------------------------------------------------
 struct Case {
     std::string name;  // file name
@@ -179,16 +179,9 @@ bool case_has_arg(const Case& c, std::string_view arg);
 // ---------------------------------------------------------------------------------------------
 // Subcommands
 // ---------------------------------------------------------------------------------------------
-int cmd_golden(Args& a);
-int cmd_vcf(Args& a);
+int cmd_regress(Args& a);
 int cmd_threads(Args& a);
 int cmd_reject(Args& a);
-int cmd_oracle(Args& a);
-int cmd_nopileup(Args& a);
-int cmd_cli(Args& a);
-int cmd_inputs(Args& a);
-int cmd_panel(Args& a);
-int cmd_synthetic(Args& a);
 int cmd_bench(Args& a);
 int cmd_release_notes(Args& a);
 

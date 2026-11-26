@@ -1,0 +1,1 @@
+Simple,test.fa,amp_allele_ins_repr.bam,test,147,149,-f 0.0 -p -r 1

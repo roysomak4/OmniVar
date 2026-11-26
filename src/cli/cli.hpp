@@ -1,12 +1,10 @@
 #pragma once
 
-// Command line: the upstream CmdParser on top of an emulation of commons-cli 1.2 BasicParser,
-// so every upstream command line parses to the same Configuration (checked against the jar by
-// omnivar-testkit cli-parity).
+// Command line: the upstream option rules (short options, defaults and their interactions) on top
+// of a small getopt-style parser that behaves like the upstream one.
 //
-// Options added by this port are long-form only and are taken out of the argument list before
-// the upstream rules apply: --version, --help, --tsv, --vcf-top-allele-only, --filter-*, --no-filter-pstd,
-// --dev-dump-config, --dev-dump-inputs, --dev-tsv-to-vcf.
+// The long-form options (--version, --help, --tsv, --vcf-top-allele-only, --filter-*,
+// --no-filter-pstd, --dev-tsv-to-vcf) are taken out of the argument list before those rules apply.
 
 #include <expected>
 #include <span>
@@ -18,12 +16,10 @@
 namespace omnivar::cli {
 
 enum class Action {
-    help,         // no options, -H or -?; also --help
-    version,      // --version
-    run,          // run the caller
-    dump_config,  // --dev-dump-config: print the parsed Configuration (parity testing)
-    dump_inputs,  // --dev-dump-inputs: print samples, regions, reference and read counts (parity testing)
-    tsv_to_vcf,   // --dev-tsv-to-vcf FILE: VCF from a Simple TSV (no caller run)
+    help,        // no options, -H or -?; also --help
+    version,     // --version
+    run,         // run the caller
+    tsv_to_vcf,  // --dev-tsv-to-vcf FILE: VCF from a Simple TSV (no caller run)
 };
 
 struct ParseError {
@@ -44,8 +40,5 @@ struct ParsedCommandLine {
 
 [[nodiscard]] std::string usage();
 [[nodiscard]] std::string version_string();
-
-// Configuration in the test oracle's format (tests/oracle; sorted "name=value" lines).
-[[nodiscard]] std::string dump_config(const Config& config);
 
 }  // namespace omnivar::cli

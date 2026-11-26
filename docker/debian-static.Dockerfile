@@ -29,7 +29,6 @@ COPY CMakeLists.txt ./
 COPY cmake ./cmake
 COPY src ./src
 COPY tests ./tests
-COPY docs/golden ./docs/golden
 
 ENV OMNIVAR_DOWNLOAD_CACHE=/var/cache/omnivar-downloads
 RUN --mount=type=cache,id=omnivar-downloads,target=/var/cache/omnivar-downloads \

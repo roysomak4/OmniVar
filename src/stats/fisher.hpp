@@ -2,15 +2,14 @@
 
 // R's fisher.test for 2x2 tables: p-values and the conditional-MLE odds ratio. Uses ports of
 // commons-math3 HypergeometricDistribution / SaddlePointExpansion (Apache License 2.0).
-// Verified against the JVM: tests/golden/fisher_vectors.tsv.
+// Verified against the JVM: tests/unit/data/fisher_vectors.tsv.
 //
 // Two flavours:
 //   jvm   the upstream FisherExact, used for the `--fisher` TSV columns.
 //   r     R 4.3's fisher.test as run by teststrandbias.R / testsomatic.R, used by the VCF
 //         annotation layer: no 7-dp rounding of the log-densities (FisherExact.logdcDhyper),
 //         long-double sums (R's sum()), and dhyper with R's numerical choices (see fisher.cpp).
-//         Equal to R on every table in tests/golden/fisher_r_vectors.tsv
-//         (tests/oracle/FisherRVectors.R).
+//         Equal to R on every table in tests/unit/data/fisher_r_vectors.tsv
 
 #include <string>
 #include <vector>

@@ -1,4 +1,4 @@
-// Local realignment (-k 1): CigarModifier against the jar.
+// Local realignment (-k 1): CigarModifier against recorded upstream results.
 
 #include <cstdio>
 #include <doctest.h>
@@ -117,8 +117,8 @@ TEST_CASE("CigarModifier: CigarModifierTest.threeIndels") {
     }
 }
 
-TEST_CASE("CigarModifier matches the jar (tests/golden/cigar_modifier_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/golden/cigar_modifier_vectors.tsv");
+TEST_CASE("CigarModifier matches the recorded vectors (tests/unit/data/cigar_modifier_vectors.tsv)") {
+    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/cigar_modifier_vectors.tsv");
     REQUIRE(in.good());
     const Config conf;
     const Region region{"chr1", 1, 500, ""};

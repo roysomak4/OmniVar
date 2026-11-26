@@ -1,6 +1,6 @@
-// threads (M9): `omnivar -th N` must write exactly what `-th 1` writes.
+// threads: `omnivar -th N` must write exactly what `-th 1` writes.
 //
-// The golden cases have one region each, which never exercises the worker pool. Every Simple and
+// The regression cases have one region each, which never exercises the worker pool. Every Simple and
 // Somatic case whose region is at least --min-length bp is split into --chunk bp BED regions, and
 // the binary runs on that BED with -th 1 and -th N, for the TSV (--tsv) and the default VCF. The
 // outputs must be byte-identical (output is in region order). Then a fatal region (outside the
@@ -36,10 +36,10 @@ Result check(const fs::path& path, const Opts& a) {
     for (long s = start; s < end; s += a.chunk)
         bed_lines.push_back(std::format("{}\t{}\t{}\tchunk{}\n", c.chr, s, std::min(s + a.chunk, end), s));
     const TempFile bed(".bed", join(bed_lines, ""));
-    std::vector<std::string> base = {bed.path(), "-b", case_bams(c, golden_bams())};
+    std::vector<std::string> base = {bed.path(), "-b", case_bams(c, bams_dir())};
     base.insert(base.end(), args.begin(), args.end());
     for (auto& w : words("-c 1 -S 2 -E 3 -g 4 -G")) base.push_back(std::move(w));
-    base.push_back(case_fasta_csv(c, golden_fastas()));
+    base.push_back(case_fasta_csv(c, fastas_dir()));
     auto cmd = [&](bool tsv, int th) {
         std::vector<std::string> v = {a.binary};
         if (tsv) v.emplace_back("--tsv");
@@ -81,7 +81,7 @@ int cmd_threads(Args& args) {
     a.timeout = args.int_or("--timeout", 900);
     const int jobs = args.int_or("-j", 4);
     args.finish();
-    const auto paths = case_files(golden_cases(), false);
+    const auto paths = case_files(cases_dir(), false);
     std::vector<Result> results(paths.size());
     parallel_for(paths.size(), jobs, [&](std::size_t i) { results[i] = check(paths[i], a); });
     int pass = 0, fail = 0, skip = 0;

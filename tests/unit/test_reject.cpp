@@ -162,12 +162,11 @@ std::vector<std::string> records(const std::string& vcf, bool drop_rejected) {
 }  // namespace
 
 TEST_CASE("Var2Vcf: rejected records leave the other records unchanged") {
-    // Calls (the jar without -p) and this port's rejected rows for a telomeric region with many
+    // Calls (the run without -p) and the rejected rows for a telomeric region with many
     // low-AF alleles: rejected rows sit at the same starts as calls, between clustered SNVs, and
     // above calls in AF order.
-    const std::string name = "Simple;hg19.fa;Colo829-18_S3-sort.bam;chr1;9922-10122;-p;.txt";
-    const auto calls = lines_of(std::string(OMNIVAR_SOURCE_DIR) + "/tests/golden/expected_nopileup/full/" + name);
-    const auto rejected = lines_of(std::string(OMNIVAR_SOURCE_DIR) + "/tests/golden/expected_rejected/full/" + name);
+    const auto calls = lines_of(std::string(OMNIVAR_SOURCE_DIR) + "/tests/unit/data/colo829_chr1_9922_calls.tsv");
+    const auto rejected = lines_of(std::string(OMNIVAR_SOURCE_DIR) + "/tests/unit/data/colo829_chr1_9922_rejected.tsv");
     REQUIRE(calls.size() == 8);
     REQUIRE(rejected.size() > 100);
 

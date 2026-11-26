@@ -27,8 +27,8 @@ std::vector<std::string> fields(const std::string& s, char sep) {
 }
 }  // namespace
 
-TEST_CASE("FisherExact matches the jar (tests/golden/fisher_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/golden/fisher_vectors.tsv");
+TEST_CASE("FisherExact matches the recorded vectors (tests/unit/data/fisher_vectors.tsv)") {
+    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/fisher_vectors.tsv");
     REQUIRE(in);
     std::string line;
     int rows = 0;
@@ -57,8 +57,8 @@ TEST_CASE("FisherExact matches the jar (tests/golden/fisher_vectors.tsv)") {
     CHECK(failures == 0);
 }
 
-TEST_CASE("FisherExact (R flavour) matches R fisher.test (tests/golden/fisher_r_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/golden/fisher_r_vectors.tsv");
+TEST_CASE("FisherExact (R flavour) matches R fisher.test (tests/unit/data/fisher_r_vectors.tsv)") {
+    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/fisher_r_vectors.tsv");
     REQUIRE(in);
     // R prints 15 significant digits, which identifies a value rounded to 5 dp exactly.
     const auto num = [](const std::string& s) {
@@ -91,8 +91,8 @@ TEST_CASE("FisherExact (R flavour) matches R fisher.test (tests/golden/fisher_r_
     CHECK(failures == 0);
 }
 
-TEST_CASE("HashOrderMap iterates like the JDK HashMap (tests/golden/hashmap_order_vectors.txt)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/golden/hashmap_order_vectors.txt");
+TEST_CASE("HashOrderMap iterates like the JDK HashMap (tests/unit/data/hashmap_order_vectors.txt)") {
+    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/hashmap_order_vectors.txt");
     REQUIRE(in);
     std::string line;
     int checked = 0;

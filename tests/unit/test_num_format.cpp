@@ -31,8 +31,8 @@ std::vector<std::string> split_tab(const std::string& line) {
 
 }  // namespace
 
-TEST_CASE("num_format matches JVM vectors (tests/golden/num_format_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/golden/num_format_vectors.tsv");
+TEST_CASE("num_format matches JVM vectors (tests/unit/data/num_format_vectors.tsv)") {
+    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/num_format_vectors.tsv");
     REQUIRE(in);
     std::string line;
     std::getline(in, line);

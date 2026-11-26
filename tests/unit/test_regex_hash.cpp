@@ -51,7 +51,7 @@ TEST_CASE("Upstream sample-name patterns (Patterns.SAMPLE_PATTERN / SAMPLE_PATTE
     CHECK(group1(kSample, "/data/NA12878.sorted.bam") == "NA12878");
     CHECK(group1(kSample, "/data/tumor_1.sorted.dedup.bam") == "1");  // [^/._]+ stops at '_'
     CHECK(group1(kSample, "x.bam") == "<nomatch>");
-    CHECK(group1(kSample2, "docs/golden/bams/Colo829-18_S3-sort.bam") == "Colo829-18_S3-sort");
+    CHECK(group1(kSample2, "tests/regression/bams/Colo829-18_S3-sort.bam") == "Colo829-18_S3-sort");
     CHECK(group1(kSample2, "/a/b/Oncospan_DNA.realigned.bam") == "Oncospan_DNA.realigned");
     CHECK(group1(kSample2, "t.bam|n.bam") == "t.bam|n");  // raw -b value, greedy group
     CHECK(group1(kSample2, "nobam") == "<nomatch>");
@@ -100,8 +100,8 @@ TEST_CASE("String.split semantics") {
     CHECK(split("1,2,3", ",") == V{"1", "2", "3"});
 }
 
-TEST_CASE("HashMap iteration order matches the JVM (tests/golden/hashmap_order_vectors.txt)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/golden/hashmap_order_vectors.txt");
+TEST_CASE("HashMap iteration order matches the JVM (tests/unit/data/hashmap_order_vectors.txt)") {
+    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/hashmap_order_vectors.txt");
     REQUIRE(in);
     std::string line;
     int cases = 0;

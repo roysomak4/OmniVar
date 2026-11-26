@@ -17,11 +17,8 @@ using RunContext = core::RunContext;
 
 [[nodiscard]] std::expected<std::pair<std::string, std::string>, std::string> sample_names(const Config& config);
 
-// --dev-dump-inputs: the M2 parity dump.
-int dump_inputs(const Config& config);
-
 // --dev-tsv-to-vcf: VCF from a Simple-mode TSV (36 columns, optional CRISPR column),
-// as teststrandbias.R | var2vcf_valid.pl would write it. `path` "-" reads stdin.
+// with the strand-bias test and FILTER annotation of a normal run. `path` "-" reads stdin.
 int tsv_to_vcf(const Config& config, const std::string& path);
 
 // Normal run. Returns the process exit status.

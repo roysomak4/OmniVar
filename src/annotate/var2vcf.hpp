@@ -2,7 +2,7 @@
 
 // Single-sample VCF from the Simple-mode rows: native replacement for
 //   teststrandbias.R | var2vcf_valid.pl -A
-// (tests/scripts/teststrandbias.R, tests/scripts/var2vcf_valid.pl, upstream 1.8.2 scripts).
+// (the upstream 1.8.2 R and Perl scripts).
 //
 // Input rows are the 36-column TSV rows (optionally with the CRISPR column), exactly as
 // SimpleOutputVariant prints them without --fisher. The R step adds the strand-bias Fisher test

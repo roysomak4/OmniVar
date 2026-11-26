@@ -14,8 +14,7 @@ auto parse(std::vector<std::string_view> args) {
 }
 }  // namespace
 
-// Full Configuration parity with the jar is checked by omnivar-testkit cli-parity; these cover
-// the behaviours that do not reach a Configuration.
+// Parser behaviours that do not reach a Configuration (help, warnings, added options).
 
 TEST_CASE("help: no options, -H, -?, and missing -b") {
     auto none = parse({});
@@ -60,10 +59,11 @@ TEST_CASE("missing -G prints the upstream notice and uses the hg19 default") {
     CHECK(r->config.fasta == omnivar::Config::kHg19);
 }
 
-TEST_CASE("dev dump options are removed before the upstream rules") {
-    auto r = parse({"--dev-dump-config", "-b", "x.bam", "-G", "r.fa"});
+TEST_CASE("dev options are removed before the upstream rules") {
+    auto r = parse({"--dev-tsv-to-vcf", "rows.tsv", "-b", "x.bam", "-G", "r.fa"});
     REQUIRE(r);
-    CHECK(r->action == Action::dump_config);
+    CHECK(r->action == Action::tsv_to_vcf);
+    CHECK(r->tsv_path == "rows.tsv");
     // after "--" they are positional
     auto p = parse({"-b", "x.bam", "-G", "r.fa", "--", "--version"});
     REQUIRE(p);

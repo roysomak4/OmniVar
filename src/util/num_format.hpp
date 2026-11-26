@@ -8,7 +8,7 @@
 // - string_format_fixed(v,n): String.format("%.<n>f", v)  (HALF_UP on Double.toString digits)
 // - double_to_string(v):      Double.toString(v) / string concatenation of a double (JDK 19+)
 //
-// Verified against the JVM: tests/golden/num_format_vectors.tsv.
+// Verified against the JVM: tests/unit/data/num_format_vectors.tsv.
 
 #include <string>
 #include <string_view>

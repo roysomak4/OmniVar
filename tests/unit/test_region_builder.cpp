@@ -98,7 +98,7 @@ TEST_CASE("correctChromosome adds or strips chr when the name is not in the BAM 
     CHECK(b.correct_chromosome("chrZ") == "Z");  // corrected even if absent either way
 }
 
-TEST_CASE("golden harness BED with -c 1 -S 2 -E 3 -g 4 -z") {
+TEST_CASE("regression harness BED with -c 1 -S 2 -E 3 -g 4 -z") {
     Config c;
     c.column_for_chromosome = 0;
     c.bed_row_format = BedRowFormat{0, 1, 2, 1, 2, 3};

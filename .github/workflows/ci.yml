@@ -6,11 +6,11 @@ name: CI
 #
 # Order (each job needs the one before; one runner, so they run one after another). The accuracy
 # gate comes first so its result is known in about 3 minutes:
-#   lint        repository rules (no Python, no upstream names in src/), clang-format, clang-tidy
+#   lint        repository rule (C++ only: no Python), clang-format, clang-tidy
 #               (the Clang static analyzer only when called with analyzer: true, as release.yml does)
-#   static      Debian trixie static x86_64 binary (Docker; runs the unit + golden gates inside).
+#   static      Debian trixie static x86_64 binary (Docker; runs the unit, regression and invariant tests inside).
 #               Accuracy gate: the full Oncospan benchmark on that binary.
-#   sanitizers  Clang 20 + libc++ ASan + UBSan: unit + golden gates, and an Oncospan subset;
+#   sanitizers  Clang 20 + libc++ ASan + UBSan: unit, regression and invariant tests, and an Oncospan subset;
 #               Clang 19 TSan: the Oncospan subset with 8 threads. Both subset outputs must equal
 #               the static binary's output byte for byte.
 #
@@ -59,15 +59,10 @@ jobs:
     runs-on: [self-hosted, linux, x64, omnivar]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - name: Repository rules
+      - name: Repository rule (C++ only)
         run: |
-          # Everything in this repository is C++ (tooling that must run the reference jar is Java,
-          # the read-only reference scripts are R and Perl).
+          # All code and test tooling is C++ (tests/testkit); no Python.
           if git ls-files '*.py' | grep .; then echo "Python files are not allowed (use tests/testkit)"; exit 1; fi
-          # No "java" or "vardict" in the code: comments say "upstream" for the reference implementation.
-          if git grep -n -i -E 'java|vardict' -- src tests/unit CMakeLists.txt cmake; then
-            echo "the code must not name the reference implementation"; exit 1
-          fi
       - name: clang-format
         run: git ls-files 'src/*.cpp' 'src/*.hpp' 'tests/unit/*.cpp' 'tests/testkit/*.cpp' 'tests/testkit/*.hpp' | xargs clang-format-20 --dry-run --Werror
       - name: Configure (Clang 19, libstdc++; compile_commands.json for clang-tidy)
@@ -92,7 +87,7 @@ jobs:
     runs-on: [self-hosted, linux, x64, omnivar]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - name: Build the static binary (runs unit + golden gates inside, checks it is static)
+      - name: Build the static binary (runs the unit, regression and invariant tests inside; checks it is static)
         run: docker build -f docker/debian-static.Dockerfile --target export --output type=local,dest=out .
       - name: Check the binary
         run: |
@@ -151,7 +146,7 @@ jobs:
           "-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O1 -g" -DOMNIVAR_WERROR=ON ${{ matrix.cmake_args }}
       - name: Build
         run: cmake --build build --target ${{ matrix.target }} -j "$(nproc)"
-      - name: Unit and golden gates (ASan + UBSan)
+      - name: Unit, regression and invariant tests (ASan + UBSan)
         if: matrix.name == 'asan-ubsan'
         run: ctest --test-dir build --output-on-failure -j "$(nproc)"
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2

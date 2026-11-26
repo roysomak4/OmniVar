@@ -9,7 +9,7 @@
 // 64). It does not model tree bins: if a bin would be treeified (>= 9 entries with table >= 64)
 // the order is not reproducible and std::nullopt is returned.
 //
-// Verified against the JVM: tests/golden/hashmap_order_vectors.txt.
+// Verified against the JVM: tests/unit/data/hashmap_order_vectors.txt.
 
 #include <cstddef>
 #include <cstdint>

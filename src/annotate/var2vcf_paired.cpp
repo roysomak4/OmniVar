@@ -1,6 +1,6 @@
 // Paired (tumour/normal) VCF: native replacement for
 //   testsomatic.R | var2vcf_paired.pl -A
-// (tests/scripts/testsomatic.R, tests/scripts/var2vcf_paired.pl, upstream 1.8.2 scripts).
+// (the upstream 1.8.2 R and Perl scripts).
 //
 // Input rows are the Somatic 55-column TSV (SomaticOutputVariant without --fisher). The R
 // step adds three Fisher tests per row (tumour strands, normal strands, tumour vs normal, the

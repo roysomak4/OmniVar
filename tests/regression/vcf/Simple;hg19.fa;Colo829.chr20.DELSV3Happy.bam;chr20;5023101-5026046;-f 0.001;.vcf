@@ -1,0 +1,167 @@
+##fileformat=VCFv4.2
+##contig=<ID=chrM,length=16571>
+##contig=<ID=chr1,length=249250621>
+##contig=<ID=chr2,length=243199373>
+##contig=<ID=chr3,length=198022430>
+##contig=<ID=chr4,length=191154276>
+##contig=<ID=chr5,length=180915260>
+##contig=<ID=chr6,length=171115067>
+##contig=<ID=chr7,length=159138663>
+##contig=<ID=chr8,length=146364022>
+##contig=<ID=chr9,length=141213431>
+##contig=<ID=chr10,length=135534747>
+##contig=<ID=chr11,length=135006516>
+##contig=<ID=chr12,length=133851895>
+##contig=<ID=chr13,length=115169878>
+##contig=<ID=chr14,length=107349540>
+##contig=<ID=chr15,length=102531392>
+##contig=<ID=chr16,length=90354753>
+##contig=<ID=chr17,length=81195210>
+##contig=<ID=chr18,length=78077248>
+##contig=<ID=chr19,length=59128983>
+##contig=<ID=chr20,length=63025520>
+##contig=<ID=chr21,length=48129895>
+##contig=<ID=chr22,length=51304566>
+##contig=<ID=chrX,length=155270560>
+##contig=<ID=chrY,length=59373566>
+##contig=<ID=chr1_gl000191_random,length=106433>
+##contig=<ID=chr1_gl000192_random,length=547496>
+##contig=<ID=chr4_ctg9_hap1,length=590426>
+##contig=<ID=chr4_gl000193_random,length=189789>
+##contig=<ID=chr4_gl000194_random,length=191469>
+##contig=<ID=chr6_apd_hap1,length=4622290>
+##contig=<ID=chr6_cox_hap2,length=4795371>
+##contig=<ID=chr6_dbb_hap3,length=4610396>
+##contig=<ID=chr6_mann_hap4,length=4683263>
+##contig=<ID=chr6_mcf_hap5,length=4833398>
+##contig=<ID=chr6_qbl_hap6,length=4611984>
+##contig=<ID=chr6_ssto_hap7,length=4928567>
+##contig=<ID=chr7_gl000195_random,length=182896>
+##contig=<ID=chr8_gl000196_random,length=38914>
+##contig=<ID=chr8_gl000197_random,length=37175>
+##contig=<ID=chr9_gl000198_random,length=90085>
+##contig=<ID=chr9_gl000199_random,length=169874>
+##contig=<ID=chr9_gl000200_random,length=187035>
+##contig=<ID=chr9_gl000201_random,length=36148>
+##contig=<ID=chr11_gl000202_random,length=40103>
+##contig=<ID=chr17_ctg5_hap1,length=1680828>
+##contig=<ID=chr17_gl000203_random,length=37498>
+##contig=<ID=chr17_gl000204_random,length=81310>
+##contig=<ID=chr17_gl000205_random,length=174588>
+##contig=<ID=chr17_gl000206_random,length=41001>
+##contig=<ID=chr18_gl000207_random,length=4262>
+##contig=<ID=chr19_gl000208_random,length=92689>
+##contig=<ID=chr19_gl000209_random,length=159169>
+##contig=<ID=chr21_gl000210_random,length=27682>
+##contig=<ID=chrUn_gl000211,length=166566>
+##contig=<ID=chrUn_gl000212,length=186858>
+##contig=<ID=chrUn_gl000213,length=164239>
+##contig=<ID=chrUn_gl000214,length=137718>
+##contig=<ID=chrUn_gl000215,length=172545>
+##contig=<ID=chrUn_gl000216,length=172294>
+##contig=<ID=chrUn_gl000217,length=172149>
+##contig=<ID=chrUn_gl000218,length=161147>
+##contig=<ID=chrUn_gl000219,length=179198>
+##contig=<ID=chrUn_gl000220,length=161802>
+##contig=<ID=chrUn_gl000221,length=155397>
+##contig=<ID=chrUn_gl000222,length=186861>
+##contig=<ID=chrUn_gl000223,length=180455>
+##contig=<ID=chrUn_gl000224,length=179693>
+##contig=<ID=chrUn_gl000225,length=211173>
+##contig=<ID=chrUn_gl000226,length=15008>
+##contig=<ID=chrUn_gl000227,length=128374>
+##contig=<ID=chrUn_gl000228,length=129120>
+##contig=<ID=chrUn_gl000229,length=19913>
+##contig=<ID=chrUn_gl000230,length=43691>
+##contig=<ID=chrUn_gl000231,length=27386>
+##contig=<ID=chrUn_gl000232,length=40652>
+##contig=<ID=chrUn_gl000233,length=45941>
+##contig=<ID=chrUn_gl000234,length=40531>
+##contig=<ID=chrUn_gl000235,length=34474>
+##contig=<ID=chrUn_gl000236,length=41934>
+##contig=<ID=chrUn_gl000237,length=45867>
+##contig=<ID=chrUn_gl000238,length=39939>
+##contig=<ID=chrUn_gl000239,length=33824>
+##contig=<ID=chrUn_gl000240,length=41933>
+##contig=<ID=chrUn_gl000241,length=42152>
+##contig=<ID=chrUn_gl000242,length=43523>
+##contig=<ID=chrUn_gl000243,length=43341>
+##contig=<ID=chrUn_gl000244,length=39929>
+##contig=<ID=chrUn_gl000245,length=36651>
+##contig=<ID=chrUn_gl000246,length=38154>
+##contig=<ID=chrUn_gl000247,length=36422>
+##contig=<ID=chrUn_gl000248,length=39786>
+##contig=<ID=chrUn_gl000249,length=38502>
+##INFO=<ID=SAMPLE,Number=1,Type=String,Description="Sample name (with whitespace translated to underscores)">
+##INFO=<ID=TYPE,Number=1,Type=String,Description="Variant Type: SNV Insertion Deletion Complex">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##INFO=<ID=END,Number=1,Type=Integer,Description="Chr End Position">
+##INFO=<ID=VD,Number=1,Type=Integer,Description="Variant Depth">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##INFO=<ID=BIAS,Number=1,Type=String,Description="Strand Bias Info">
+##INFO=<ID=REFBIAS,Number=1,Type=String,Description="Reference depth by strand">
+##INFO=<ID=VARBIAS,Number=1,Type=String,Description="Variant depth by strand">
+##INFO=<ID=PMEAN,Number=1,Type=Float,Description="The mean distance to the nearest 5 or 3 prime read end (whichever is closer) in all reads that support the variant call">
+##INFO=<ID=PSTD,Number=1,Type=Float,Description="Position STD in reads">
+##INFO=<ID=QUAL,Number=1,Type=Float,Description="Mean quality score in reads">
+##INFO=<ID=QSTD,Number=1,Type=Float,Description="Quality score STD in reads">
+##INFO=<ID=SBF,Number=1,Type=Float,Description="Strand Bias Fisher p-value">
+##INFO=<ID=ODDRATIO,Number=1,Type=Float,Description="Strand Bias Odds ratio">
+##INFO=<ID=MQ,Number=1,Type=Float,Description="Mean Mapping Quality">
+##INFO=<ID=SN,Number=1,Type=Float,Description="Signal to noise">
+##INFO=<ID=HIAF,Number=1,Type=Float,Description="Allele frequency using only high quality bases">
+##INFO=<ID=ADJAF,Number=1,Type=Float,Description="Adjusted AF for indels due to local realignment">
+##INFO=<ID=SHIFT3,Number=1,Type=Integer,Description="No. of bases to be shifted to 3 prime for deletions due to alternative alignment">
+##INFO=<ID=MSI,Number=1,Type=Float,Description="MicroSatellite. > 1 indicates MSI">
+##INFO=<ID=MSILEN,Number=1,Type=Float,Description="MicroSatellite unit length in bp">
+##INFO=<ID=NM,Number=1,Type=Float,Description="Mean mismatches in reads">
+##INFO=<ID=LSEQ,Number=1,Type=String,Description="5' flanking seq">
+##INFO=<ID=RSEQ,Number=1,Type=String,Description="3' flanking seq">
+##INFO=<ID=GDAMP,Number=1,Type=Integer,Description="No. of amplicons supporting variant">
+##INFO=<ID=TLAMP,Number=1,Type=Integer,Description="Total of amplicons covering variant">
+##INFO=<ID=NCAMP,Number=1,Type=Integer,Description="No. of amplicons don't work">
+##INFO=<ID=AMPFLAG,Number=1,Type=Integer,Description="Top variant in amplicons don't match">
+##INFO=<ID=HICNT,Number=1,Type=Integer,Description="High quality variant reads">
+##INFO=<ID=HICOV,Number=1,Type=Integer,Description="High quality total reads">
+##INFO=<ID=SPLITREAD,Number=1,Type=Integer,Description="No. of split reads supporting SV">
+##INFO=<ID=SPANPAIR,Number=1,Type=Integer,Description="No. of pairs supporting SV">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="SV type: INV DUP DEL INS FUS">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="The length of SV in bp">
+##INFO=<ID=DUPRATE,Number=1,Type=Float,Description="Duplication rate in fraction">
+##INFO=<ID=CRISPR,Number=1,Type=Integer,Description="Variant is close to the CRISPR cutting site (-J)">
+##FILTER=<ID=q22.5,Description="Mean Base Quality Below 22.5">
+##FILTER=<ID=Q10,Description="Mean Mapping Quality Below 10">
+##FILTER=<ID=p8,Description="Mean Position in Reads Less than 8">
+##FILTER=<ID=SN1.5,Description="Signal to Noise Less than 1.5">
+##FILTER=<ID=Bias,Description="Strand Bias">
+##FILTER=<ID=pSTD,Description="Position in Reads has STD of 0">
+##FILTER=<ID=d3,Description="Total Depth < 3">
+##FILTER=<ID=v2,Description="Var Depth < 2">
+##FILTER=<ID=f0.02,Description="Allele frequency < 0.02">
+##FILTER=<ID=MSI12,Description="Variant in MSI region with 12 non-monomer MSI or 13 monomer MSI">
+##FILTER=<ID=NM5.25,Description="Mean mismatches in reads >= 5.25, thus likely false positive">
+##FILTER=<ID=InGap,Description="The variant is in the deletion gap, thus likely false positive">
+##FILTER=<ID=InIns,Description="The variant is adjacent to an insertion variant">
+##FILTER=<ID=Cluster0bp,Description="Two variants are within 0 bp">
+##FILTER=<ID=LongMSI,Description="The somatic variant is flanked by long A/T (>=14)">
+##FILTER=<ID=AMPBIAS,Description="Indicate the variant has amplicon bias.">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##FORMAT=<ID=VD,Number=1,Type=Integer,Description="Variant Depth">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##FORMAT=<ID=RD,Number=2,Type=Integer,Description="Reference forward, reverse reads">
+##FORMAT=<ID=ALD,Number=2,Type=Integer,Description="Variant forward, reverse reads">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	Colo829.chr20.DELSV3Happy
+chr20	5023338	.	A	G	113	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=16;END=5023338;VD=9;AF=0.5625;BIAS=2:2;REFBIAS=3:4;VARBIAS=6:3;PMEAN=46.9;PSTD=1;QUAL=35.8;QSTD=1;SBF=0.61451;ODDRATIO=2.501000400160064;MQ=60.0;SN=8.000;HIAF=0.5714;ADJAF=0;SHIFT3=1;MSI=2.000;MSILEN=1;NM=2.3;HICNT=8;HICOV=14;LSEQ=AGTGTTGGGATTATAGGCAT;RSEQ=AGCCACCACAACCGACCTGA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/0:16:9:7,9:0.5625:3,4:6,3
+chr20	5023675	.	C	T	139	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=20;END=5023675;VD=12;AF=0.6000;BIAS=2:2;REFBIAS=3:5;VARBIAS=7:5;PMEAN=49.8;PSTD=1;QUAL=38.8;QSTD=1;SBF=0.64992;ODDRATIO=2.2340877102835055;MQ=60.0;SN=24.000;HIAF=0.6000;ADJAF=0;SHIFT3=0;MSI=1.000;MSILEN=1;NM=1.8;HICNT=12;HICOV=20;LSEQ=TGCATTGCCCAGGCTGGTCT;RSEQ=GAACTCCTGAGCTCAAGTGA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/0:20:12:8,12:0.6000:3,5:7,5
+chr20	5023744	.	C	T	130	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=17;END=5023744;VD=10;AF=0.5882;BIAS=2:2;REFBIAS=4:3;VARBIAS=5:5;PMEAN=32.1;PSTD=1;QUAL=39.2;QSTD=1;SBF=1;ODDRATIO=1.31092;MQ=60.0;SN=20.000;HIAF=0.6250;ADJAF=0.0588;SHIFT3=0;MSI=2.000;MSILEN=2;NM=2.3;HICNT=10;HICOV=16;LSEQ=GGGATTACAGGCATGAGCCA;RSEQ=AGCACCCAGCTTCCCTTTTT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/0:17:10:7,10:0.5882:4,3:5,5
+chr20	5024034	.	C	T	108	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=19;END=5024034;VD=7;AF=0.3684;BIAS=2:2;REFBIAS=6:6;VARBIAS=3:4;PMEAN=38.0;PSTD=1;QUAL=38.6;QSTD=1;SBF=1;ODDRATIO=1.31328;MQ=60.0;SN=14.000;HIAF=0.3684;ADJAF=0;SHIFT3=0;MSI=1.000;MSILEN=1;NM=1.4;HICNT=7;HICOV=19;LSEQ=TGCATGTCATGAATTCCATG;RSEQ=ACTCTTTGGATTGGGAGGCA;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:19:7:12,7:0.3684:6,6:3,4
+chr20	5024179	.	C	T	122	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=19;END=5024179;VD=10;AF=0.5263;BIAS=2:2;REFBIAS=5:4;VARBIAS=4:6;PMEAN=39.5;PSTD=1;QUAL=36.9;QSTD=1;SBF=0.65628;ODDRATIO=1.81296;MQ=60.0;SN=9.000;HIAF=0.5000;ADJAF=0;SHIFT3=0;MSI=1.000;MSILEN=1;NM=2.2;HICNT=9;HICOV=18;LSEQ=TGGGCTGCTCCATGGAGGCA;RSEQ=TGGCATCAGGAGCTTAAAAC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/0:19:10:9,10:0.5263:5,4:4,6
+chr20	5024237	.	C	T	50	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=11;END=5024237;VD=3;AF=0.2727;BIAS=2:2;REFBIAS=4:4;VARBIAS=2:1;PMEAN=20.3;PSTD=1;QUAL=31.7;QSTD=1;SBF=1;ODDRATIO=1.8793459875963163;MQ=60.0;SN=2.000;HIAF=0.2000;ADJAF=0;SHIFT3=1;MSI=2.000;MSILEN=1;NM=3.0;HICNT=2;HICOV=10;LSEQ=TTTGTGCTCATCAGCAATGT;RSEQ=CTTGGTGCCTGGACCGGTTT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:11:3:8,3:0.2727:4,4:2,1
+chr20	5024507	.	A	C	36	p8;pSTD	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=16;END=5024507;VD=2;AF=0.1250;BIAS=2:2;REFBIAS=9:5;VARBIAS=1:1;PMEAN=6.0;PSTD=0;QUAL=36.5;QSTD=1;SBF=1;ODDRATIO=1.73197;MQ=60.0;SN=4.000;HIAF=0.1429;ADJAF=0;SHIFT3=0;MSI=1.000;MSILEN=1;NM=1.0;HICNT=2;HICOV=14;LSEQ=GTTGCCCAGGCTGGTCTTGA;RSEQ=CTCCTGGGCTCAAGTGATAT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:16:2:14,2:0.1250:9,5:1,1
+chr20	5024573	.	C	T	141	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=20;END=5024573;VD=13;AF=0.6500;BIAS=2:2;REFBIAS=3:4;VARBIAS=9:4;PMEAN=40.2;PSTD=1;QUAL=38.2;QSTD=1;SBF=0.35635;ODDRATIO=2.8284542497525105;MQ=60.0;SN=12.000;HIAF=0.6316;ADJAF=0.0500;SHIFT3=0;MSI=2.000;MSILEN=1;NM=1.1;HICNT=12;HICOV=19;LSEQ=GGGGTTACAGGCATGAGCCA;RSEQ=CATGGCCAGCTACTCCTGCC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/0:20:13:7,13:0.6500:3,4:9,4
+chr20	5024851	.	T	A	87	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=13;END=5024851;VD=6;AF=0.4615;BIAS=2:2;REFBIAS=4:3;VARBIAS=3:3;PMEAN=44.7;PSTD=1;QUAL=34.0;QSTD=1;SBF=1;ODDRATIO=1.30401;MQ=60.0;SN=5.000;HIAF=0.5556;ADJAF=0.0769;SHIFT3=0;MSI=2.000;MSILEN=1;NM=2.2;HICNT=5;HICOV=9;LSEQ=AAAACTTGTAGAATGGAGCT;RSEQ=GGCACAGAGTAAGCTTCAAT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:13:6:7,6:0.4615:4,3:3,3
+chr20	5024928	.	G	A	151	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=20;END=5024928;VD=16;AF=0.8000;BIAS=2:2;REFBIAS=2:2;VARBIAS=11:5;PMEAN=35.3;PSTD=1;QUAL=37.8;QSTD=1;SBF=0.58679;ODDRATIO=2.1089037918090177;MQ=60.0;SN=15.000;HIAF=0.7895;ADJAF=0;SHIFT3=1;MSI=2.000;MSILEN=1;NM=2.0;HICNT=15;HICOV=19;LSEQ=ATGACGAACACCTGTGGATG;RSEQ=TTAAAAACTGCACTGCAGGT;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/1:20:16:4,16:0.8000:2,2:11,5
+chr20	5024990	.	AT	A	41	pSTD	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=Deletion;DP=19;END=5024991;VD=2;AF=0.1053;BIAS=2:2;REFBIAS=10:7;VARBIAS=1:1;PMEAN=63.0;PSTD=0;QUAL=41.0;QSTD=0;SBF=1;ODDRATIO=1.40151;MQ=60.0;SN=4.000;HIAF=0.1176;ADJAF=0;SHIFT3=8;MSI=9.000;MSILEN=1;NM=0;HICNT=2;HICOV=17;LSEQ=GGTGGGACCCAGGCTTCCGT;RSEQ=TTTTTTTTAAGCCCCTTAGG;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	0/1:19:2:17,2:0.1053:10,7:1,1
+chr20	5025836	.	G	A	93	PASS	SAMPLE=Colo829.chr20.DELSV3Happy;TYPE=SNV;DP=13;END=5025836;VD=8;AF=0.6154;BIAS=2:2;REFBIAS=3:2;VARBIAS=3:5;PMEAN=51.9;PSTD=1;QUAL=31.0;QSTD=1;SBF=0.59207;ODDRATIO=2.32357;MQ=60.0;SN=3.000;HIAF=0.6667;ADJAF=0;SHIFT3=3;MSI=2.000;MSILEN=1;NM=2.2;HICNT=6;HICOV=9;LSEQ=TTTGGGAGGCCGAGGCGGGT;RSEQ=GATCACGAGGTTAGGGGTTC;DUPRATE=0;SPLITREAD=0;SPANPAIR=0	GT:DP:VD:AD:AF:RD:ALD	1/0:13:8:5,8:0.6154:3,2:3,5

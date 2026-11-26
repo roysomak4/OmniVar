@@ -60,8 +60,8 @@ TEST_CASE("malformed lines are errors") {
     CHECK_FALSE(CsvSliceProvider::from_text("chr1,1x,4,ACGT\n", "x.csv"));
 }
 
-TEST_CASE("every golden reference CSV loads") {
-    const std::filesystem::path dir = OMNIVAR_SOURCE_DIR "/docs/golden/fastas";
+TEST_CASE("every regression reference CSV loads") {
+    const std::filesystem::path dir = OMNIVAR_SOURCE_DIR "/tests/regression/fastas";
     REQUIRE(std::filesystem::is_directory(dir));
     int n = 0;
     for (const auto& entry : std::filesystem::directory_iterator(dir)) {

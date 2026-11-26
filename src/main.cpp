@@ -26,8 +26,6 @@ int main(int argc, char** argv) {
             std::print("{}", omnivar::cli::usage());
             return 0;
         case omnivar::cli::Action::version: std::println("{}", omnivar::cli::version_string()); return 0;
-        case omnivar::cli::Action::dump_config: std::print("{}", omnivar::cli::dump_config(parsed->config)); return 0;
-        case omnivar::cli::Action::dump_inputs: return omnivar::app::dump_inputs(parsed->config);
         case omnivar::cli::Action::tsv_to_vcf: return omnivar::app::tsv_to_vcf(parsed->config, parsed->tsv_path);
         case omnivar::cli::Action::run: return omnivar::app::run(parsed->config);
     }
