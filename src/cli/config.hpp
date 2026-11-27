@@ -10,7 +10,7 @@
 
 #include "annotate/var2vcf.hpp"
 
-namespace omnivar {
+namespace senri {
 
 struct BedRowFormat {
     int chr_column;
@@ -132,4 +132,4 @@ struct Config {
     [[nodiscard]] bool is_zero_based_defined() const { return zero_based.has_value(); }
 };
 
-}  // namespace omnivar
+}  // namespace senri

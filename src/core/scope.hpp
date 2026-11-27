@@ -15,12 +15,12 @@
 #include "io/reference.hpp"
 #include "region/region.hpp"
 
-namespace omnivar::io {
+namespace senri::io {
 class BamCache;
 class ReferenceProvider;
-}  // namespace omnivar::io
+}  // namespace senri::io
 
-namespace omnivar::core {
+namespace senri::core {
 
 // GlobalReadOnlyScope, minus conf.
 struct RunContext {
@@ -72,4 +72,4 @@ struct RegionScope {
     return region.chr;
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

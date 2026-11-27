@@ -8,7 +8,7 @@
 #include <string>
 #include <string_view>
 
-namespace omnivar::io {
+namespace senri::io {
 
 struct ReferenceError {
     enum class Kind {
@@ -31,4 +31,4 @@ public:
                                                                              int end) const = 0;
 };
 
-}  // namespace omnivar::io
+}  // namespace senri::io

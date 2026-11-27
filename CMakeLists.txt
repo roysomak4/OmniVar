@@ -7,21 +7,21 @@ cmake_minimum_required(VERSION 3.25)
 set(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG" CACHE STRING "C flags for Release builds")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG" CACHE STRING "C++ flags for Release builds")
 
-project(omnivar
+project(senri
     VERSION 0.1.0
-    DESCRIPTION "omnivar: variant caller for targeted and whole-genome sequencing"
+    DESCRIPTION "senri: variant caller for targeted and whole-genome sequencing"
     LANGUAGES C CXX)
 
 
 # ---------------------------------------------------------------------------
 # Options
 # ---------------------------------------------------------------------------
-option(OMNIVAR_STATIC      "Link a fully static binary (Linux) / static htslib + compression libs (macOS)" OFF)
-option(OMNIVAR_BUILD_TESTS "Build unit tests" ON)
-option(OMNIVAR_WERROR      "Treat compiler warnings as errors" OFF)
-option(OMNIVAR_SANITIZE    "Build with AddressSanitizer + UndefinedBehaviorSanitizer" OFF)
-option(OMNIVAR_LIBDEFLATE  "Use libdeflate in htslib when available" ON)
-set(OMNIVAR_HTSLIB_TARBALL "" CACHE FILEPATH
+option(SENRI_STATIC      "Link a fully static binary (Linux) / static htslib + compression libs (macOS)" OFF)
+option(SENRI_BUILD_TESTS "Build unit tests" ON)
+option(SENRI_WERROR      "Treat compiler warnings as errors" OFF)
+option(SENRI_SANITIZE    "Build with AddressSanitizer + UndefinedBehaviorSanitizer" OFF)
+option(SENRI_LIBDEFLATE  "Use libdeflate in htslib when available" ON)
+set(SENRI_HTSLIB_TARBALL "" CACHE FILEPATH
     "Local htslib release tarball (offline builds); downloaded when empty")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -53,29 +53,29 @@ endif()
 # ---------------------------------------------------------------------------
 # Warnings, sanitizers, static linking
 # ---------------------------------------------------------------------------
-add_library(omnivar_options INTERFACE)
-target_compile_options(omnivar_options INTERFACE
+add_library(senri_options INTERFACE)
+target_compile_options(senri_options INTERFACE
     -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wno-sign-conversion
-    $<$<BOOL:${OMNIVAR_WERROR}>:-Werror>)
+    $<$<BOOL:${SENRI_WERROR}>:-Werror>)
 
-if(OMNIVAR_SANITIZE)
-    target_compile_options(omnivar_options INTERFACE
+if(SENRI_SANITIZE)
+    target_compile_options(senri_options INTERFACE
         -fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=undefined)
-    target_link_options(omnivar_options INTERFACE -fsanitize=address,undefined)
+    target_link_options(senri_options INTERFACE -fsanitize=address,undefined)
     # libc++/libc++abi false positive on every caught exception; see the file.
-    target_sources(omnivar_options INTERFACE ${PROJECT_SOURCE_DIR}/src/util/asan_default_options.cpp)
+    target_sources(senri_options INTERFACE ${PROJECT_SOURCE_DIR}/src/util/asan_default_options.cpp)
 endif()
 
-if(OMNIVAR_STATIC)
-    if(OMNIVAR_SANITIZE)
-        message(FATAL_ERROR "OMNIVAR_STATIC and OMNIVAR_SANITIZE cannot be combined")
+if(SENRI_STATIC)
+    if(SENRI_SANITIZE)
+        message(FATAL_ERROR "SENRI_STATIC and SENRI_SANITIZE cannot be combined")
     endif()
     if(APPLE)
         # libSystem stays dynamic; prefer static archives for everything else.
         set(CMAKE_FIND_LIBRARY_SUFFIXES .a .tbd .dylib)
     else()
         set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
-        target_link_options(omnivar_options INTERFACE -static)
+        target_link_options(senri_options INTERFACE -static)
     endif()
 endif()
 
@@ -90,7 +90,7 @@ include(cmake/htslib.cmake)
 # ---------------------------------------------------------------------------
 configure_file(src/version.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/generated/version.hpp @ONLY)
 
-add_library(omnivar_lib STATIC
+add_library(senri_lib STATIC
     src/annotate/var2vcf.cpp
     src/annotate/var2vcf_paired.cpp
     src/app/launcher.cpp
@@ -119,37 +119,37 @@ add_library(omnivar_lib STATIC
     src/util/regex_engine.cpp
     src/util/number_parse.cpp
 )
-target_include_directories(omnivar_lib PUBLIC
+target_include_directories(senri_lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_BINARY_DIR}/generated)
-target_link_libraries(omnivar_lib PUBLIC omnivar_options htslib::htslib)
+target_link_libraries(senri_lib PUBLIC senri_options htslib::htslib)
 
-add_executable(omnivar src/main.cpp)
-target_link_libraries(omnivar PRIVATE omnivar_lib)
+add_executable(senri src/main.cpp)
+target_link_libraries(senri PRIVATE senri_lib)
 
-install(TARGETS omnivar RUNTIME DESTINATION bin)
+install(TARGETS senri RUNTIME DESTINATION bin)
 
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
-if(OMNIVAR_BUILD_TESTS)
+if(SENRI_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests/unit)
 
-    add_test(NAME cli.version COMMAND omnivar --version)
+    add_test(NAME cli.version COMMAND senri --version)
     set_tests_properties(cli.version PROPERTIES
-        PASS_REGULAR_EXPRESSION "^omnivar ${PROJECT_VERSION}, htslib [0-9]")
-    add_test(NAME cli.help COMMAND omnivar -H)
-    set_tests_properties(cli.help PROPERTIES PASS_REGULAR_EXPRESSION "usage: omnivar")
-    add_test(NAME cli.unknown_option COMMAND omnivar --no-such-option)
+        PASS_REGULAR_EXPRESSION "^senri ${PROJECT_VERSION}, htslib [0-9]")
+    add_test(NAME cli.help COMMAND senri -H)
+    set_tests_properties(cli.help PROPERTIES PASS_REGULAR_EXPRESSION "usage: senri")
+    add_test(NAME cli.unknown_option COMMAND senri --no-such-option)
     set_tests_properties(cli.unknown_option PROPERTIES WILL_FAIL TRUE)
 
-    # Regression and invariant gates (tests/testkit, omnivar-testkit; tests/regression).
+    # Regression and invariant gates (tests/testkit, senri-testkit; tests/regression).
     add_subdirectory(tests/testkit)
-    set(TK $<TARGET_FILE:omnivar-testkit>)
-    set(BIN --binary $<TARGET_FILE:omnivar>)
-    # omnivar's TSV and VCF on the 90 regression cases, and crafted rows through the VCF writer,
-    # against the checked-in output (omnivar-testkit regress --update after a deliberate change).
+    set(TK $<TARGET_FILE:senri-testkit>)
+    set(BIN --binary $<TARGET_FILE:senri>)
+    # senri's TSV and VCF on the 90 regression cases, and crafted rows through the VCF writer,
+    # against the checked-in output (senri-testkit regress --update after a deliberate change).
     foreach(mode Simple Somatic)
         string(TOLOWER ${mode} m)
         add_test(NAME regress.tsv.${m} COMMAND ${TK} regress ${BIN} --part tsv --mode ${mode} -j 4)

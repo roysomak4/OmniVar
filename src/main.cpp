@@ -11,9 +11,9 @@ int main(int argc, char** argv) {
     std::vector<std::string_view> args(argv + 1, argv + argc);
 
     const int cpus = static_cast<int>(std::max(1u, std::thread::hardware_concurrency()));
-    auto parsed = omnivar::cli::parse_command_line(args, cpus);
+    auto parsed = senri::cli::parse_command_line(args, cpus);
     if (!parsed) {
-        std::println(stderr, "omnivar: {}", parsed.error().message);
+        std::println(stderr, "senri: {}", parsed.error().message);
         return 1;
     }
     if (!parsed->warnings.empty()) {
@@ -21,13 +21,13 @@ int main(int argc, char** argv) {
     }
 
     switch (parsed->action) {
-        case omnivar::cli::Action::help:
+        case senri::cli::Action::help:
             // The help page, exit status 0.
-            std::print("{}", omnivar::cli::usage());
+            std::print("{}", senri::cli::usage());
             return 0;
-        case omnivar::cli::Action::version: std::println("{}", omnivar::cli::version_string()); return 0;
-        case omnivar::cli::Action::tsv_to_vcf: return omnivar::app::tsv_to_vcf(parsed->config, parsed->tsv_path);
-        case omnivar::cli::Action::run: return omnivar::app::run(parsed->config);
+        case senri::cli::Action::version: std::println("{}", senri::cli::version_string()); return 0;
+        case senri::cli::Action::tsv_to_vcf: return senri::app::tsv_to_vcf(parsed->config, parsed->tsv_path);
+        case senri::cli::Action::run: return senri::app::run(parsed->config);
     }
     return 2;
 }

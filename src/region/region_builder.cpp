@@ -8,7 +8,7 @@
 #include "util/hash_order.hpp"
 #include "util/number_parse.hpp"
 
-namespace omnivar {
+namespace senri {
 
 namespace {
 
@@ -362,4 +362,4 @@ std::expected<Segments, std::string> RegionBuilder::build_region_from_configurat
     return Segments{{Region{chr, s, e, gene, 0, 0}}};
 }
 
-}  // namespace omnivar
+}  // namespace senri

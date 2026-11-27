@@ -8,7 +8,7 @@
 #include "util/checked_string.hpp"
 #include "util/number_parse.hpp"
 
-namespace omnivar::util {
+namespace senri::util {
 
 namespace {
 
@@ -297,4 +297,4 @@ std::string double_to_string(double value) {
     return out;
 }
 
-}  // namespace omnivar::util
+}  // namespace senri::util

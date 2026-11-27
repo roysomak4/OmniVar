@@ -13,7 +13,7 @@
 
 #include "cli/config.hpp"
 
-namespace omnivar::cli {
+namespace senri::cli {
 
 enum class Action {
     help,        // no options, -H or -?; also --help
@@ -41,4 +41,4 @@ struct ParsedCommandLine {
 [[nodiscard]] std::string usage();
 [[nodiscard]] std::string version_string();
 
-}  // namespace omnivar::cli
+}  // namespace senri::cli

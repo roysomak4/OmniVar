@@ -11,7 +11,7 @@
 #include "util/regex_engine.hpp"
 #include "util/sequence.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 using util::char_at;
 using util::qual_at;
@@ -1641,4 +1641,4 @@ void CigarParser::sclip5_high_quality_processing(const std::string& query_sequen
     }
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

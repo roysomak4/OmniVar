@@ -10,7 +10,7 @@
 
 struct faidx_t;
 
-namespace omnivar::io {
+namespace senri::io {
 
 class FaidxProvider final : public ReferenceProvider {
 public:
@@ -27,4 +27,4 @@ private:
     std::shared_ptr<faidx_t> fai_;
 };
 
-}  // namespace omnivar::io
+}  // namespace senri::io

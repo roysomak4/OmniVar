@@ -7,7 +7,7 @@
 #include "io/reference.hpp"
 #include "region/region.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 struct ModifiedCigar {
     int position;
@@ -24,4 +24,4 @@ struct ModifiedCigar {
                                          int insertion_deletion_length, const Region& region, int max_read_length,
                                          const Config& conf, ExceptionCounter& exceptions);
 
-}  // namespace omnivar::core
+}  // namespace senri::core

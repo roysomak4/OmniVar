@@ -1,4 +1,4 @@
-add_executable(omnivar_unit_tests
+add_executable(senri_unit_tests
     main.cpp
     test_cli.cpp
     test_csv_slice_provider.cpp
@@ -9,8 +9,8 @@ add_executable(omnivar_unit_tests
     test_region_builder.cpp
     test_stats_containers.cpp
 )
-target_include_directories(omnivar_unit_tests SYSTEM PRIVATE ${PROJECT_SOURCE_DIR}/tests/third_party)
-target_compile_definitions(omnivar_unit_tests PRIVATE OMNIVAR_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
-target_link_libraries(omnivar_unit_tests PRIVATE omnivar_lib)
+target_include_directories(senri_unit_tests SYSTEM PRIVATE ${PROJECT_SOURCE_DIR}/tests/third_party)
+target_compile_definitions(senri_unit_tests PRIVATE SENRI_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
+target_link_libraries(senri_unit_tests PRIVATE senri_lib)
 
-add_test(NAME unit COMMAND omnivar_unit_tests)
+add_test(NAME unit COMMAND senri_unit_tests)

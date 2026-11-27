@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <print>
 
-namespace omnivar::core {
+namespace senri::core {
 
 void print_exception_and_continue(const std::exception& e, const std::string& place, const std::string& place_def,
                                   const Region* region, ExceptionCounter& counter) {
@@ -16,9 +16,9 @@ void print_exception_and_continue(const std::exception& e, const std::string& pl
     }
     std::println(stderr, "{}", e.what());
     if (const int current = ++counter.count; current > Config::kMaxExceptionCount) {
-        throw FatalError("omnivar fails (there were " + std::to_string(counter.count.load()) +
+        throw FatalError("senri fails (there were " + std::to_string(counter.count.load()) +
                          " continued exceptions during the run).");
     }
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

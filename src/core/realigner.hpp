@@ -12,7 +12,7 @@
 #include "core/variation.hpp"
 #include "core/variation_utils.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 // VariationRealigner.process without filterAllSVStructures.
 void realigner_process(VariationData& data, RegionScope& scope);
@@ -80,4 +80,4 @@ struct Match35 {
 };
 [[nodiscard]] Match35 find35match(const std::string& seq5, const std::string& seq3, const Config& conf);
 
-}  // namespace omnivar::core
+}  // namespace senri::core

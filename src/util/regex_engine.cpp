@@ -4,7 +4,7 @@
 #include <bitset>
 #include <limits>
 
-namespace omnivar::util {
+namespace senri::util {
 
 struct Regex::Node {
     enum class Kind { chars, any, start, end, group, alt, concat, repeat };
@@ -635,4 +635,4 @@ std::expected<std::vector<std::string_view>, std::string> regex_split(std::strin
     return regex_split(text, *re);
 }
 
-}  // namespace omnivar::util
+}  // namespace senri::util

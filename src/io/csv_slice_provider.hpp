@@ -13,7 +13,7 @@
 
 #include "io/reference_provider.hpp"
 
-namespace omnivar::io {
+namespace senri::io {
 
 class CsvSliceProvider final : public ReferenceProvider {
 public:
@@ -33,4 +33,4 @@ private:
 // True when the -G path names a thin-FASTA CSV rather than an indexed FASTA.
 [[nodiscard]] bool is_csv_reference(std::string_view path);
 
-}  // namespace omnivar::io
+}  // namespace senri::io

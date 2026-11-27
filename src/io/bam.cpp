@@ -4,7 +4,7 @@
 
 #include "util/number_parse.hpp"
 
-namespace omnivar::io {
+namespace senri::io {
 
 struct BamFile::Impl {
     htsFile* fp = nullptr;
@@ -217,4 +217,4 @@ bool SamView::read(BamRecord& out) {
     }
 }
 
-}  // namespace omnivar::io
+}  // namespace senri::io

@@ -1,6 +1,6 @@
 #pragma once
 
-// omnivar-testkit: the test and validation harness (regression cases, thread and -p invariants,
+// senri-testkit: the test and validation harness (regression cases, thread and -p invariants,
 // truth-set benchmark, release notes). Test tooling only; not installed.
 
 #include <algorithm>
@@ -22,7 +22,7 @@ namespace fs = std::filesystem;
 // ---------------------------------------------------------------------------------------------
 // Repository layout
 // ---------------------------------------------------------------------------------------------
-fs::path root();  // source tree (compiled in; OMNIVAR_SOURCE_DIR env overrides)
+fs::path root();  // source tree (compiled in; SENRI_SOURCE_DIR env overrides)
 inline fs::path regression_dir() { return root() / "tests/regression"; }
 inline fs::path cases_dir() { return regression_dir() / "cases"; }  // case spec + expected TSV
 inline fs::path vcf_dir() { return regression_dir() / "vcf"; }      // expected VCF per case

@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace omnivar {
+namespace senri {
 
 struct Region {
     std::string chr;
@@ -36,4 +36,4 @@ using Segments = std::vector<std::vector<Region>>;
 // Contig name -> length, from the BAM header.
 using ChrLengths = std::unordered_map<std::string, int>;
 
-}  // namespace omnivar
+}  // namespace senri

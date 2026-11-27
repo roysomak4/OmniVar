@@ -9,7 +9,7 @@
 #include "util/checked_string.hpp"
 #include "util/num_format.hpp"
 
-namespace omnivar::modes {
+namespace senri::modes {
 
 namespace {
 
@@ -229,4 +229,4 @@ void simple_post_process(core::AlignedVars& aligned, const core::RegionScope& sc
     });
 }
 
-}  // namespace omnivar::modes
+}  // namespace senri::modes

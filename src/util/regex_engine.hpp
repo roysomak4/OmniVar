@@ -24,7 +24,7 @@
 #include <utility>
 #include <vector>
 
-namespace omnivar::util {
+namespace senri::util {
 
 class Regex {
 public:
@@ -70,4 +70,4 @@ private:
 [[nodiscard]] std::expected<std::vector<std::string_view>, std::string> regex_split(std::string_view text,
                                                                                     std::string_view regex);
 
-}  // namespace omnivar::util
+}  // namespace senri::util

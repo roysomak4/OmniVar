@@ -26,7 +26,7 @@
 #include <utility>
 #include <vector>
 
-namespace omnivar::annotate {
+namespace senri::annotate {
 
 // A threshold: the value, and its text as given (Perl writes the option text into the tag name,
 // e.g. "f0.02", "q22.5").
@@ -111,4 +111,4 @@ private:
     std::vector<std::string> first_seen_;
 };
 
-}  // namespace omnivar::annotate
+}  // namespace senri::annotate

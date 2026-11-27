@@ -11,7 +11,7 @@
 #include "io/record_preprocessor.hpp"
 #include "io/reference_provider.hpp"
 
-namespace omnivar::modes {
+namespace senri::modes {
 
 // What every pipeline run needs besides its region, BAMs and reference.
 struct PipelineEnv {
@@ -37,4 +37,4 @@ struct PipelineResult {
 // "a.bam:b.bam" -> {"a.bam", "b.bam"} (String.split(":")).
 [[nodiscard]] std::vector<std::string> split_bams(const std::string& bam);
 
-}  // namespace omnivar::modes
+}  // namespace senri::modes

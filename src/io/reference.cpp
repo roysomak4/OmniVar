@@ -6,7 +6,7 @@
 #include "io/csv_slice_provider.hpp"
 #include "io/faidx_provider.hpp"
 
-namespace omnivar::io {
+namespace senri::io {
 
 namespace {
 
@@ -99,4 +99,4 @@ std::expected<std::unique_ptr<ReferenceProvider>, ReferenceError> open_reference
     return std::make_unique<FaidxProvider>(std::move(*p));
 }
 
-}  // namespace omnivar::io
+}  // namespace senri::io

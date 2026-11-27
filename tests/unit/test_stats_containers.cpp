@@ -9,7 +9,7 @@
 #include "util/number_parse.hpp"
 #include "util/ordered_maps.hpp"
 
-using namespace omnivar;
+using namespace senri;
 
 namespace {
 std::vector<std::string> fields(const std::string& s, char sep) {
@@ -28,7 +28,7 @@ std::vector<std::string> fields(const std::string& s, char sep) {
 }  // namespace
 
 TEST_CASE("FisherExact matches the recorded vectors (tests/unit/data/fisher_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/fisher_vectors.tsv");
+    std::ifstream in(SENRI_SOURCE_DIR "/tests/unit/data/fisher_vectors.tsv");
     REQUIRE(in);
     std::string line;
     int rows = 0;
@@ -58,7 +58,7 @@ TEST_CASE("FisherExact matches the recorded vectors (tests/unit/data/fisher_vect
 }
 
 TEST_CASE("FisherExact (R flavour) matches R fisher.test (tests/unit/data/fisher_r_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/fisher_r_vectors.tsv");
+    std::ifstream in(SENRI_SOURCE_DIR "/tests/unit/data/fisher_r_vectors.tsv");
     REQUIRE(in);
     // R prints 15 significant digits, which identifies a value rounded to 5 dp exactly.
     const auto num = [](const std::string& s) {
@@ -92,7 +92,7 @@ TEST_CASE("FisherExact (R flavour) matches R fisher.test (tests/unit/data/fisher
 }
 
 TEST_CASE("HashOrderMap iterates like the JDK HashMap (tests/unit/data/hashmap_order_vectors.txt)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/hashmap_order_vectors.txt");
+    std::ifstream in(SENRI_SOURCE_DIR "/tests/unit/data/hashmap_order_vectors.txt");
     REQUIRE(in);
     std::string line;
     int checked = 0;

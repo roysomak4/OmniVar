@@ -1,6 +1,6 @@
-# omnivar-testkit: test and validation harness (regression cases, thread and -p invariants,
+# senri-testkit: test and validation harness (regression cases, thread and -p invariants,
 # truth-set benchmark, release notes). Not installed.
-add_executable(omnivar-testkit
+add_executable(senri-testkit
     bench.cpp
     common.cpp
     main.cpp
@@ -9,5 +9,5 @@ add_executable(omnivar-testkit
     release_notes.cpp
     threads.cpp
 )
-target_compile_definitions(omnivar-testkit PRIVATE OMNIVAR_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
-target_link_libraries(omnivar-testkit PRIVATE omnivar_options htslib::htslib Threads::Threads)
+target_compile_definitions(senri-testkit PRIVATE SENRI_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
+target_link_libraries(senri-testkit PRIVATE senri_options htslib::htslib Threads::Threads)

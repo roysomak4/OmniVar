@@ -7,7 +7,7 @@
 #include "util/checked_string.hpp"
 #include "util/sequence.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 char ref_at(const RefMap& ref, int pos) {
     auto r = ref_get(ref, pos);
@@ -232,4 +232,4 @@ bool ismatchref(std::string_view sequence, const RefMap& ref, int position, int 
     return mm <= mm_limit && mm / static_cast<double>(sequence.size()) < 0.15;
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

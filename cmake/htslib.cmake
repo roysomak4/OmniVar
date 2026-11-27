@@ -6,29 +6,29 @@ include(ExternalProject)
 set(HTSLIB_VERSION 1.22.1)
 set(HTSLIB_SHA256 3dfa6eeb71db719907fe3ef7c72cb2ec9965b20b58036547c858c89b58c342f7)
 
-# Source tarball, in order: OMNIVAR_HTSLIB_TARBALL (explicit file), then the shared download
+# Source tarball, in order: SENRI_HTSLIB_TARBALL (explicit file), then the shared download
 # cache, which is filled once from the release URL. The cache is shared by every build directory
 # (and by the Docker build through a BuildKit cache mount), so htslib is downloaded once per
 # machine. The SHA-256 is checked when the file enters the cache and again by ExternalProject.
 set(_hts_name "htslib-${HTSLIB_VERSION}.tar.bz2")
 set(_hts_release_url "https://github.com/samtools/htslib/releases/download/${HTSLIB_VERSION}/${_hts_name}")
 
-if(DEFINED ENV{OMNIVAR_DOWNLOAD_CACHE})
-    set(_cache_default "$ENV{OMNIVAR_DOWNLOAD_CACHE}")
+if(DEFINED ENV{SENRI_DOWNLOAD_CACHE})
+    set(_cache_default "$ENV{SENRI_DOWNLOAD_CACHE}")
 elseif(DEFINED ENV{XDG_CACHE_HOME})
-    set(_cache_default "$ENV{XDG_CACHE_HOME}/omnivar/downloads")
+    set(_cache_default "$ENV{XDG_CACHE_HOME}/senri/downloads")
 elseif(DEFINED ENV{HOME})
-    set(_cache_default "$ENV{HOME}/.cache/omnivar/downloads")
+    set(_cache_default "$ENV{HOME}/.cache/senri/downloads")
 else()
     set(_cache_default "${CMAKE_BINARY_DIR}/_downloads")
 endif()
-set(OMNIVAR_DOWNLOAD_CACHE "${_cache_default}" CACHE PATH
+set(SENRI_DOWNLOAD_CACHE "${_cache_default}" CACHE PATH
     "Directory that keeps downloaded third-party sources (htslib) across build directories")
 
-if(OMNIVAR_HTSLIB_TARBALL)
-    set(_hts_url "${OMNIVAR_HTSLIB_TARBALL}")
+if(SENRI_HTSLIB_TARBALL)
+    set(_hts_url "${SENRI_HTSLIB_TARBALL}")
 else()
-    set(_hts_cached "${OMNIVAR_DOWNLOAD_CACHE}/${_hts_name}")
+    set(_hts_cached "${SENRI_DOWNLOAD_CACHE}/${_hts_name}")
     if(EXISTS "${_hts_cached}")
         file(SHA256 "${_hts_cached}" _hts_have)
         if(NOT _hts_have STREQUAL HTSLIB_SHA256)
@@ -37,8 +37,8 @@ else()
         endif()
     endif()
     if(NOT EXISTS "${_hts_cached}")
-        message(STATUS "htslib: downloading ${_hts_release_url} into ${OMNIVAR_DOWNLOAD_CACHE}")
-        file(MAKE_DIRECTORY "${OMNIVAR_DOWNLOAD_CACHE}")
+        message(STATUS "htslib: downloading ${_hts_release_url} into ${SENRI_DOWNLOAD_CACHE}")
+        file(MAKE_DIRECTORY "${SENRI_DOWNLOAD_CACHE}")
         # Download to a per-process name, then rename, so parallel configures cannot see a partial file.
         string(RANDOM LENGTH 8 _hts_tmp_suffix)
         set(_hts_tmp "${_hts_cached}.${_hts_tmp_suffix}.part")
@@ -49,7 +49,7 @@ else()
             file(REMOVE "${_hts_tmp}")
             list(GET _hts_dl 1 _hts_dl_msg)
             message(FATAL_ERROR "htslib: download failed (${_hts_dl_msg}). Offline: pass "
-                                "-DOMNIVAR_HTSLIB_TARBALL=/path/to/${_hts_name}")
+                                "-DSENRI_HTSLIB_TARBALL=/path/to/${_hts_name}")
         endif()
         file(RENAME "${_hts_tmp}" "${_hts_cached}")
     else()
@@ -64,7 +64,7 @@ find_package(LibLZMA REQUIRED)
 
 set(_hts_deflate_flag --without-libdeflate)
 set(_hts_deflate_lib "")
-if(OMNIVAR_LIBDEFLATE)
+if(SENRI_LIBDEFLATE)
     find_path(LIBDEFLATE_INCLUDE_DIR libdeflate.h)
     find_library(LIBDEFLATE_LIBRARY NAMES deflate libdeflate)
     if(LIBDEFLATE_INCLUDE_DIR AND LIBDEFLATE_LIBRARY)
@@ -79,7 +79,7 @@ endif()
 # Flags for htslib's own C compile: optimised, and sanitised when the C++ code is.
 set(_hts_cflags "-O2 -g")
 set(_hts_ldflags "")
-if(OMNIVAR_SANITIZE)
+if(SENRI_SANITIZE)
     string(APPEND _hts_cflags " -fsanitize=address,undefined -fno-omit-frame-pointer")
     # configure links test programs with CFLAGS objects; they need the sanitizer runtime too.
     string(APPEND _hts_ldflags " -fsanitize=address,undefined")

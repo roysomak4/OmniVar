@@ -9,7 +9,7 @@
 #include <string_view>
 #include <utility>
 
-namespace omnivar::core::patterns {
+namespace senri::core::patterns {
 
 inline bool is_digit(char c) { return c >= '0' && c <= '9'; }
 inline bool is_atgc(char c) { return c == 'A' || c == 'T' || c == 'G' || c == 'C'; }
@@ -179,4 +179,4 @@ inline std::string remove_first_caret_digits(std::string_view s) {
     return std::string(s.substr(0, p)) + std::string(s.substr(p + 1 + d));
 }
 
-}  // namespace omnivar::core::patterns
+}  // namespace senri::core::patterns

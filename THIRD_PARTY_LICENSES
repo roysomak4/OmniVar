@@ -1,7 +1,7 @@
-Third-party software in omnivar
+Third-party software in senri
 ===============================
 
-The omnivar release binary is statically linked. Besides omnivar's own code (MIT License,
+The senri release binary is statically linked. Besides senri's own code (MIT License,
 see LICENSE), it contains the software listed below. Each component's licence notice follows.
 Versions are those of the release build: Debian trixie packages, and htslib built from source.
 
@@ -19,12 +19,12 @@ Versions are those of the release build: Debian trixie packages, and htslib buil
   libgcc)                                              Exception 3.1
 
 glibc is linked statically. The LGPL lets you modify the library and relink the program with
-it: the complete source of omnivar is at https://github.com/roysomak4/OmniVar, and
+it: the complete source of senri is at https://github.com/roysomak4/Senri, and
 docker/debian-static.Dockerfile rebuilds the binary against any glibc. The glibc source is at
 https://sourceware.org/glibc/ (Debian package source: `apt-get source glibc` on Debian trixie).
 
 The GCC Runtime Library Exception allows the libstdc++ and libgcc code that the compiler
-inserts or links into the program to be distributed under omnivar's own terms; their notice
+inserts or links into the program to be distributed under senri's own terms; their notice
 is included below for completeness.
 
 
@@ -32,7 +32,7 @@ is included below for completeness.
 VarDictJava 1.8.3 (https://github.com/AstraZeneca-NGS/VarDictJava)
 ================================================================================
 
-omnivar's variant-calling core is derived from VarDictJava. Its strand-bias and VCF annotation
+senri's variant-calling core is derived from VarDictJava. Its strand-bias and VCF annotation
 reproduce VarDict's R and Perl scripts (Zhongwu Lai, AstraZeneca).
 The test BAMs, reference slices and case definitions in tests/regression/ come from the
 VarDictJava test suite.

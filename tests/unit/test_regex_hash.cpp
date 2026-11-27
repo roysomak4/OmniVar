@@ -7,7 +7,7 @@
 #include "util/number_parse.hpp"
 #include "util/regex_engine.hpp"
 
-using namespace omnivar::util;
+using namespace senri::util;
 
 namespace {
 
@@ -101,7 +101,7 @@ TEST_CASE("String.split semantics") {
 }
 
 TEST_CASE("HashMap iteration order matches the JVM (tests/unit/data/hashmap_order_vectors.txt)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/hashmap_order_vectors.txt");
+    std::ifstream in(SENRI_SOURCE_DIR "/tests/unit/data/hashmap_order_vectors.txt");
     REQUIRE(in);
     std::string line;
     int cases = 0;

@@ -8,7 +8,7 @@
 #include <string_view>
 #include <variant>
 
-namespace omnivar::util {
+namespace senri::util {
 
 // Integer.parseInt: optional sign, decimal digits, must fit in int. No whitespace.
 [[nodiscard]] std::expected<std::int32_t, std::string> parse_int(std::string_view s);
@@ -49,4 +49,4 @@ private:
 // (long) cast of a double, same rules.
 [[nodiscard]] std::int64_t d2l_cast(double d);
 
-}  // namespace omnivar::util
+}  // namespace senri::util

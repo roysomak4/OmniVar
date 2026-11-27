@@ -9,7 +9,7 @@
 #include "util/checked_string.hpp"
 #include "util/sequence.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 namespace {
 
@@ -1523,4 +1523,4 @@ void sv_process(VariationData& data, RegionScope& scope) {
     }
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

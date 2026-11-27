@@ -9,7 +9,7 @@
 
 #include "io/bam.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 struct CigarElement {
     int length;
@@ -45,4 +45,4 @@ using Cigar = std::vector<CigarElement>;
 // Cigar.getReferenceLength: M D N = X
 [[nodiscard]] int reference_length(const Cigar& c);
 
-}  // namespace omnivar::core
+}  // namespace senri::core

@@ -1,4 +1,4 @@
-// Linked into every executable of a OMNIVAR_SANITIZE build (CMakeLists.txt).
+// Linked into every executable of a SENRI_SANITIZE build (CMakeLists.txt).
 //
 // With libc++ 19 as packaged by Ubuntu/Debian, std::runtime_error's message string is allocated
 // by libc++ (operator new) and freed by the system libc++abi (free). AddressSanitizer reports

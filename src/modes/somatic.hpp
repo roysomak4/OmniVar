@@ -7,7 +7,7 @@
 
 #include "modes/pipeline.hpp"
 
-namespace omnivar::modes {
+namespace senri::modes {
 
 // SomaticMode.printHeader (empty unless -h)
 [[nodiscard]] std::string somatic_header(const Config& conf);
@@ -16,4 +16,4 @@ namespace omnivar::modes {
 // normal = bam2) and SomaticPostProcessModule.accept; appends the output lines to `out`.
 void process_somatic_region(const PipelineEnv& env, const Region& region, std::string& out);
 
-}  // namespace omnivar::modes
+}  // namespace senri::modes

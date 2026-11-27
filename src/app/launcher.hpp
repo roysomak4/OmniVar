@@ -9,7 +9,7 @@
 #include "core/scope.hpp"
 #include "region/region.hpp"
 
-namespace omnivar::app {
+namespace senri::app {
 
 using RunContext = core::RunContext;
 
@@ -24,4 +24,4 @@ int tsv_to_vcf(const Config& config, const std::string& path);
 // Normal run. Returns the process exit status.
 int run(const Config& config);
 
-}  // namespace omnivar::app
+}  // namespace senri::app

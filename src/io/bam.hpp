@@ -14,7 +14,7 @@
 
 #include "region/region.hpp"
 
-namespace omnivar::io {
+namespace senri::io {
 
 struct BamError {
     std::string message;
@@ -125,4 +125,4 @@ private:
     std::optional<std::string> error_;
 };
 
-}  // namespace omnivar::io
+}  // namespace senri::io

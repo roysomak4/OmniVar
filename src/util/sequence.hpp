@@ -6,7 +6,7 @@
 #include <string>
 #include <string_view>
 
-namespace omnivar::util {
+namespace senri::util {
 
 // htsjdk SequenceUtil.complement(byte): A<->T, C<->G in both cases; anything else unchanged.
 [[nodiscard]] constexpr char complement(char b) {
@@ -33,4 +33,4 @@ namespace omnivar::util {
 // Utils.reverse(String)
 [[nodiscard]] inline std::string reverse(std::string_view s) { return std::string(s.rbegin(), s.rend()); }
 
-}  // namespace omnivar::util
+}  // namespace senri::util

@@ -14,7 +14,7 @@
 
 namespace {
 
-using namespace omnivar;
+using namespace senri;
 using core::RejectReason;
 
 // A variant that passes every isGoodVar rule with the default Config, at AF 0.1 (so the
@@ -165,8 +165,8 @@ TEST_CASE("Var2Vcf: rejected records leave the other records unchanged") {
     // Calls (the run without -p) and the rejected rows for a telomeric region with many
     // low-AF alleles: rejected rows sit at the same starts as calls, between clustered SNVs, and
     // above calls in AF order.
-    const auto calls = lines_of(std::string(OMNIVAR_SOURCE_DIR) + "/tests/unit/data/colo829_chr1_9922_calls.tsv");
-    const auto rejected = lines_of(std::string(OMNIVAR_SOURCE_DIR) + "/tests/unit/data/colo829_chr1_9922_rejected.tsv");
+    const auto calls = lines_of(std::string(SENRI_SOURCE_DIR) + "/tests/unit/data/colo829_chr1_9922_calls.tsv");
+    const auto rejected = lines_of(std::string(SENRI_SOURCE_DIR) + "/tests/unit/data/colo829_chr1_9922_rejected.tsv");
     REQUIRE(calls.size() == 8);
     REQUIRE(rejected.size() > 100);
 

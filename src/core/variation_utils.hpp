@@ -12,7 +12,7 @@
 #include "core/scope.hpp"
 #include "core/variation.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 using RefMap = std::unordered_map<int, char>;
 
@@ -62,4 +62,4 @@ void correct_cnt(Variation& v);
 
 [[nodiscard]] bool ismatchref(std::string_view sequence, const RefMap& ref, int position, int dir, int mm_limit = 3);
 
-}  // namespace omnivar::core
+}  // namespace senri::core

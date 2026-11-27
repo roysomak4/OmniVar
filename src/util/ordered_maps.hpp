@@ -25,7 +25,7 @@
 
 #include "util/hash_order.hpp"
 
-namespace omnivar::util {
+namespace senri::util {
 
 inline std::int32_t hash_code(int v) { return v; }
 inline std::int32_t hash_code(char c) { return static_cast<unsigned char>(c); }  // Character.hashCode
@@ -384,4 +384,4 @@ private:
     std::size_t size_ = 0;
 };
 
-}  // namespace omnivar::util
+}  // namespace senri::util

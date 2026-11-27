@@ -7,7 +7,7 @@
 #include "core/scope.hpp"
 #include "core/variant.hpp"
 
-namespace omnivar::modes {
+namespace senri::modes {
 
 // SimpleOutputVariant.toString for one variant (nullptr = a null variant).
 [[nodiscard]] std::string simple_output_line(const core::Variant* variant, const Region& region, const std::string& sv,
@@ -24,4 +24,4 @@ inline constexpr char kRejectedLineMarker = '\x1f';
 // SimplePostProcessModule.accept: appends output lines for one region to `out`.
 void simple_post_process(core::AlignedVars& aligned, const core::RegionScope& scope, std::string& out);
 
-}  // namespace omnivar::modes
+}  // namespace senri::modes

@@ -3,8 +3,8 @@
 
 #include "io/csv_slice_provider.hpp"
 
-using omnivar::io::CsvSliceProvider;
-using omnivar::io::ReferenceError;
+using senri::io::CsvSliceProvider;
+using senri::io::ReferenceError;
 
 namespace {
 CsvSliceProvider make(std::string_view text) {
@@ -61,7 +61,7 @@ TEST_CASE("malformed lines are errors") {
 }
 
 TEST_CASE("every regression reference CSV loads") {
-    const std::filesystem::path dir = OMNIVAR_SOURCE_DIR "/tests/regression/fastas";
+    const std::filesystem::path dir = SENRI_SOURCE_DIR "/tests/regression/fastas";
     REQUIRE(std::filesystem::is_directory(dir));
     int n = 0;
     for (const auto& entry : std::filesystem::directory_iterator(dir)) {

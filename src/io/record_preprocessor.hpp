@@ -16,7 +16,7 @@
 #include "io/bam.hpp"
 #include "region/region.hpp"
 
-namespace omnivar::io {
+namespace senri::io {
 
 // Opens each BAM once and hands out the open file (one reader per file per
 // thread in SamView.threadLocalSAMReaders).
@@ -63,4 +63,4 @@ private:
     std::mt19937_64 rnd_;
 };
 
-}  // namespace omnivar::io
+}  // namespace senri::io

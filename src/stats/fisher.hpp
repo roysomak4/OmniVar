@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-namespace omnivar::stats {
+namespace senri::stats {
 
 enum class FisherFlavor { jvm, r };
 
@@ -58,4 +58,4 @@ private:
 [[nodiscard]] double hypergeometric_cumulative(int population, int successes, int sample, int x);
 [[nodiscard]] double hypergeometric_upper_cumulative(int population, int successes, int sample, int x);
 
-}  // namespace omnivar::stats
+}  // namespace senri::stats

@@ -13,7 +13,7 @@
 #include "util/regex_engine.hpp"
 #include "version.hpp"
 
-namespace omnivar {
+namespace senri {
 
 BamNames BamNames::from(const std::string& value) {
     BamNames b;
@@ -29,9 +29,9 @@ BamNames BamNames::from(const std::string& value) {
     return b;
 }
 
-}  // namespace omnivar
+}  // namespace senri
 
-namespace omnivar::cli {
+namespace senri::cli {
 
 namespace {
 
@@ -661,9 +661,9 @@ std::expected<ParsedCommandLine, ParseError> parse_command_line(std::span<const 
 
 std::string usage() {
     std::string s =
-        "usage: omnivar [-n name_reg] [-b bam] [-c chr] [-S start] [-E end] [-s seg_starts] [-e seg_ends] [-x #_nu] "
+        "usage: senri [-n name_reg] [-b bam] [-c chr] [-S start] [-E end] [-s seg_starts] [-e seg_ends] [-x #_nu] "
         "[-g gene] [-f freq] [-r #_reads] [-B #_reads] region_info\n"
-        "omnivar is a variant calling program for SNV, MNV, indels (<50 bp), complex and structural variants.\n"
+        "senri is a variant calling program for SNV, MNV, indels (<50 bp), complex and structural variants.\n"
         "Options:\n";
     for (const auto& o : kOptions) {
         std::string head = " -" + std::string(o.opt);
@@ -705,6 +705,6 @@ std::string usage() {
     return s;
 }
 
-std::string version_string() { return "omnivar " + std::string(kVersion) + ", htslib " + hts_version(); }
+std::string version_string() { return "senri " + std::string(kVersion) + ", htslib " + hts_version(); }
 
-}  // namespace omnivar::cli
+}  // namespace senri::cli

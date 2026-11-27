@@ -10,7 +10,7 @@
 #include "region/region.hpp"
 #include "util/regex_engine.hpp"
 
-namespace omnivar {
+namespace senri {
 
 // Result of reading the BED file.
 struct BedFile {
@@ -53,4 +53,4 @@ private:
     std::optional<std::string> chromosome_override_;
 };
 
-}  // namespace omnivar
+}  // namespace senri

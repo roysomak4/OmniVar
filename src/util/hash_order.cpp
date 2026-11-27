@@ -1,6 +1,6 @@
 #include "util/hash_order.hpp"
 
-namespace omnivar::util {
+namespace senri::util {
 
 // Model of the JDK 8+ HashMap putVal/resize for distinct keys without removals.
 std::optional<std::vector<std::size_t>> hashmap_order(const std::vector<std::int32_t>& hashes) {
@@ -63,4 +63,4 @@ std::optional<std::vector<std::size_t>> hashmap_order(const std::vector<std::int
     return order;
 }
 
-}  // namespace omnivar::util
+}  // namespace senri::util

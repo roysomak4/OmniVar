@@ -8,7 +8,7 @@
 #include "core/variation_utils.hpp"
 #include "io/record_preprocessor.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 struct CigarParserResult {
     VariationData data;
@@ -113,4 +113,4 @@ private:
     int read_position_excluding_soft_clipped_ = 0;
 };
 
-}  // namespace omnivar::core
+}  // namespace senri::core

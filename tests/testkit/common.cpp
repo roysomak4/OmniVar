@@ -21,12 +21,12 @@ extern char** environ;
 namespace testkit {
 
 fs::path root() {
-    if (const char* env = std::getenv("OMNIVAR_SOURCE_DIR"); env && *env) return env;
-    return OMNIVAR_SOURCE_DIR;
+    if (const char* env = std::getenv("SENRI_SOURCE_DIR"); env && *env) return env;
+    return SENRI_SOURCE_DIR;
 }
 
 [[noreturn]] void die(std::string_view msg) {
-    std::println(stderr, "omnivar-testkit: {}", msg);
+    std::println(stderr, "senri-testkit: {}", msg);
     std::exit(2);
 }
 
@@ -190,7 +190,7 @@ static std::string temp_base() {
 }
 
 TempFile::TempFile(std::string_view suffix, std::string_view content) {
-    std::string tmpl = temp_base() + "/omnivar-testkit-XXXXXX" + std::string(suffix);
+    std::string tmpl = temp_base() + "/senri-testkit-XXXXXX" + std::string(suffix);
     const int fd = ::mkstemps(tmpl.data(), static_cast<int>(suffix.size()));
     if (fd < 0) die("mkstemps failed: " + std::string(std::strerror(errno)));
     ::close(fd);
@@ -203,7 +203,7 @@ TempFile::~TempFile() { ::unlink(path_.c_str()); }
 void TempFile::write(std::string_view content) const { write_file(path_, content); }
 
 TempDir::TempDir() {
-    std::string tmpl = temp_base() + "/omnivar-testkit-XXXXXX";
+    std::string tmpl = temp_base() + "/senri-testkit-XXXXXX";
     if (!::mkdtemp(tmpl.data())) die("mkdtemp failed: " + std::string(std::strerror(errno)));
     path_ = tmpl;
 }

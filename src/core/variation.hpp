@@ -13,7 +13,7 @@
 
 #include "util/ordered_maps.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 struct Variation {
     int vars_count = 0;             // varsCount
@@ -150,4 +150,4 @@ inline Variation* get_variation_maybe(PositionMap& hash, int start, std::optiona
 // VariationUtils.getVariationFromSeq
 inline Variation& get_variation_from_seq(Sclip& sclip, int idx, char ch) { return sclip.seq[idx].get_or_create(ch); }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

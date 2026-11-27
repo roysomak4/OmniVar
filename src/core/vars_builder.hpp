@@ -6,7 +6,7 @@
 #include "core/variant.hpp"
 #include "core/variation.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 struct MsiResult {
     double msi;
@@ -19,4 +19,4 @@ struct MsiResult {
 
 [[nodiscard]] AlignedVars build_vars(VariationData& data, const RegionScope& scope);
 
-}  // namespace omnivar::core
+}  // namespace senri::core

@@ -10,7 +10,7 @@
 #include "util/num_format.hpp"
 #include "util/number_parse.hpp"
 
-namespace omnivar::annotate::detail {
+namespace senri::annotate::detail {
 
 inline std::vector<std::string> split_tabs(std::string_view s) {
     // Perl split(/\t/) drops trailing empty fields.
@@ -50,4 +50,4 @@ inline bool perl_true(const std::string& s) { return !s.empty() && s != "0"; }
 
 inline std::string integer_text(double v) { return util::decimal_format(v, 0); }
 
-}  // namespace omnivar::annotate::detail
+}  // namespace senri::annotate::detail

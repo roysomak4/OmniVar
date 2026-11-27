@@ -4,7 +4,7 @@
 
 #include <cstdlib>
 
-namespace omnivar::io {
+namespace senri::io {
 
 void FaidxProvider::Free::operator()(faidx_t* f) const { fai_destroy(f); }
 
@@ -54,4 +54,4 @@ std::expected<std::string, ReferenceError> FaidxProvider::sub_seq(std::string_vi
     return out;
 }
 
-}  // namespace omnivar::io
+}  // namespace senri::io

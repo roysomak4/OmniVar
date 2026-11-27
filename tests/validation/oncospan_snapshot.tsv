@@ -1,4 +1,4 @@
-# omnivar-testkit bench snapshot: counts and digests only (regenerate with --update-snapshot)
+# senri-testkit bench snapshot: counts and digests only (regenerate with --update-snapshot)
 records	8568
 pass	6991
 filter.Bias	11

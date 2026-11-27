@@ -13,7 +13,7 @@
 #include "cli/config.hpp"
 #include "util/ordered_maps.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 // Why isGoodVar rejects a variant: one value per rule, in the order the rules are checked.
 // -p writes rejected variants with FILTER = reject_id(reason).
@@ -98,4 +98,4 @@ using AlignedVars = util::HashOrderMap<int, Vars>;
 // VariationUtils.getOrPutVars
 inline Vars& get_or_put_vars(AlignedVars& map, int position) { return map.get_or_create(position); }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

@@ -11,7 +11,7 @@
 #include "util/num_format.hpp"
 #include "util/number_parse.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 namespace {
 
@@ -789,4 +789,4 @@ void Builder::construct_debug_lines(const std::vector<std::string>& debug_lines,
 
 }  // namespace
 
-}  // namespace omnivar::core
+}  // namespace senri::core

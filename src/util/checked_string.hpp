@@ -9,7 +9,7 @@
 #include <string>
 #include <string_view>
 
-namespace omnivar::util {
+namespace senri::util {
 
 struct RecoverableError : std::runtime_error {
     using std::runtime_error::runtime_error;
@@ -115,4 +115,4 @@ struct RecoverableError : std::runtime_error {
     }
 }
 
-}  // namespace omnivar::util
+}  // namespace senri::util

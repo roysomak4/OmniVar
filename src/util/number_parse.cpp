@@ -5,7 +5,7 @@
 #include <limits>
 #include <string>
 
-namespace omnivar::util {
+namespace senri::util {
 
 namespace {
 
@@ -283,4 +283,4 @@ std::expected<ParsedNumber, std::string> create_number(std::string_view s) {
     return ParsedNumber(*l);
 }
 
-}  // namespace omnivar::util
+}  // namespace senri::util

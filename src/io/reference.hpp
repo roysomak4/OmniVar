@@ -13,7 +13,7 @@
 #include "io/reference_provider.hpp"
 #include "region/region.hpp"
 
-namespace omnivar::io {
+namespace senri::io {
 
 struct Reference {
     struct LoadedRegion {
@@ -43,4 +43,4 @@ struct Reference {
 // Opens the -G reference: a thin-FASTA CSV when the path ends in ".csv", else an indexed FASTA.
 [[nodiscard]] std::expected<std::unique_ptr<ReferenceProvider>, ReferenceError> open_reference(const std::string& path);
 
-}  // namespace omnivar::io
+}  // namespace senri::io

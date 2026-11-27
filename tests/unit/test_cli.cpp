@@ -5,8 +5,8 @@
 #include "cli/cli.hpp"
 #include "version.hpp"
 
-using omnivar::cli::Action;
-using omnivar::cli::parse_command_line;
+using senri::cli::Action;
+using senri::cli::parse_command_line;
 
 namespace {
 auto parse(std::vector<std::string_view> args) {
@@ -38,8 +38,8 @@ TEST_CASE("-h is the header flag, not help") {
 
 TEST_CASE("--version") {
     CHECK(parse({"--version"})->action == Action::version);
-    auto v = omnivar::cli::version_string();
-    CHECK(v.starts_with("omnivar " + std::string(omnivar::kVersion)));
+    auto v = senri::cli::version_string();
+    CHECK(v.starts_with("senri " + std::string(senri::kVersion)));
     CHECK(v.contains("htslib "));
 }
 
@@ -56,7 +56,7 @@ TEST_CASE("missing -G prints the upstream notice and uses the hg19 default") {
     auto r = parse({"-b", "x.bam", "a.bed"});
     REQUIRE(r);
     CHECK(r->warnings == "Reference file path wasn't set (option -G). Will be used the default fasta path.\n");
-    CHECK(r->config.fasta == omnivar::Config::kHg19);
+    CHECK(r->config.fasta == senri::Config::kHg19);
 }
 
 TEST_CASE("dev options are removed before the upstream rules") {
@@ -117,9 +117,9 @@ TEST_CASE("--dev-tsv-to-vcf needs no caller options") {
 // var2vcf_paired.pl defaults apply to thresholds the user did not set.
 TEST_CASE("paired VCF options: Perl defaults unless given") {
     const std::vector<std::string_view> plain = {"-b", "t.bam|n.bam", "-G", "ref.fa", "-R", "chr1:1-10"};
-    auto p = omnivar::cli::parse_command_line(plain, 4);
+    auto p = senri::cli::parse_command_line(plain, 4);
     REQUIRE(p.has_value());
-    const auto o = omnivar::annotate::paired_options(p->config.vcf);
+    const auto o = senri::annotate::paired_options(p->config.vcf);
     CHECK(o.min_depth.text == "5");
     CHECK(o.min_var_depth.text == "3");
     CHECK(o.min_mq.value == 0);
@@ -136,9 +136,9 @@ TEST_CASE("paired VCF options: Perl defaults unless given") {
                                                "7",
                                                "--filter-max-pvalue=0.01",
                                                "--vcf-somatic-only"};
-    auto q = omnivar::cli::parse_command_line(set, 4);
+    auto q = senri::cli::parse_command_line(set, 4);
     REQUIRE(q.has_value());
-    const auto o2 = omnivar::annotate::paired_options(q->config.vcf);
+    const auto o2 = senri::annotate::paired_options(q->config.vcf);
     CHECK(o2.min_depth.text == "7");
     CHECK(o2.min_var_depth.text == "3");
     CHECK(o2.max_pvalue.value == 0.01);

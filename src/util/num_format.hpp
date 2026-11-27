@@ -13,7 +13,7 @@
 #include <string>
 #include <string_view>
 
-namespace omnivar::util {
+namespace senri::util {
 
 // DecimalFormat with pattern "0" (fraction_digits == 0) or "0." followed by fraction_digits zeros.
 // RoundingMode.HALF_EVEN on the shortest decimal digits of the double; a '5' at the rounding
@@ -46,4 +46,4 @@ namespace omnivar::util {
 // Math.round(double): floor(v + 0.5) with the JVM's special cases (NaN -> 0, saturation).
 [[nodiscard]] long long math_round(double value);
 
-}  // namespace omnivar::util
+}  // namespace senri::util

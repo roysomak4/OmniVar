@@ -29,7 +29,7 @@
 #include "util/regex_engine.hpp"
 #include "util/sequence.hpp"
 
-namespace omnivar::app {
+namespace senri::app {
 
 namespace {
 
@@ -167,7 +167,7 @@ std::expected<RunContext, std::string> init_resources(const Config& conf) {
 int tsv_to_vcf(const Config& conf, const std::string& path) {
     std::FILE* in = path == "-" ? stdin : std::fopen(path.c_str(), "rb");
     if (in == nullptr) {
-        std::println(stderr, "omnivar: cannot open {}", path);
+        std::println(stderr, "senri: cannot open {}", path);
         return 1;
     }
     std::string text;
@@ -237,14 +237,14 @@ void process_simple_region(const modes::PipelineEnv& env, const Region& region, 
 int run(const Config& conf) {
     auto ctx = init_resources(conf);
     if (!ctx) {
-        std::println(stderr, "omnivar: {}", ctx.error());
+        std::println(stderr, "senri: {}", ctx.error());
         return 1;
     }
     const bool splicing = conf.output_splicing;
     if (!splicing && !(conf.region_of_interest || !ctx->amplicon_based_calling)) {
         // Amplicon mode (an 8-column BED, or -a) is out of scope for this release.
         std::println(stderr,
-                     "omnivar: amplicon mode (8-column amplicon BED or -a) is not supported in this "
+                     "senri: amplicon mode (8-column amplicon BED or -a) is not supported in this "
                      "version; use a 3- or 4-column BED");
         return 2;
     }
@@ -486,4 +486,4 @@ int run(const Config& conf) {
     return 0;
 }
 
-}  // namespace omnivar::app
+}  // namespace senri::app

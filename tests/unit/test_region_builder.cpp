@@ -3,7 +3,7 @@
 #include "cli/config.hpp"
 #include "region/region_builder.hpp"
 
-using namespace omnivar;
+using namespace senri;
 
 namespace {
 

@@ -5,7 +5,7 @@
 #include "core/vars_builder.hpp"
 #include "util/regex_engine.hpp"
 
-namespace omnivar::modes {
+namespace senri::modes {
 
 std::vector<std::string> split_bams(const std::string& bam) {
     static const util::Regex colon = util::Regex::compile(":").value();
@@ -34,4 +34,4 @@ PipelineResult run_pipeline(const PipelineEnv& env, const Region& region, const 
     return result;
 }
 
-}  // namespace omnivar::modes
+}  // namespace senri::modes

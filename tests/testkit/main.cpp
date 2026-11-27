@@ -6,10 +6,10 @@
 
 namespace {
 
-constexpr std::string_view usage = R"(usage: omnivar-testkit <command> [options]
+constexpr std::string_view usage = R"(usage: senri-testkit <command> [options]
 
 Regression and invariants (the ctest gates):
-  regress           omnivar output vs its checked-in output (tests/regression)
+  regress           senri output vs its checked-in output (tests/regression)
                     --binary B [--part tsv,vcf,synthetic] [--mode Simple|Somatic]... [-k substr]...
                     [--update] [--diff N] [-v] [-j N]
   threads           -th N output equals -th 1   --binary B [-th 4] [--chunk 500] [-j N]
@@ -47,6 +47,6 @@ int main(int argc, char** argv) {
     for (const auto& [name, f] : table) {
         if (name == cmd) return f(a);
     }
-    std::print(stderr, "omnivar-testkit: unknown command {}\n\n{}", cmd, usage);
+    std::print(stderr, "senri-testkit: unknown command {}\n\n{}", cmd, usage);
     return 2;
 }

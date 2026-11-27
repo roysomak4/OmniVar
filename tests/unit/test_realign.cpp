@@ -15,7 +15,7 @@
 
 namespace {
 
-using namespace omnivar;
+using namespace senri;
 
 std::vector<std::string> split_tabs(const std::string& line) {
     std::vector<std::string> f;
@@ -118,7 +118,7 @@ TEST_CASE("CigarModifier: CigarModifierTest.threeIndels") {
 }
 
 TEST_CASE("CigarModifier matches the recorded vectors (tests/unit/data/cigar_modifier_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/cigar_modifier_vectors.tsv");
+    std::ifstream in(SENRI_SOURCE_DIR "/tests/unit/data/cigar_modifier_vectors.tsv");
     REQUIRE(in.good());
     const Config conf;
     const Region region{"chr1", 1, 500, ""};

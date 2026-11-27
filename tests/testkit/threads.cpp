@@ -1,4 +1,4 @@
-// threads: `omnivar -th N` must write exactly what `-th 1` writes.
+// threads: `senri -th N` must write exactly what `-th 1` writes.
 //
 // The regression cases have one region each, which never exercises the worker pool. Every Simple and
 // Somatic case whose region is at least --min-length bp is split into --chunk bp BED regions, and

@@ -12,7 +12,7 @@
 #include "util/regex_engine.hpp"
 #include "util/sequence.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 namespace {
 
@@ -811,4 +811,4 @@ ModifiedCigar modify_cigar(int position, const std::string& cigar, const std::st
     return {m.position_, m.cigar_str_, m.query_sequence_, m.query_quality_};
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

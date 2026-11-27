@@ -1,12 +1,12 @@
-// bench: score omnivar calls against a truth set with `aardvark compare` (haplotype-aware, the
+// bench: score senri calls against a truth set with `aardvark compare` (haplotype-aware, the
 // comparator GIAB recommends), and optionally check the call set against a snapshot.
 //
-//   omnivar-testkit bench --binary build/omnivar --reference ref.fa --bed targets.bed -b s.bam
+//   senri-testkit bench --binary build/senri --reference ref.fa --bed targets.bed -b s.bam
 //       [-N name] --truth truth.vcf.gz [--snapshot FILE [--update-snapshot]] [--min-recall 1]
 //       [--somatic] [--min-af X] [--out DIR] [-th 16] [-- extra caller options]
-//   omnivar-testkit bench --vcf calls.vcf --reference ref.fa --bed eval.bed --truth truth.vcf.gz ...
+//   senri-testkit bench --vcf calls.vcf --reference ref.fa --bed eval.bed --truth truth.vcf.gz ...
 //
-// 1. omnivar writes the VCF (default output) for the targets (-b "T|N" for a tumour/normal pair),
+// 1. senri writes the VCF (default output) for the targets (-b "T|N" for a tumour/normal pair),
 //    or --vcf names an existing VCF.
 // 2. The query is the PASS records; with --somatic only those whose INFO STATUS contains "Somatic"
 //    (paired VCF); with --min-af only those with INFO AF >= X.
@@ -132,8 +132,7 @@ Snapshot call_snapshot(std::string_view vcf) {
 }
 
 bool check_snapshot(const fs::path& snapshot, const Snapshot& snap, bool update) {
-    std::string text =
-        "# omnivar-testkit bench snapshot: counts and digests only (regenerate with --update-snapshot)\n";
+    std::string text = "# senri-testkit bench snapshot: counts and digests only (regenerate with --update-snapshot)\n";
     for (const auto& [k, v] : snap) text += k + "\t" + v + "\n";
     if (update) {
         fs::create_directories(fs::absolute(snapshot).parent_path());
@@ -221,9 +220,9 @@ int cmd_bench(Args& args) {
         cmd.push_back(bed);
         const auto calls_path = out / "calls.vcf";
         const auto rc = run(cmd, files_opt(calls_path.string(), (out / "calls.err").string(), timeout));
-        std::println("omnivar: exit {}, {:.1f} s ({} threads)", rc.rc, rc.seconds, threads);
+        std::println("senri: exit {}, {:.1f} s ({} threads)", rc.rc, rc.seconds, threads);
         if (rc.rc != 0 || rc.timed_out) {
-            std::println("FAIL: omnivar failed: {}", tail(read_file(out / "calls.err"), 300));
+            std::println("FAIL: senri failed: {}", tail(read_file(out / "calls.err"), 300));
             return 1;
         }
         calls = read_file(calls_path);

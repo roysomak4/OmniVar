@@ -21,7 +21,7 @@
 #include "stats/fisher.hpp"
 #include "util/num_format.hpp"
 
-namespace omnivar::annotate {
+namespace senri::annotate {
 
 using namespace detail;
 
@@ -179,7 +179,7 @@ std::string Var2Vcf::paired_header(const VcfHeaderInfo& info) const {
         h += "##contig=<ID=" + name + ",length=" + std::to_string(length) + ">\n";
     }
     if (!info.command_line.empty()) {
-        h += "##omnivarCommandLine=\"" + info.command_line + "\"\n";
+        h += "##senriCommandLine=\"" + info.command_line + "\"\n";
     }
     h +=
         R"VCF(##INFO=<ID=SAMPLE,Number=1,Type=String,Description="Sample name (with whitespace translated to underscores)">
@@ -528,4 +528,4 @@ std::string Var2Vcf::paired_records(const std::string& sample_name) const {
     return out;
 }
 
-}  // namespace omnivar::annotate
+}  // namespace senri::annotate

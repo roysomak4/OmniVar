@@ -6,7 +6,7 @@
 #include "util/checked_string.hpp"
 #include "util/num_format.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 bool Variant::is_noise(const Config& conf) {
     const double qual = mean_quality;
@@ -186,4 +186,4 @@ std::vector<std::pair<std::string, std::string>> reject_filter_descriptions(cons
     };
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

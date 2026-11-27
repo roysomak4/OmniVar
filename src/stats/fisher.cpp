@@ -7,7 +7,7 @@
 
 #include "util/num_format.hpp"
 
-namespace omnivar::stats {
+namespace senri::stats {
 
 namespace {
 
@@ -520,4 +520,4 @@ double FisherExact::p_value() const { return round_as_r(p_two_sided_); }
 double FisherExact::p_value_less() const { return round_as_r(p_less_); }
 double FisherExact::p_value_greater() const { return round_as_r(p_greater_); }
 
-}  // namespace omnivar::stats
+}  // namespace senri::stats

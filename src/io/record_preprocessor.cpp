@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace omnivar::io {
+namespace senri::io {
 
 std::expected<const BamFile*, BamError> BamCache::get(const std::string& path) {
     auto it = files_.find(path);
@@ -127,4 +127,4 @@ bool RecordPreprocessor::preprocess_record(const BamRecord& record) {
     return true;
 }
 
-}  // namespace omnivar::io
+}  // namespace senri::io

@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 
-namespace omnivar::io {
+namespace senri::io {
 
 namespace {
 
@@ -90,4 +90,4 @@ std::expected<std::string, ReferenceError> CsvSliceProvider::sub_seq(std::string
                                                            "-" + std::to_string(end) + " in file " + path_});
 }
 
-}  // namespace omnivar::io
+}  // namespace senri::io

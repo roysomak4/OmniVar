@@ -16,7 +16,7 @@
 #include "util/checked_string.hpp"
 #include "util/num_format.hpp"
 
-namespace omnivar::modes {
+namespace senri::modes {
 
 namespace {
 
@@ -740,4 +740,4 @@ void process_somatic_region(const PipelineEnv& env, const Region& region, std::s
     SomaticPostProcess(env, region, splice, out).accept(bam1, bam2);
 }
 
-}  // namespace omnivar::modes
+}  // namespace senri::modes

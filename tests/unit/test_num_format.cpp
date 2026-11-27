@@ -11,7 +11,7 @@
 #include "util/num_format.hpp"
 #include "util/number_parse.hpp"
 
-using namespace omnivar::util;
+using namespace senri::util;
 
 namespace {
 
@@ -32,7 +32,7 @@ std::vector<std::string> split_tab(const std::string& line) {
 }  // namespace
 
 TEST_CASE("num_format matches JVM vectors (tests/unit/data/num_format_vectors.tsv)") {
-    std::ifstream in(OMNIVAR_SOURCE_DIR "/tests/unit/data/num_format_vectors.tsv");
+    std::ifstream in(SENRI_SOURCE_DIR "/tests/unit/data/num_format_vectors.tsv");
     REQUIRE(in);
     std::string line;
     std::getline(in, line);
@@ -150,7 +150,7 @@ TEST_CASE("commons-cli createNumber") {
 // Perl's sprintf("%.Nf") (var2vcf_paired.pl): exact binary value, ties to even. Expected values
 // printed by perl 5 on this machine.
 TEST_CASE("printf_fixed matches Perl sprintf") {
-    using omnivar::util::printf_fixed;
+    using senri::util::printf_fixed;
     CHECK(printf_fixed(0.125, 2) == "0.12");
     CHECK(printf_fixed(0.375, 2) == "0.38");
     CHECK(printf_fixed(2.5, 0) == "2");

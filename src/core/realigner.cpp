@@ -17,7 +17,7 @@
 #include "util/regex_engine.hpp"
 #include "util/sequence.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 namespace {
 
@@ -2617,4 +2617,4 @@ Match35 find35match(const std::string& seq5, const std::string& seq3, const Conf
     return {b5, b3, max_matched_length};
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

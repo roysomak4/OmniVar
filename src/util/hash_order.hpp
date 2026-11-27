@@ -17,7 +17,7 @@
 #include <string_view>
 #include <vector>
 
-namespace omnivar::util {
+namespace senri::util {
 
 // String.hashCode() of an ASCII/Latin-1 string (bytes taken as UTF-16 code units).
 [[nodiscard]] constexpr std::int32_t string_hash_code(std::string_view s) {
@@ -34,4 +34,4 @@ namespace omnivar::util {
 // Indices into `hashes` in HashMap iteration order (see above).
 [[nodiscard]] std::optional<std::vector<std::size_t>> hashmap_order(const std::vector<std::int32_t>& hashes);
 
-}  // namespace omnivar::util
+}  // namespace senri::util

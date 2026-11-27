@@ -1,6 +1,6 @@
 #include "core/cigar.hpp"
 
-namespace omnivar::core {
+namespace senri::core {
 
 Cigar cigar_of(const io::BamRecord& record) {
     const bam1_t* b = record.raw();
@@ -71,4 +71,4 @@ int reference_length(const Cigar& c) {
     return sum_if(c, [](char op) { return consumes_reference(op); });
 }
 
-}  // namespace omnivar::core
+}  // namespace senri::core

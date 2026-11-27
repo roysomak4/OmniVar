@@ -1,6 +1,6 @@
-// regress: omnivar's output on the regression cases against its own checked-in output.
+// regress: senri's output on the regression cases against its own checked-in output.
 //
-//   omnivar-testkit regress --binary B [--part tsv,vcf,synthetic] [--mode Simple|Somatic] [-k substr]
+//   senri-testkit regress --binary B [--part tsv,vcf,synthetic] [--mode Simple|Somatic] [-k substr]
 //       [--update] [--diff N] [-v] [-j N] [--timeout S]
 //
 // Parts:
@@ -10,14 +10,14 @@
 //   vcf        tests/regression/vcf/<case>.vcf: the expected VCF (default output) of the same case.
 //              Pass: identical lines, except ##source (version) and ##reference (a local path).
 //   synthetic  tests/regression/synthetic/{single,paired}.tsv: crafted rows (many contigs, SVs,
-//              clusters, edge values) through `omnivar --dev-tsv-to-vcf`, for each VCF option set;
+//              clusters, edge values) through `senri --dev-tsv-to-vcf`, for each VCF option set;
 //              expected synthetic/<input>.<variant>.vcf.
 //
 // Every case runs as
 //   <binary> [--tsv] <bed> -b <bam> <case args> -z -c 1 -S 2 -E 3 -g 4 -G <fasta slice>.csv
 // and every VCF must also pass `bcftools view` when bcftools is installed.
 //
-// The expectations are omnivar's own output, so a deliberate change of behaviour is recorded with
+// The expectations are senri's own output, so a deliberate change of behaviour is recorded with
 // --update (review the diff before committing it). Version 0.1.0 produced exactly the output of
 // VarDictJava 1.8.3 and its R and Perl scripts on these cases (see docs/release-notes/v0.1.0.md).
 
@@ -158,7 +158,7 @@ const std::string kThresholds =
     "--filter-min-qual 30 --filter-min-mq 20 --filter-min-sn 3 --filter-max-nm 2.5 --filter-msi 6 "
     "--filter-hom-af 0.3 ";
 
-// (input, variant) -> omnivar VCF options
+// (input, variant) -> senri VCF options
 std::vector<std::tuple<std::string, std::string, std::string>> synthetic_jobs() {
     return {
         {"single", "default", ""},
